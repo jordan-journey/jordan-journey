@@ -26,6 +26,9 @@ function Header(){
             <Link to="/Login" className="mx-4 hover:text-sky-950">
             Login
             </Link>
+            <Link to="/Dashboard" className="mx-4 hover:text-sky-950">
+            Dashboard
+            </Link>
           
             
             

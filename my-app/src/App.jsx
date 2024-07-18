@@ -1,11 +1,12 @@
 
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import Header from './component/header';
-import Home from './component/Home';
-import AboutUs from './component/AboutAu';
-import ContactUs from './component/ContactUs';
-import ListingPage from './component/ListingPage';
-import Login from './component/Login';
+import Home from './pages/Home';
+import AboutUs from './pages/AboutAu';
+import ContactUs from './pages/ContactUs';
+import ListingPage from './pages/ListingPage';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
               <Route path='/ContactUs' element={<ContactUs />}/>
               <Route path='/ListingPage' element={<ListingPage />}/>
               <Route path='/Login' element={<Login />}/>
+              <Route path='/Dashboard' element={<Dashboard />}/>
+
 
 
         </Routes> 
