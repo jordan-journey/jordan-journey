@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightToBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import Logo from "../assets/images/Logo.png";
 
 function Header() {
@@ -15,6 +15,7 @@ function Header() {
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"><img src={Logo} className="h-12" alt="Flowbite Logo" /></span>
         </Link>
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
+        <Link to="/Profile" className="text-sm text-white dark:text-white hover:underline"><FontAwesomeIcon icon={faUser} className="mx-1"/> profile</Link>
             <Link to="/Dashboard" className="text-sm text-white dark:text-white hover:underline"><FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1"/> Admin</Link>
             <Link to="/Login" className="text-sm text-white dark:text-white hover:underline"> <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1"/> Login</Link>
         </div>

@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import '../assets/style/Login.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
+
+
+
+ 
+    
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -28,7 +36,7 @@ function Login() {
           localStorage.setItem('id', id);
           localStorage.setItem('username', userFound.name);
           localStorage.setItem('email', userFound.email);
-          window.location = "Home";
+          navigate(`/`);
         } else {
           alert('Invalid email or password.');
         }
@@ -40,7 +48,7 @@ function Login() {
   };
 
   return (
-    <div className='forms-container'>
+    <div className='mb-20 forms-container'>
       <div className="signup-container">
         <div className="signup-box">
           <h2>Login</h2>
@@ -68,9 +76,11 @@ function Login() {
             <button type="submit" className="login1-btn">
               Login
             </button>
-            <button type="button" className="signup2-btn" onClick={() => window.location = "SignUp"}>
+            <Link to="/SignUp">
+            <button type="button" className="signup2-btn" >
               Sign Up
             </button>
+            </Link>
           </form>
         </div>
       </div>

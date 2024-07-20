@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../assets/style/Profile.css'; 
 import axios from 'axios';
 
@@ -41,6 +41,7 @@ const Profile = () => {
     };
 
     return (
+    <div className='mainProfile'>
         <div className="container">
             <form className="form" onSubmit={handleUpdate}>
                 <div className="form-group">
@@ -66,6 +67,7 @@ const Profile = () => {
                 <button type="submit" className="edit-button">Update</button>
             </form>
         </div>
+    </div>
     );
 };
 

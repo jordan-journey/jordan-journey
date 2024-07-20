@@ -17,6 +17,9 @@ import UpdateTicket from "./pages/Dashboard/UPdate";
 import Users from "./pages/Dashboard/Users";
 import Contact from "./pages/Dashboard/ContactMsg";
 import Footer from './component/Footer';
+import Profile from "./pages/Profile";
+import SignUp from "./pages/SignUp";
+
 
 
 function App() {
@@ -26,6 +29,7 @@ function App() {
         <Header />
         <div>
           <Routes>
+           
             <Route path="/" element={<Home />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
@@ -41,6 +45,11 @@ function App() {
             <Route path="/Users" element={<Users />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/MDashboard" element={<MainDashboard />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/SignUp" element={<SignUp />} />
+
+
+    
           </Routes>
         </div>
 
