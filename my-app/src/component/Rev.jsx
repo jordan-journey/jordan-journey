@@ -232,8 +232,11 @@ const Rev = () => {
         <div className="max-w-xl">
           <div>
             <h2 className="text-2xl font-extrabold text-gray-800">{title}</h2>
+            <p className="text-sm text-gray-600 mt-2 w-auto z-[-10000000000]">
+              {mainDescription}
+            </p>
+            <br /> <br />{" "}
           </div>
-          <p className="text-sm text-gray-600 mt-2 3">{mainDescription}</p>
 
           <form className=" space-y-4 flex flex-col items-end">
             <div className="flex items-center justify-end space-x-4">
