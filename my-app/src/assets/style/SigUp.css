@@ -1,0 +1,105 @@
+
+.forms-container{
+    margin-top: 7%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    /* background: transparent;
+    border: 2px solid #f8f5f5; */
+
+}
+  
+  
+  
+  .signup-container {
+    background: url(../images/) no-repeat center center fixed;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+ 
+  }
+  
+  .signup-box h2 {
+    text-align: center;
+    color: #4B0082;
+    margin-bottom: 20px;
+  }
+  
+  .input-container {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .input-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+  }
+  
+  .input-container input {
+    width: 100%;
+    padding: 10px 10px 10px 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .signup-btn, .login-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signup-btn {
+    background: #44b946;
+    color: white;
+  }
+  .signup-btn:hover {
+    background-color: #3a943c;
+  }
+  
+  .login-btn {
+    background: #ccc;
+    color: #666;
+  }
+  .login-btn:hover {
+    background-color: #b8b6b6
+  }
+
+  .login1-btn:hover {
+    background-color: #3a943c;
+  }
+  
+  .login1-btn{
+    background: #44b946;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }
+
+  .signup2-btn{
+    background: #ccc;
+    color: #666;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .signup2-btn:hover{
+    background-color: #b8b6b6;
+  }
