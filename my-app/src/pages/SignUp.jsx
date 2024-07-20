@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import '../assets/style/SigUp.css';
 import axios from 'axios';  
+import { Link } from 'react-router-dom';
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -29,7 +30,7 @@ function SignUp() {
   };
 
   return (
-    <div className='forms-container'>
+    <div className='mb-20 forms-container'>
     <div className="signup-container">
       <div className="signup-box">
         <h2>Sign Up</h2>
@@ -65,7 +66,9 @@ function SignUp() {
             />
           </div>
           <button type="submit" className="signup-btn">Sign Up</button>
-          <button type="button" className="login-btn" onClick={() => window.location = "Login"}  >Login</button>
+          <Link to="/Login">
+          <button type="button" className="login-btn"  >Login</button>
+          </Link>
         </form>
       </div>
     </div>
