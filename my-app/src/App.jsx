@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./component/header";
 import Home from "./pages/Home";
@@ -15,6 +16,8 @@ import DelteTicket from "./pages/Dashboard/Delte";
 import UpdateTicket from "./pages/Dashboard/UPdate";
 import Users from "./pages/Dashboard/Users";
 import Contact from "./pages/Dashboard/ContactMsg";
+import Footer from './component/Footer';
+
 
 function App() {
   return (
@@ -40,8 +43,15 @@ function App() {
             <Route path="/MDashboard" element={<MainDashboard />} />
           </Routes>
         </div>
-      </div>
-    </BrowserRouter>
+
+
+      <Footer/>
+      
+     
+    </div> 
+      </BrowserRouter>
+  
+
   );
 }
 
