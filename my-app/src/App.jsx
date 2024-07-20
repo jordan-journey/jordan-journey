@@ -7,6 +7,7 @@ import ContactUs from './pages/ContactUs';
 import ListingPage from './pages/ListingPage';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Footer from './component/Footer';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 
         </Routes> 
       </div>
+      <Footer/>
       
      
     </div> 
