@@ -24,7 +24,7 @@ function Saidbar() {
         type="button"
         className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
-        <span className="sr-only">Open sidebar</span>
+        {/* <span className="sr-only">Open sidebar</span> */}
         <svg
           className="w-6 h-6"
           aria-hidden="true"
@@ -50,10 +50,7 @@ function Saidbar() {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <Link className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg
                   className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
@@ -67,7 +64,7 @@ function Saidbar() {
                 <Link to={"/MDashboard"}>
                   <span className="ms-3">Dashboard</span>
                 </Link>
-              </a>
+              </Link>
             </li>
             <li>
               <button
@@ -105,37 +102,7 @@ function Saidbar() {
                   />
                 </svg>
               </button>
-              <ul
-                id="dropdown-example"
-                className={`${
-                  Opentickepanel ? "flex flex-col py-2 space-y-2" : "hidden"
-                }`}
-              >
-                <li>
-                  <Link
-                    to="/Add"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Add New Ticket
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/Update"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Update Ticket
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/Delete"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Delete Ticket
-                  </Link>
-                </li>
-              </ul>
+              <ul id="dropdown-example"></ul>
             </li>
             <li>
               <Link
@@ -230,7 +197,10 @@ function Saidbar() {
               </Link>
             </li>
             <li>
-              <Link className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link
+                to="/Logout"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"

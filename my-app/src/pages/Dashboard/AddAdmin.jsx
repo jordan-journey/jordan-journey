@@ -43,10 +43,10 @@ function AddAdmin() {
 
   return (
     <>
-      <div className="flex flex-wrap gap-16">
+      <div className="flex flex-wrap gap-6">
         <Saidbar />
         <section className="py-10 my-auto dark:bg-gray-900 px-24">
-          <div className="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
+          <div className="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex ms">
             <div className="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
               <div>
                 <h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
