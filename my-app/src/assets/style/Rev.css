@@ -1,0 +1,13 @@
+/* Rev.css */
+.highlight {
+  animation: highlight 1s ease-in-out;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: #67fe41;
+  }
+  100% {
+    background-color: transparent;
+  }
+}

@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./component/header";
 import Home from "./pages/Home";
@@ -16,11 +15,13 @@ import DelteTicket from "./pages/Dashboard/Delte";
 import UpdateTicket from "./pages/Dashboard/UPdate";
 import Users from "./pages/Dashboard/Users";
 import Contact from "./pages/Dashboard/ContactMsg";
-import Footer from './component/Footer';
+import Footer from "./component/Footer";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 
-
+import Rev from "./component/Rev";
+import CheckPayment from "./component/CheckPayment";
+import OrderDetails from "./component/OrderDetails";
 
 function App() {
   return (
@@ -29,7 +30,6 @@ function App() {
         <Header />
         <div>
           <Routes>
-           
             <Route path="/" element={<Home />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
@@ -48,19 +48,16 @@ function App() {
             <Route path="/Profile" element={<Profile />} />
             <Route path="/SignUp" element={<SignUp />} />
 
-
-    
+            <Route path="/event/:id" element={<Rev />} />
+            <Route path="/CheckPayment" element={<CheckPayment />} />
+            <Route path="/order-details" element={<OrderDetails />} />
+            <Route path="/Logout" element={<Home />} />
           </Routes>
         </div>
 
-
-      <Footer/>
-      
-     
-    </div> 
-      </BrowserRouter>
-  
-
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 

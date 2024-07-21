@@ -1,3 +1,4 @@
+
 .mainProfileOrders {
   margin: 0;
   padding: 0;
@@ -23,14 +24,19 @@
 }
 
 .profile-container .form, .orders-container .orders-list {
-  display: flex;
-  flex-direction: column;
-}
+
+
+
+
+
+
+
 
 h2 {
   text-align: center;
   color: #333;
 }
+
 
 .form-group {
   margin-bottom: 15px;
@@ -39,7 +45,9 @@ h2 {
 .form-group label {
   margin-bottom: 5px;
   font-weight: bold;
+
   color: #555;
+
 }
 
 .form-group input {
@@ -47,6 +55,7 @@ h2 {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+
   font-size: 16px;
   transition: border 0.3s;
 }
@@ -54,6 +63,7 @@ h2 {
 .form-group input:focus {
   border-color: #44b946;
   outline: none;
+
 }
 
 .edit-button {
@@ -63,13 +73,16 @@ h2 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+
   font-size: 16px;
   transition: background-color 0.3s;
+
 }
 
 .edit-button:hover {
   background-color: #3a943c;
 }
+
 
 .orders-list {
   display: flex;
@@ -117,3 +130,4 @@ h2 {
   margin-top: 70px;
   text-align: center;
 }
+
