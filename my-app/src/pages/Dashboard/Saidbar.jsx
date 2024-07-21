@@ -115,37 +115,7 @@ function Saidbar() {
                   />
                 </svg>
               </button>
-              <ul
-                id="dropdown-example"
-                className={`${
-                  Opentickepanel ? "flex flex-col py-2 space-y-2" : "hidden"
-                }`}
-              >
-                <li>
-                  <Link
-                    to="/Add"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Add New Ticket
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/Update"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Update Ticket
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/Delete"
-                    className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >
-                    Delete Ticket
-                  </Link>
-                </li>
-              </ul>
+              <ul id="dropdown-example"></ul>
             </li>
             <li>
               <Link
