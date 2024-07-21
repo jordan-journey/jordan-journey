@@ -31,10 +31,10 @@ function Admin() {
   return (
     <div className="a flex">
       <Saidbar />
-      <div className=" flex flex-wrap px-28 gap-20">
+      <div className=" flex flex-wrap px-28">
         {Admins.map((admin) =>
           admin.delete ? (
-            <div key={admin.id} className="max-w-sm mx-auto mt-10">
+            <div key={admin.id} className="max-w-sm mx-auto mt-10 mb-10">
               <div className="p-6 flex items-center justify-between bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-center">
                   <img

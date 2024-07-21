@@ -49,19 +49,6 @@ function Saidbar() {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-            <div className="flex items-center gap-4">
-              <img
-                className="w-10 h-10 rounded-full"
-                src="/docs/images/people/profile-picture-5.jpg"
-                alt=""
-              />
-              <div className="font-medium dark:text-white">
-                <div>Jese Leos</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Joined in August 2014
-                </div>
-              </div>
-            </div>
             <li>
               <Link className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg
@@ -210,7 +197,10 @@ function Saidbar() {
               </Link>
             </li>
             <li>
-              <Link className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <Link
+                to="/Logout"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
