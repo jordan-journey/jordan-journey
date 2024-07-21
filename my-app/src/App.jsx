@@ -15,6 +15,13 @@ import DelteTicket from "./pages/Dashboard/Delte";
 import UpdateTicket from "./pages/Dashboard/UPdate";
 import Users from "./pages/Dashboard/Users";
 import Contact from "./pages/Dashboard/ContactMsg";
+import Footer from "./component/Footer";
+import Profile from "./pages/Profile";
+import SignUp from "./pages/SignUp";
+
+import Rev from "./component/Rev";
+import CheckPayment from "./component/CheckPayment";
+import OrderDetails from "./component/OrderDetails";
 
 function App() {
   return (
@@ -38,8 +45,16 @@ function App() {
             <Route path="/Users" element={<Users />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/MDashboard" element={<MainDashboard />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/SignUp" element={<SignUp />} />
+
+            <Route path="/event/:id" element={<Rev />} />
+            <Route path="/CheckPayment" element={<CheckPayment />} />
+            <Route path="/order-details" element={<OrderDetails />} />
           </Routes>
         </div>
+
+        <Footer />
       </div>
     </BrowserRouter>
   );
