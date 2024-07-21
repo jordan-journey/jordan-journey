@@ -51,6 +51,7 @@ function App() {
             <Route path="/event/:id" element={<Rev />} />
             <Route path="/CheckPayment" element={<CheckPayment />} />
             <Route path="/order-details" element={<OrderDetails />} />
+            <Route path="/Logout" element={<Home />} />
           </Routes>
         </div>
 
