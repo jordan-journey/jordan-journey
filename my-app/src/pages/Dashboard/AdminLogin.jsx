@@ -15,8 +15,6 @@ function AdminLogin() {
       const response = await axios.get(`${dbURL}/Admin.json`);
       const admins = response.data;
 
-      console.log("Admins from Firebase:", admins); // Log the retrieved data for debugging
-
       const admin = Object.values(admins).find((adminObj) => {
         // Remove extra spaces from email and password
         const email = adminObj.email ? adminObj.email.trim() : "";
@@ -30,8 +28,10 @@ function AdminLogin() {
       });
 
       if (admin) {
-        sessionStorage.setItem("AdminID", admin.src);
-        navigate("/Said"); // Redirect to the home page or another route
+        sessionStorage.setItem("AdminImg", admin.src);
+        if (admin.delete) {
+          navigate("/Said");
+        } else setError("  قد تم انهاء خدماتك ");
       } else {
         setError("البيانات غير صحيحة"); // Error message
       }
