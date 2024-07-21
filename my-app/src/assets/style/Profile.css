@@ -1,54 +1,119 @@
-.mainProfile {
-    margin: 0;
-    padding: 0;
-    background-image: url(../images/); /* استبدلها برابط صورة الخلفية */
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-  }
-  
-  .container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .edit-button {
-    padding: 10px;
-    background-color: #44b946;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .edit-button:hover {
-    background-color: #3a943c;
-  }
-  
+.mainProfileOrders {
+  margin: 0;
+  padding: 0;
+  background-image: url(../images/background.jpg); 
+  background-size: cover;
+  display: flex;
+  gap: 20px;
+  /* height: 70vh; */
+  font-family: Arial, sans-serif;
+}
+
+.profile-container, .orders-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+.profile-container {
+  width: 40%;
+}
+.orders-container {
+  width: 58%;
+}
+
+.profile-container .form, .orders-container .orders-list {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #44b946;
+  outline: none;
+}
+
+.edit-button {
+  padding: 10px;
+  background-color: #44b946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #3a943c;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: wrap;
+  gap: 10px;
+}
+
+.order-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.order-item:hover {
+  background-color: #f1f1f1;
+}
+
+.order-item h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.order-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+.mainProfileOrders  label{
+  font-size: 12px;
+}
+.mainProfileOrders  input{
+  font-size: 12px;
+}
+.mainProfileOrders h2{
+  font-weight: bold;
+}
+.mainProfileOrdersNew{
+  height: 70vh;
+}
+.no-order-found{
+  margin-top: 20px;
+  margin-top: 70px;
+  text-align: center;
+}

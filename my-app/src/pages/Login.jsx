@@ -10,9 +10,6 @@ function Login() {
   const navigate = useNavigate();
 
 
-
-
- 
     
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,11 +17,11 @@ function Login() {
       const response = await axios.get('https://tickets-73a3c-default-rtdb.firebaseio.com/users.json');
       if (response.status === 200) {
         const users = response.data;
-        let userFound = false;
+        let userFound = false;  
         let id ;
 
         for (let key in users) {
-          if (users[key].email === email && users[key].password === password) {
+          if (users[key].email === email && users[key].password === password && users[key].Active === true) {
             userFound = users[key];
             id = key;
             break;
@@ -48,9 +45,10 @@ function Login() {
   };
 
   return (
-    <div className='mb-20 forms-container'>
-      <div className="signup-container">
-        <div className="signup-box">
+    <section className='signup-section flex'>
+   
+      <div className="signup-container flex mt-20">
+        <div className="signup-box ">
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
             <div className="input-container">
@@ -84,7 +82,8 @@ function Login() {
           </form>
         </div>
       </div>
-    </div>
+   
+    </section>
   );
 }
 
