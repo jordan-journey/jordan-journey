@@ -2,6 +2,8 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Footer from "./Footer";
+import Header from "./header";
 
 const OrderDetails = () => {
   const location = useLocation();
@@ -20,7 +22,7 @@ const OrderDetails = () => {
 
   if (!orderDetails || !paymentDetails) {
     return (
-      <div className="text-center py-20 text-gray-500">
+      <div className="py-20 text-center text-gray-500">
         No order or payment details available.
       </div>
     );
@@ -108,112 +110,116 @@ const OrderDetails = () => {
     doc.save("event-ticket.pdf");
   };
 
+  const DetailRow = ({ label, value, isBold = false }) => (
+    <div
+      className={`flex justify-between text-sm ${
+        isBold ? "font-bold" : "font-medium"
+      } text-gray-800`}
+    >
+      <span className="text-gray-600">{label}:</span>
+      <span>{value}</span>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
+    <><Footer/>
+    <div className="min-h-screen px-8 py-8 bg-gray-100">
+      {/* Hero Section */}
       {mainImage && (
-        <div className="max-w-4xl mx-auto mb-6">
+        <div className="relative max-w-6xl mx-auto mb-10 overflow-hidden rounded-lg">
           <img
             src={mainImage}
             alt="Main Event"
-            className="w-full h-64 object-cover rounded-lg shadow-lg"
+            className="object-cover w-full rounded-lg shadow-lg h-96"
           />
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+            <h1 className="text-4xl font-bold text-white">Event Details</h1>
+          </div>
         </div>
       )}
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2">
-          <div className="p-6 bg-white shadow-md rounded-lg border border-gray-300">
-            <h1 className="text-4xl font-bold mb-6 text-center border-b border-gray-200 pb-2">
-              Order Bill
-            </h1>
 
-            <div className="mb-8">
-              <h2 className="text-3xl font-semibold mb-4">Order Summary</h2>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="font-semibold">Title:</span>
-                  <span>{orderDetails.title}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Date:</span>
-                  <span>{orderDetails.date}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Time:</span>
-                  <span>{orderDetails.time}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Price:</span>
-                  <span>${orderDetails.price}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Quantity:</span>
-                  <span>{orderDetails.quantity}</span>
-                </div>
-                <div className="flex justify-between font-bold">
-                  <span>Total Price:</span>
-                  <span>${orderDetails.totalPrice}</span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-semibold mb-4">Payment Details</h2>
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="font-semibold">Amount:</span>
-                  <span>${purchaseUnits[0]?.amount?.value || "N/A"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Payer Name:</span>
-                  <span>
-                    {payer?.name?.given_name || ""} {payer?.name?.surname || ""}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Payer Email:</span>
-                  <span>{payer?.email_address || "N/A"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Payer ID:</span>
-                  <span>{payer?.payer_id || "N/A"}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Country Code:</span>
-                  <span>{payer?.address?.country_code || "N/A"}</span>
-                </div>
-              </div>
-            </div>
+      <div className="grid max-w-6xl grid-cols-1 gap-10 mx-auto md:grid-cols-2">
+        {/* Order Summary Section */}
+        <div className="p-8 bg-white border border-gray-200 rounded-lg shadow-lg">
+          <h2 className="pb-2 mb-6 text-3xl font-bold border-b border-gray-300">
+            Order Summary
+          </h2>
+          <div className="space-y-4">
+            <DetailRow label="Title" value={orderDetails.title} />
+            <DetailRow label="Date" value={orderDetails.date} />
+            <DetailRow label="Time" value={orderDetails.time} />
+            <DetailRow label="Price" value={`$${orderDetails.price}`} />
+            <DetailRow label="Quantity" value={orderDetails.quantity} />
+            <DetailRow
+              label="Total Price"
+              value={`$${orderDetails.totalPrice}`}
+              isBold
+            />
           </div>
         </div>
 
-        <div>
-          <div className="bg-white p-6 shadow-md rounded-lg border border-gray-300">
-            <h2 className="text-3xl font-semibold mb-4 text-center border-b border-gray-200 pb-2">
-              Gallery
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {otherImages.length > 0 &&
-                otherImages.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Event Gallery ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-lg shadow"
-                  />
-                ))}
-            </div>
+        {/* Payment Details Section */}
+        <div className="p-8 bg-white border border-gray-200 rounded-lg shadow-lg">
+          <h2 className="pb-2 mb-6 text-3xl font-bold border-b border-gray-300">
+            Payment Details
+          </h2>
+          <div className="space-y-4">
+            <DetailRow
+              label="Amount"
+              value={`$${purchaseUnits[0]?.amount?.value || "N/A"}`}
+            />
+            <DetailRow
+              label="Payer Name"
+              value={`${payer?.name?.given_name || ""} ${
+                payer?.name?.surname || ""
+              }`}
+            />
+            <DetailRow
+              label="Payer Email"
+              value={payer?.email_address || "N/A"}
+            />
+            <DetailRow label="Payer ID" value={payer?.payer_id || "N/A"} />
+            <DetailRow
+              label="Country Code"
+              value={payer?.address?.country_code || "N/A"}
+            />
           </div>
         </div>
       </div>
-      <div className="max-w-4xl mx-auto mt-6 flex justify-center">
+
+      {/* Gallery Section */}
+      <div className="max-w-6xl mx-auto mt-10">
+        <h2 className="mb-6 text-3xl font-bold text-center">Gallery</h2>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {otherImages.length > 0 &&
+            otherImages.map((image, index) => (
+              <>
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Event Gallery ${index + 1}`}
+                  className="object-cover w-full h-56 rounded-lg shadow-md"
+                />
+              </>
+            ))}
+          <img
+            src="./src/assets/bill.gif"
+            className="object-cover w-full h-56 rounded-lg shadow-md"
+          />
+        </div>
+      </div>
+
+      {/* Download PDF Button */}
+      <div className="flex justify-center max-w-6xl mx-auto mt-10">
         <button
           onClick={generatePDF}
-          className="px-6 py-3 bg-[#519341] text-white font-semibold rounded-lg shadow hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
+          className="px-8 py-4 font-semibold text-white transition-colors bg-green-600 rounded-full shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
         >
           Download PDF
         </button>
       </div>
     </div>
+    <Footer/></>
   );
 };
 

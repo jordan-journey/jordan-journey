@@ -42,14 +42,16 @@ const Profile = () => {
         .get(`https://tickets-73a3c-default-rtdb.firebaseio.com/orders.json`)
         .then((response) => {
           const ordersData = response.data;
-          const userOrders = Object.keys(ordersData)
-            .filter((key) => ordersData[key].userId === userId)
-            .map((key) => ({ id: key, ...ordersData[key] }));
-
-          setOrders(userOrders);
+          if (ordersData) {
+            const userOrders = Object.keys(ordersData)
+              .filter((key) => ordersData[key].userId === userId)
+              .map((key) => ({ id: key, ...ordersData[key] }));
+            setOrders(userOrders);
+          } else {
+            setOrders([]);
+          }
           setLoading(false);
-
-          saveOrdersToFirebase(userOrders);
+          //   saveOrdersToFirebase(ordersData);
         })
         .catch((error) => {
           console.error("Error fetching orders from Firebase:", error);
@@ -62,14 +64,17 @@ const Profile = () => {
         .get(`https://tickets-73a3c-default-rtdb.firebaseio.com/coupons.json`)
         .then((response) => {
           const couponsData = response.data;
-
-          const userCoupons = Object.keys(couponsData)
-            .filter(
-              (key) => couponsData[key].email.trim().toLowerCase() === userEmail
-            )
-            .map((key) => ({ id: key, ...couponsData[key] }));
-
-          setCoupons(userCoupons);
+          if (couponsData) {
+            const userCoupons = Object.keys(couponsData)
+              .filter(
+                (key) =>
+                  couponsData[key].email.trim().toLowerCase() === userEmail
+              )
+              .map((key) => ({ id: key, ...couponsData[key] }));
+            setCoupons(userCoupons);
+          } else {
+            setCoupons([]);
+          }
           setLoading(false); // Set loading to false once coupons are fetched
         })
         .catch((error) => {
@@ -94,22 +99,9 @@ const Profile = () => {
     }
   };
 
-  const saveOrdersToFirebase = async (orders) => {
-    try {
-      await axios.put(
-        `https://tickets-73a3c-default-rtdb.firebaseio.com/userOrders/${id}.json`,
-        orders
-      );
-      console.log("Orders saved to Firebase successfully");
-    } catch (error) {
-      console.error("Error saving orders to Firebase:", error);
-      alert("Error saving orders. Please try again.");
-    }
-  };
-
   return (
-    <div>
-      <Header/>
+    <>
+    <Header/>
     <div className="flex items-center justify-center min-h-screen p-6 bg-gradient-to-r">
       <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg">
         <h1 className="mb-8 text-3xl font-bold text-center text-gray-800">
@@ -158,7 +150,7 @@ const Profile = () => {
           {loading ? (
             <p className="text-center text-gray-600">Loading orders...</p>
           ) : error ? (
-            <p className="text-center text-red-500">{error}</p>
+            <p className="text-center text-gray-800">{error}</p>
           ) : (
             <div className="space-y-4">
               {orders.length > 0 ? (
@@ -170,8 +162,6 @@ const Profile = () => {
                     <h3 className="text-lg font-semibold text-gray-700">
                       Trip: {order.title}
                     </h3>
-                    {/* <p className="text-gray-600">User ID: {order.userId}</p> */}
-                    {/* <h1 className="text-gray-600">Title: {order.title}</h1> */}
                     <p className="text-gray-600">Location: {order.location}</p>
                     <p className="text-gray-600">Date: {order.date}</p>
                     <p className="text-gray-600">
@@ -212,7 +202,7 @@ const Profile = () => {
           {loading ? (
             <p className="text-center text-gray-600">Loading coupons...</p>
           ) : error ? (
-            <p className="text-center text-red-500">{error}</p>
+            <p className="text-center text-gray-800">{error}</p>
           ) : (
             <div className="space-y-4">
               {coupons.length > 0 ? (
@@ -241,7 +231,7 @@ const Profile = () => {
       </div>
     </div>
     <Footer/>
-    </div>
+    </>
   );
 };
 

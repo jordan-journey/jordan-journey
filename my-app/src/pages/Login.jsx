@@ -57,38 +57,48 @@ function Login() {
   };
 
   return (
-    <div>
+    <>
       <Header/>
-    <section className="flex signup-section">
-      <div className="flex mt-20 signup-container">
-        <div className="signup-box ">
-          <h2>Login</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="input-container">
-              <i className="fas fa-envelope"></i>
+    <section className="flex items-center justify-center h-screen signup-container">
+      <div className=" flex justify-center items-center  w-[30rem] bg-white p-8 rounded-lg shadow-lg">
+        <div className="w-full max-w-md text-black signup-box">
+          <h2 className="mb-6 text-3xl font-semibold text-center text-black">
+            Login
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="flex items-center py-2 border-gray-300 input-container">
+              <i className="mr-2 text-gray-400 fas fa-envelope"></i>
               <input
                 type="email"
                 placeholder="Email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-2 py-1 mr-3 leading-tight text-gray-700 bg-transparent border-none appearance-none focus:outline-none"
               />
             </div>
-            <div className="input-container">
-              <i className="fas fa-lock"></i>
+            <div className="flex items-center py-2 border-gray-300 input-container">
+              <i className="mr-2 text-gray-400 fas fa-lock"></i>
               <input
                 type="password"
                 placeholder="Password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-2 py-1 mr-3 leading-tight text-gray-700 bg-transparent border-none appearance-none focus:outline-none"
               />
             </div>
-            <button type="submit" className="login1-btn">
+            <button
+              type="submit"
+              className="login1-btn bg-[#519341] hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+            >
               Login
             </button>
             <Link to="/SignUp">
-              <button type="button" className="signup2-btn">
+              <button
+                type="button"
+                className="w-full px-4 py-2 mt-4 font-bold text-gray-800 bg-gray-300 rounded signup2-btn hover:bg-gray-400"
+              >
                 Sign Up
               </button>
             </Link>
@@ -97,7 +107,7 @@ function Login() {
       </div>
     </section>
     <Footer/>
-    </div>
+    </>
   );
 }
 

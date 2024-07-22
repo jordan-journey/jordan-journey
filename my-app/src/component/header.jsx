@@ -49,13 +49,16 @@ function Header() {
               to="/Dashboard"
               className="text-sm text-white dark:text-white hover:underline"
             >
-              <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" /> Admin
+              <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" />{" "}
+              Admin
             </Link>
             {!isLoggedIn ? (
               <Link
                 to="/Login"
+
                 className="text-sm text-white dark:text-white hover:underline">
                 <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" /> Login
+
               </Link>
             ) : (
               <Link

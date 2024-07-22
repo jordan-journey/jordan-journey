@@ -1,4 +1,5 @@
 
+
 import Products from '../component/Products/Products';
 import Hero from '../component/Hero/Hero';
 import TopProducts from '../component/TopProducts/TopProducts';
@@ -10,6 +11,7 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Header from '../component/header';
 import Footer from '../component/Footer';
+
 
 // import React from "react";
 
@@ -24,11 +26,9 @@ import Footer from '../component/Footer';
 
 // import Popup from "./components/Popup/Popup";
 
-
-
 // import Header from "../component/header";
 
-function Home(){
+function Home() {
   const [orderPopup, setOrderPopup] = React.useState(false);
 
   const handleOrderPopup = () => {
@@ -44,7 +44,7 @@ function Home(){
     Aos.refresh();
   }, []);
 
-
+ 
   return(
 
     
@@ -58,17 +58,15 @@ function Home(){
       
       <Testimonials />
       <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
+
       </div>
       <Footer/>
       </div>
 
-    // <>
-    // <Header/>
-    // <h1>Home</h1>
-    // </>
+
+  
 
   );
-
 }
 
 export default Home;
