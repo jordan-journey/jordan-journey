@@ -8,6 +8,8 @@ import Popup from '../component/Popup/Popup';
 import React from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import Header from '../component/header';
+import Footer from '../component/Footer';
 
 // import React from "react";
 
@@ -47,7 +49,9 @@ function Home(){
 
     
     <div >
+      <Header/>
     <Hero handleOrderPopup={handleOrderPopup} />
+    <div className='items-center p-20'>
       <Products />
       <TopProducts handleOrderPopup={handleOrderPopup} />
       <Banner />
@@ -55,11 +59,13 @@ function Home(){
       <Testimonials />
       <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
       </div>
+      <Footer/>
+      </div>
 
-    <>
-    {/* <Header/> */}
-    <h1>Home</h1>
-    </>
+    // <>
+    // <Header/>
+    // <h1>Home</h1>
+    // </>
 
   );
 

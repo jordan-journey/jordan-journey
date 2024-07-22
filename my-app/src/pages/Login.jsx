@@ -3,6 +3,8 @@ import "../assets/style/Login.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Header from "../component/header";
+import Footer from "../component/Footer";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -55,8 +57,10 @@ function Login() {
   };
 
   return (
-    <section className="signup-section flex">
-      <div className="signup-container flex mt-20">
+    <div>
+      <Header/>
+    <section className="flex signup-section">
+      <div className="flex mt-20 signup-container">
         <div className="signup-box ">
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
@@ -92,6 +96,8 @@ function Login() {
         </div>
       </div>
     </section>
+    <Footer/>
+    </div>
   );
 }
 

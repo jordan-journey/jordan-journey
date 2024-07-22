@@ -2,6 +2,7 @@ import Saidbar from "./Saidbar";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import NavDashboard from "../../component/NavDashboard";
 
 function AddTicket() {
   const [name, setName] = useState('');
@@ -81,6 +82,7 @@ function AddTicket() {
   };
 
   return (
+    <div><NavDashboard/>
     <div className="flex flex-wrap gap-12">
       <div className="w-1/4">
         <Saidbar />
@@ -249,6 +251,7 @@ function AddTicket() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

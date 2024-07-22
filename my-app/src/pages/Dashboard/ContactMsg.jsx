@@ -2,6 +2,7 @@ import Saidbar from "./Saidbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { dbURL } from "./Config";
+import NavDashboard from "../../component/NavDashboard";
 
 function Contact() {
   const [Contact, setContact] = useState({});
@@ -30,14 +31,15 @@ function Contact() {
   }
 
   return (
-    <div className="flex flex-wrap gap-12 px-4 py-6">
+    <div><NavDashboard/>
+    <div className="flex flex-wrap gap-12 ">
       <Saidbar />
 
-      <div className="flex-grow flex justify-center items-center">
+      <div className="flex items-center justify-center flex-grow">
         <div className="w-full max-w-4xl">
-          <h1 className="text-2xl font-bold text-center mb-6">All Contact</h1>
+          <h1 className="mb-6 text-2xl font-bold text-center">All Contact</h1>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
@@ -102,6 +104,7 @@ function Contact() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

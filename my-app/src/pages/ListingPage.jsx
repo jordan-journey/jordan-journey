@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Cards from "../component/Cards";
 import ListingPageImage from "../assets/images/ListingPageImage.jpg";
 import axios from "axios";
+import Header from "../component/header";
+import Footer from "../component/Footer";
 import {
   Checkbox,
   Card,
@@ -71,6 +73,7 @@ function ListingPage() {
 
   return (
     <main>
+      <Header/>
       {/******************************HeroSection in listing page******************************** */}
       <section
         style={{
@@ -153,6 +156,7 @@ function ListingPage() {
       <section>
         <Cards events={filteredEvents} searchQuery={searchQuery} />
       </section>
+      <Footer/>
     </main>
   );
 }

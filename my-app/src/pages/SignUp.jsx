@@ -2,6 +2,8 @@ import { useState } from "react";
 import "../assets/style/SigUp.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Header from "../component/header";
+import Footer from "../component/Footer";
 
 function SignUp() {
   const [name, setName] = useState("");
@@ -29,7 +31,8 @@ function SignUp() {
         };
 
         localStorage.setItem("userData", JSON.stringify(userData));
-        alert("Sign up successful!");
+        navigate("/")
+        // alert("Sign up successful!");
       }
     } catch (error) {
       console.error("Error fetching data from Firebase:", error);
@@ -37,10 +40,12 @@ function SignUp() {
   };
 
   return (
-    <section className="signup-section flex">
-      <div className="signup-container flex mt-20 ">
-        <div className="signup-box text-black">
-          <h2 className="v text-white">Sign Up</h2>
+    <div>
+      <Header/>
+    <section className="flex signup-section">
+      <div className="flex mt-20 signup-container ">
+        <div className="text-black signup-box">
+          <h2 className="text-white v">Sign Up</h2>
           <form onSubmit={handleSubmit}>
             <div className="input-container">
               <i className="fas fa-user"></i>
@@ -84,6 +89,8 @@ function SignUp() {
         </div>
       </div>
     </section>
+    <Footer/>
+    </div>
   );
 }
 

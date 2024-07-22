@@ -43,7 +43,7 @@
 
 //       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 //         <h1>All Users</h1>
-//         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+//         <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
 //           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 //             <tr>
 //               <th scope="col" className="px-6 py-3">
@@ -116,6 +116,7 @@ import Saidbar from "./Saidbar";
 import { dbURL } from "./Config";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import NavDashboard from "../../component/NavDashboard";
 
 function Users() {
   const [information, setuserinformation] = useState({});
@@ -150,16 +151,17 @@ function Users() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-12 px-4 py-6">
+    <div><NavDashboard/>
+    <div className="flex flex-col gap-12 lg:flex-row">
       <div className="lg:w-1/4">
         <Saidbar />
       </div>
 
-      <div className="flex-grow flex justify-center items-center">
+      <div className="flex items-center justify-center flex-grow">
         <div className="w-full max-w-4xl">
-          <h1 className="text-2xl font-bold text-center mb-6">All Users</h1>
+          <h1 className="mb-6 text-2xl font-bold text-center">All Users</h1>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
@@ -224,7 +226,7 @@ function Users() {
           </div>
         </div>
       </div>
-    </div>
+    </div></div>
   );
 }
 
