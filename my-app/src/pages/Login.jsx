@@ -1,27 +1,27 @@
-import  { useState } from 'react';
-import '../assets/style/Login.css';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { useNavigate} from 'react-router-dom';
+import { useState } from "react";
+import "../assets/style/Login.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-
-    
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get('https://tickets-73a3c-default-rtdb.firebaseio.com/users.json');
+      const response = await axios.get(
+        "https://tickets-73a3c-default-rtdb.firebaseio.com/users.json"
+      );
       if (response.status === 200) {
         const users = response.data;
-        let userFound = false;  
-        let id ;
+        let userFound = null;
+        let id = null;
 
         for (let key in users) {
-          if (users[key].email === email && users[key].password === password && users[key].Active === true) {
+          if (users[key].email === email && users[key].password === password) {
             userFound = users[key];
             id = key;
             break;
@@ -29,13 +29,21 @@ function Login() {
         }
 
         if (userFound) {
-          alert('Login successful!');
-          localStorage.setItem('id', id);
-          localStorage.setItem('username', userFound.name);
-          localStorage.setItem('email', userFound.email);
-          navigate(`/`);
+          alert("Login successful!");
+
+          // Consolidate user data into one object
+          const userData = {
+            id: id,
+            username: userFound.name,
+            email: userFound.email,
+          };
+
+          // Store user data as a JSON string in localStorage
+          localStorage.setItem("userData", JSON.stringify(userData));
+
+          navigate(`/`); // Navigate to the home page or desired route
         } else {
-          alert('Invalid email or password.');
+          alert("Invalid email or password.");
         }
       }
     } catch (error) {
@@ -45,8 +53,7 @@ function Login() {
   };
 
   return (
-    <section className='signup-section flex'>
-   
+    <section className="signup-section flex">
       <div className="signup-container flex mt-20">
         <div className="signup-box ">
           <h2>Login</h2>
@@ -75,14 +82,13 @@ function Login() {
               Login
             </button>
             <Link to="/SignUp">
-            <button type="button" className="signup2-btn" >
-              Sign Up
-            </button>
+              <button type="button" className="signup2-btn">
+                Sign Up
+              </button>
             </Link>
           </form>
         </div>
       </div>
-   
     </section>
   );
 }
