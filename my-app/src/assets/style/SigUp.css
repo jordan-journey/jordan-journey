@@ -1,13 +1,16 @@
-.signup-section {
+.signup-section{
   margin: 0;
   padding: 0;
   height: 100vh;
-  background-image: url("../images/ListingPageImage.jpg");
+  background-image: url('../images/ListingPageImage.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   justify-content: center;
+
 }
+
+
 
 .signup-box h2 {
   text-align: center;
@@ -35,7 +38,8 @@
   border-radius: 5px;
 }
 
-.signup-btn,
+
+ .signup-btn,
 .login-btn {
   width: 100%;
   padding: 10px;
@@ -43,37 +47,44 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
+} 
 
-.signup-box h2 {
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 20px;
-  font-size: 30px;
-  font-weight: 500;
-}
+  
 
-.input-container {
-  position: relative;
-  margin-bottom: 15px;
-}
+  .signup-box h2 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: 500  ;
+  }
+  
+  .input-container {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .input-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+  }
+  
+  .input-container input {
+    width: 100%;
+    padding: 10px 10px 10px 30px;
+    
+    border-radius: 5px;
+  }
+  
+  
 
-.input-container i {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-}
 
-.input-container input {
-  width: 100%;
-  padding: 10px 10px 10px 30px;
 
-  border-radius: 5px;
-}
 
-.signup2-btn:hover {
+.signup2-btn:hover{
   background-color: #b8b6b6;
 }
 
@@ -84,7 +95,13 @@
 .signup-btn {
   background-color: #3a943c;
   color: #f4f4f4;
+
 }
+
+
+
+
+
 
 /* .login1-btn {
   background: #44b946;
@@ -98,7 +115,10 @@
   cursor: pointer;
 } */
 
+
+
 .login-btn {
+
   background-color: #b8b6b6;
 
   color: rgb(114, 110, 110);
@@ -121,7 +141,13 @@
 
 .login1-btn:hover {
   background-color: #b8b6b6;
+
+ 
 }
+  
+ 
+ 
+
 
 .signup2-btn:hover {
   background-color: #b8b6b6;

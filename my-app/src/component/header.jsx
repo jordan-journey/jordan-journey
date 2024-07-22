@@ -1,12 +1,30 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightToBracket,
+  faArrowRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../assets/images/Logo.png";
 
 function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const userSession = JSON.parse(sessionStorage.getItem("users"));
+    if (userSession) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("users");
+    setIsLoggedIn(false);
+  };
+
   return (
     <div>
       <nav className="bg-green-600 border-b-2 border-gray-200 dark:bg-gray-900">
@@ -24,26 +42,27 @@ function Header() {
               to="/Profile"
               className="text-sm text-white dark:text-white hover:underline"
             >
-              <FontAwesomeIcon icon={faUser} className="mx-1" /> profile
+              <FontAwesomeIcon icon={faUser} className="mx-1" /> Profile
             </Link>
             <Link
               to="/Dashboard"
               className="text-sm text-white dark:text-white hover:underline"
             >
-              <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" />{" "}
-              Admin
+              <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" /> Admin
             </Link>
-            <Link
-              to="/Login"
-              className="text-sm text-white dark:text-white hover:underline"
-            >
-              {" "}
-              <FontAwesomeIcon
-                icon={faArrowRightToBracket}
-                className="mx-1"
-              />{" "}
-              Login
-            </Link>
+            {!isLoggedIn ? (
+              <Link
+                to="/Login"
+                className="text-sm text-white dark:text-white hover:underline"              >
+                <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" /> Login
+              </Link>
+            ) : (
+              <Link
+                onClick={handleLogout}
+                className="text-sm text-white dark:text-white hover:underline"              >
+                <FontAwesomeIcon icon={faArrowRightFromBracket} className="mx-1" /> Logout
+              </Link>
+            )}
           </div>
         </div>
       </nav>
