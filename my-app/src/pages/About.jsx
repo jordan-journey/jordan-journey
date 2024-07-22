@@ -1,7 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineRight } from "react-icons/ai";
-
+import Header
+ from "../component/header";
+ import Footer from "../component/Footer";
 function AboutUs() {
   const features = [
     {
@@ -112,21 +113,22 @@ function AboutUs() {
 
   return (
     <div>
+      <Header/>
       <div
-        className="bg-cover bg-center h-screen bg-fixed"
+        className="h-screen bg-fixed bg-center bg-cover"
         style={{
           backgroundImage: `url(./src/assets/abouthero.jpg)`,
           height: "39.7rem",
         }}
       >
         <div className="flex items-center justify-center h-full bg-black bg-opacity-50">
-          <div className="text-center w-1/2">
-            <h1 className="text-4xl font-bold text-white mb-4">
+          <div className="w-1/2 text-center">
+            <h1 className="mb-4 text-4xl font-bold text-white">
               Discover the wonders of Jordan with ease, book your next adventure
               with us!
             </h1>
-            <nav className="text-white mb-8">
-              <ol className="list-none p-0 inline-flex">
+            <nav className="mb-8 text-white">
+              <ol className="inline-flex p-0 list-none">
                 <li className="flex items-center">
                   <Link
                     to="/"
@@ -145,14 +147,14 @@ function AboutUs() {
         </div>
       </div>
       <div className="pt-10 overflow-hidden">
-        <div className="max-w-screen-xl mx-auto px-4 md:px-8">
+        <div className="max-w-screen-xl px-4 mx-auto md:px-8">
           <div className="space-y-8">
             <div>
               <h2 className="text-4xl text-center font-bold text-[#519341]">
                 Main features
               </h2>
             </div>
-            <div className="mt-16 grid border divide-x divide-y rounded-lg overflow-hidden sm:grid-cols-2 lg:divide-y-0 lg:grid-cols-3">
+            <div className="grid mt-16 overflow-hidden border divide-x divide-y rounded-lg sm:grid-cols-2 lg:divide-y-0 lg:grid-cols-3">
               {features.map((item, idx) => (
                 <div key={idx} className="relative group">
                   <div className="relative p-8 space-y-8 transform">
@@ -173,9 +175,9 @@ function AboutUs() {
         </div>
       </div>
       <section className="overflow-hidden py-28">
-        <div className="flex flex-wrap items-center max-w-screen-xl mx-auto px-4 md:px-8">
+        <div className="flex flex-wrap items-center max-w-screen-xl px-4 mx-auto md:px-8">
           <div className="w-full lg:w-1/2">
-            <div className="sm:flex items-center gap-8 hidden">
+            <div className="items-center hidden gap-8 sm:flex">
               <div className="w-full xl:w-1/2">
                 <div className="border border-[#519341] rounded-lg mb-4">
                   <img
@@ -773,13 +775,13 @@ function AboutUs() {
               </div>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 text-center pt-10 text-black capitalize ">
+          <div className="w-full pt-10 text-center text-black capitalize lg:w-1/2 ">
             <div className="">
               <h2 className="text-[#519341] mb-8 text-4xl font-bold sm:text-4xl">
                 Explore Jordan with Ease
               </h2>
-              <p className="text-body-color mb-8 ml-8 text-base">
-                Discover Jordan's rich history and stunning landscapes
+              <p className="mb-8 ml-8 text-base text-body-color">
+                Discover Jordan s rich history and stunning landscapes
                 effortlessly. With our user-friendly booking, secure payments,
                 and 24/7 support, planning your adventure has never been
                 simpler. Enjoy exclusive offers and customizable packages,
@@ -791,7 +793,7 @@ function AboutUs() {
         </div>
       </section>
       <section className="pb-28">
-        <div className="max-w-screen-xl mx-auto px-4 text-center md:px-8">
+        <div className="max-w-screen-xl px-4 mx-auto text-center md:px-8">
           <div className="text-left">
             <h3 className="text-3xl text-[#519341] flex justify-center font-semibold sm:text-4xl">
               Meet our team
@@ -809,11 +811,11 @@ function AboutUs() {
                     />
                   </div>
                   <div className="mt-2">
-                    <h4 className="text-black font-semibold sm:text-lg">
+                    <h4 className="font-semibold text-black sm:text-lg">
                       {item.name}
                     </h4>
                     <p className="text-[#519341]">{item.title}</p>
-                    <p className="text-black mt-2">{item.desc}</p>
+                    <p className="mt-2 text-black">{item.desc}</p>
                     <div className="mt-4 flex justify-center gap-4 text-[#519341]">
                       <a href={item.gitHub}>
                         <svg
@@ -851,7 +853,7 @@ function AboutUs() {
                 </li>
               ))}
             </ul>
-            <ul className="mt-8 flex justify-center gap-8">
+            <ul className="flex justify-center gap-8 mt-8">
               {team.slice(3).map((item, idx) => (
                 <li key={idx}>
                   <div className="w-24 h-24 mx-auto">
@@ -862,11 +864,11 @@ function AboutUs() {
                     />
                   </div>
                   <div className="mt-2">
-                    <h4 className="text-black font-semibold sm:text-lg">
+                    <h4 className="font-semibold text-black sm:text-lg">
                       {item.name}
                     </h4>
                     <p className="text-[#519341]">{item.title}</p>
-                    <p className="text-black mt-2">{item.desc}</p>
+                    <p className="mt-2 text-black">{item.desc}</p>
                     <div className="mt-4 flex justify-center gap-4 text-[#519341]">
                       <a href={item.gitHub}>
                         <svg
@@ -907,6 +909,7 @@ function AboutUs() {
           </div>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 }

@@ -6,6 +6,8 @@ import "../assets/style/Rev.css"; // Assuming you create a separate CSS file for
 import Swal from "sweetalert2"; // If using modules
 import SoldOut from "../assets/images/SoldOut.jpg";
 import soldwhite from "../assets/images/soldwhite.png";
+import Header from "./header";
+import Footer from "./Footer";
 
 const Rev = () => {
   const { id } = useParams(); // Get the event ID from the URL
@@ -248,8 +250,9 @@ const Rev = () => {
     });
   };
   return (
-    <div className="font-sans p-8 tracking-wide max-lg:max-w-2xl mx-auto mb-8">
-      <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-6">
+    <><Header/>
+    <div className="p-8 mx-auto mb-8 font-sans tracking-wide max-lg:max-w-2xl">
+      <div className="grid items-start grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="space-y-4 text-center lg:sticky top-8">
           <div className=" p-4 flex items-center sm:h-[32rem] rounded-lg">
             <img
@@ -284,7 +287,7 @@ const Rev = () => {
             <br /> <br />{" "}
           </div>
 
-          <form className=" space-y-4 flex flex-col items-end">
+          <form className="flex flex-col items-end space-y-4 ">
             <div className="flex items-center justify-end space-x-4">
               <div className="w-[11rem]">
                 <div className={`mb-4 ${highlightPrice ? "highlight" : ""}`}>
@@ -319,7 +322,7 @@ const Rev = () => {
                     type="number"
                     value={quantity}
                     readOnly
-                    className="w-20 h-12 text-center border bg-green-100 border-gray-300 rounded-md pl-7"
+                    className="w-20 h-12 text-center bg-green-100 border border-gray-300 rounded-md pl-7"
                   />
 
                   <button
@@ -377,7 +380,7 @@ const Rev = () => {
           </form>
 
           <div className="mt-10 border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+            <nav className="flex -mb-px space-x-8">
               <button
                 onClick={() => handleTabChange("description")}
                 className={`pb-4 px-1 text-base font-medium ${
@@ -407,7 +410,7 @@ const Rev = () => {
                 <div className="mt-4 text-sm text-gray-600">
                   <p>{details.eventDescription}</p>
                 </div>
-                <ul className="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-600">
+                <ul className="pl-4 mt-6 space-y-3 text-sm text-gray-600 list-disc">
                   <li>Date: {details.date}</li>
                   <li>Location: {details.location}</li>
                   <li>Time: {details.time}</li>
@@ -419,7 +422,7 @@ const Rev = () => {
             )}
             {activeTab === "reviews" && (
               <div>
-                <h3 className="text-lg font-semibold mb-4">Reviews</h3>
+                <h3 className="mb-4 text-lg font-semibold">Reviews</h3>
                 <div className="space-y-4">
                   {reviews.length === 0 ? (
                     <p className="text-gray-500">
@@ -429,19 +432,19 @@ const Rev = () => {
                     reviews.map((review, index) => (
                       <div
                         key={index}
-                        className="bg-green-50 p-4 rounded-lg shadow"
+                        className="p-4 rounded-lg shadow bg-green-50"
                       >
                         <div className="flex items-center">
                           <img
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU5mKo7TNAlFnR_IPJ9JWBKb4jNOzzlFFjrA&s"
                             alt={`${review.name}'s avatar`}
-                            className="w-10 h-10 rounded-full mr-4"
+                            className="w-10 h-10 mr-4 rounded-full"
                           />
                           <div>
                             <p className="text-sm text-gray-600">
                               <strong>{review.name}</strong>: {review.text}
                             </p>
-                            {/* <p className="text-xs text-gray-400 mt-1">
+                            {/* <p className="mt-1 text-xs text-gray-400">
                   {new Date(review.date).toLocaleString()}
                 </p> */}
                           </div>
@@ -461,7 +464,7 @@ const Rev = () => {
                       value={comment.name}
                       onChange={handleCommentChange}
                       required
-                      className="mt-1 h-11 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm h-11 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -474,7 +477,7 @@ const Rev = () => {
                       value={comment.email}
                       onChange={handleCommentChange}
                       required
-                      className="mt-1 h-11 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm h-11 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -486,7 +489,7 @@ const Rev = () => {
                       value={comment.text}
                       onChange={handleCommentChange}
                       required
-                      className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm sm:text-sm"
                       rows="4"
                     ></textarea>
                   </div>
@@ -505,6 +508,7 @@ const Rev = () => {
         </div>
       </div>
     </div>
+    <Footer/></>
   );
 };
 

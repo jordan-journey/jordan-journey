@@ -3,6 +3,8 @@ import "../assets/style/Login.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Header from "../component/header";
+import Footer from "../component/Footer";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -55,33 +57,35 @@ function Login() {
   };
 
   return (
-    <section className="signup-container flex justify-center items-center h-screen">
+    <>
+      <Header/>
+    <section className="flex items-center justify-center h-screen signup-container">
       <div className=" flex justify-center items-center  w-[30rem] bg-white p-8 rounded-lg shadow-lg">
-        <div className="signup-box w-full max-w-md text-black">
-          <h2 className="text-3xl font-semibold text-center text-black mb-6">
+        <div className="w-full max-w-md text-black signup-box">
+          <h2 className="mb-6 text-3xl font-semibold text-center text-black">
             Login
           </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="input-container flex items-center   border-gray-300 py-2">
-              <i className="fas fa-envelope mr-2 text-gray-400"></i>
+            <div className="flex items-center py-2 border-gray-300 input-container">
+              <i className="mr-2 text-gray-400 fas fa-envelope"></i>
               <input
                 type="email"
                 placeholder="Email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                className="w-full px-2 py-1 mr-3 leading-tight text-gray-700 bg-transparent border-none appearance-none focus:outline-none"
               />
             </div>
-            <div className="input-container flex items-center   border-gray-300 py-2">
-              <i className="fas fa-lock mr-2 text-gray-400"></i>
+            <div className="flex items-center py-2 border-gray-300 input-container">
+              <i className="mr-2 text-gray-400 fas fa-lock"></i>
               <input
                 type="password"
                 placeholder="Password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                className="w-full px-2 py-1 mr-3 leading-tight text-gray-700 bg-transparent border-none appearance-none focus:outline-none"
               />
             </div>
             <button
@@ -93,7 +97,7 @@ function Login() {
             <Link to="/SignUp">
               <button
                 type="button"
-                className="signup2-btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-full mt-4"
+                className="w-full px-4 py-2 mt-4 font-bold text-gray-800 bg-gray-300 rounded signup2-btn hover:bg-gray-400"
               >
                 Sign Up
               </button>
@@ -102,6 +106,8 @@ function Login() {
         </div>
       </div>
     </section>
+    <Footer/>
+    </>
   );
 }
 

@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./component/header";
 import Home from "./pages/Home";
 import AboutUs from "./pages/About";
 import ContactUs from "./pages/ContactUs";
@@ -15,7 +14,6 @@ import DelteTicket from "./pages/Dashboard/Delte";
 import UpdateTicket from "./pages/Dashboard/UPdate";
 import Users from "./pages/Dashboard/Users";
 import Contact from "./pages/Dashboard/ContactMsg";
-import Footer from "./component/Footer";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 
@@ -30,7 +28,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+        
         <div>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -62,7 +60,6 @@ function App() {
           </Routes>
         </div>
 
-        <Footer />
       </div>
     </BrowserRouter>
   );

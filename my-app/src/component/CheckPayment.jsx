@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import coupon from "../assets/images/imgonline-com-ua-ReplaceColor-i5I62J4vDy9gr-removebg-preview.png";
 import gif from "../assets/images/imggif.gif";
+import Header from "./header";
+import Footer from "./Footer";
 
 const CheckPayment = () => {
   const location = useLocation();
@@ -225,12 +227,13 @@ const CheckPayment = () => {
 
   return (
     <>
+    <Header/>
       <div className="font-[sans-serif] bg-white p-4 lg:max-w-7xl max-w-xl mx-auto mt-20">
-        <div className="grid lg:grid-cols-3 gap-10">
+        <div className="grid gap-10 lg:grid-cols-3">
           <div className="bg-[#ade5a0] p-6 rounded-md h-[27rem]">
             <h2 className="text-2xl font-extrabold text-gray-800">{title}</h2>
             <div className="bg-[#ade5a0] p-6 rounded-md">
-              <ul className="text-gray-800 mt-8 space-y-4">
+              <ul className="mt-8 space-y-4 text-gray-800">
                 <li className="flex flex-wrap gap-4 text-sm">
                   Location{" "}
                   <span className="ml-auto font-bold">{eventLocation}</span>
@@ -249,14 +252,14 @@ const CheckPayment = () => {
                   Quantity of tickets:{" "}
                   <span className="ml-auto font-bold">{quantity}</span>
                 </li>
-                <li className="flex flex-col gap-4 text-sm font-bold border-t-2 pt-4">
+                <li className="flex flex-col gap-4 pt-4 text-sm font-bold border-t-2">
                   {discountedPrice ? (
                     <>
                       <div className="flex flex-col">
                         <span className="text-red-500 line-through">
                           Previous Total: ${totalPrice}
                         </span>
-                        <span className="text-gray-800 font-bold mt-2">
+                        <span className="mt-2 font-bold text-gray-800">
                           Discounted Total: ${discountedPrice}
                         </span>
                       </div>
@@ -281,7 +284,7 @@ const CheckPayment = () => {
                         : "bg-[#519341] opacity-50"
                     } p-1.5 flex items-center justify-center rounded-full`}
                   >
-                    <span className="text-sm text-white font-bold">1</span>
+                    <span className="text-sm font-bold text-white">1</span>
                   </div>
                   <div
                     className={`w-full h-[3px] mx-4 rounded-lg ${
@@ -295,18 +298,18 @@ const CheckPayment = () => {
                   <h6 className="text-sm font-bold text-gray-800">Coupon</h6>
                 </div>
                 {currentStep === 1 && (
-                  <div className="mt-4 flex flex-col items-center">
+                  <div className="flex flex-col items-center mt-4">
                     <img
                       src={coupon}
                       alt="Coupon"
                       className="w-[20rem] h-[16rem] " // Adjust the size as needed
                     />
-                    <div className="mt-4 w-full max-w-md">
+                    <div className="w-full max-w-md mt-4">
                       <input
                         type="text"
                         value={couponCode}
                         onChange={(e) => setCouponCode(e.target.value)}
-                        className="px-4 py-2 border rounded-md w-full"
+                        className="w-full px-4 py-2 border rounded-md"
                         placeholder="Enter coupon code (optional)"
                       />
                       <button
@@ -329,7 +332,7 @@ const CheckPayment = () => {
                         : "bg-[#519341] opacity-50"
                     } p-1.5 flex items-center justify-center rounded-full`}
                   >
-                    <span className="text-sm text-white font-bold">2</span>
+                    <span className="text-sm font-bold text-white">2</span>
                   </div>
                   <div
                     className={`w-full h-[3px] mx-4 rounded-lg ${
@@ -384,7 +387,7 @@ const CheckPayment = () => {
                         : "bg-[#519341] opacity-50"
                     } p-1.5 flex items-center justify-center rounded-full`}
                   >
-                    <span className="text-sm text-white font-bold">3</span>
+                    <span className="text-sm font-bold text-white">3</span>
                   </div>
                 </div>
                 <div className="mt-2 mr-4">
@@ -403,7 +406,7 @@ const CheckPayment = () => {
                       <h2 className="text-xl font-bold text-green-700">
                         Awesome!
                       </h2>
-                      <p className="mt-4 text-lg text-gray-800 text-center">
+                      <p className="mt-4 text-lg text-center text-gray-800">
                         Your payment went through smoothly. Thanks a bunch for
                         choosing us! 😊
                       </p>
@@ -440,6 +443,7 @@ const CheckPayment = () => {
           )}
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

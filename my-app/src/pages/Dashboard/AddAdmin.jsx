@@ -2,6 +2,7 @@ import { useState } from "react";
 import Saidbar from "./Saidbar";
 import { dbURL } from "./Config";
 import axios from "axios";
+import NavDashboard from "../../component/NavDashboard";
 
 function AddAdmin() {
   const [newadmin, setnewadmin] = useState({
@@ -43,20 +44,21 @@ function AddAdmin() {
 
   return (
     <>
+    <NavDashboard/>
       <div className="flex flex-wrap gap-6">
         <Saidbar />
-        <section className="py-10 my-auto dark:bg-gray-900 px-24">
+        <section className="w-3/4 px-24 py-10 my-auto dark:bg-gray-900">
           <div className="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex ms">
             <div className="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
               <div>
-                <h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
+                <h1 className="mb-2 font-serif font-extrabold lg:text-3xl md:text-2xl sm:text-xl xs:text-xl dark:text-white">
                   Profile
                 </h1>
 
                 <form onSubmit={AddNewAdmin}>
-                  <div className="w-full rounded-sm bg-gray-200 dark:bg-gray-700 h-40 flex items-center justify-center">
-                    <div className="w-32 h-32 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
-                      <div className="bg-gray-100 dark:bg-gray-400 rounded-full w-24 h-24 flex items-center justify-center">
+                  <div className="flex items-center justify-center w-full h-40 bg-gray-200 rounded-sm dark:bg-gray-700">
+                    <div className="flex items-center justify-center w-32 h-32 bg-gray-300 rounded-full dark:bg-gray-600">
+                      <div className="flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full dark:bg-gray-400">
                         <input
                           type="file"
                           name="profile"
@@ -94,17 +96,17 @@ function AddAdmin() {
                       </div>
                     </div>
                   </div>
-                  <h2 className="text-center mt-1 font-semibold dark:text-gray-300">
+                  <h2 className="mt-1 font-semibold text-center dark:text-gray-300">
                     Upload Profile Image
                   </h2>
-                  <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-                    <div className="w-full mb-4 mt-6">
+                  <div className="flex justify-center w-full gap-2 lg:flex-row md:flex-col sm:flex-col xs:flex-col">
+                    <div className="w-full mt-6 mb-4">
                       <label className="mb-2 dark:text-gray-300">
                         FULL NAME
                       </label>
                       <input
                         type="text"
-                        className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                        className="w-full p-4 mt-2 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                         value={newadmin.fullname}
                         onChange={(e) =>
                           setnewadmin({ ...newadmin, fullname: e.target.value })
@@ -115,7 +117,7 @@ function AddAdmin() {
                       <label className="dark:text-gray-300">EMAIL</label>
                       <input
                         type="email"
-                        className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                        className="w-full p-4 mt-2 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                         value={newadmin.email}
                         onChange={(e) => {
                           setnewadmin({ ...newadmin, email: e.target.value });
@@ -124,12 +126,12 @@ function AddAdmin() {
                     </div>
                   </div>
 
-                  <div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+                  <div className="flex justify-center w-full gap-2 lg:flex-row md:flex-col sm:flex-col xs:flex-col">
                     <div className="w-full">
-                      <h3 className="dark:text-gray-300 mb-2">PASSWORD</h3>
+                      <h3 className="mb-2 dark:text-gray-300">PASSWORD</h3>
                       <input
                         type="password"
-                        className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                        className="w-full p-4 mt-2 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                         value={newadmin.pasword}
                         onChange={(e) =>
                           setnewadmin({ ...newadmin, pasword: e.target.value })
@@ -137,7 +139,7 @@ function AddAdmin() {
                       />
                     </div>
                   </div>
-                  <div className="w-full rounded-lg bg-green-500 mt-4 text-white text-lg font-semibold">
+                  <div className="w-full mt-4 text-lg font-semibold text-white bg-green-500 rounded-lg">
                     <button type="submit" className="w-full p-4">
                       Submit
                     </button>

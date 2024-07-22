@@ -4,6 +4,7 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useEffect,useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation  } from 'react-router-dom';
+import NavDashboard from '../../component/NavDashboard';
 
 
 function DisplayEvents(){
@@ -66,6 +67,7 @@ const currentItems = data ? Object.keys(data).slice(startIndex, endIndex) : [];
   {/**********************end pagination****************** */}
 
     return(
+      <div><NavDashboard/>
         <div className="flex flex-wrap gap-12">
   <div className="w-1/4">
     <Saidbar />
@@ -180,7 +182,7 @@ const currentItems = data ? Object.keys(data).slice(startIndex, endIndex) : [];
     </div>
   </div>
 </div>
-    
+</div>    
     );
 
 }
