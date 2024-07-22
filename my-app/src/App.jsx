@@ -19,6 +19,9 @@ import Footer from "./component/Footer";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 
+import DisplayEvents from "./pages/Dashboard/DisplayEvents";
+
+
 import Rev from "./component/Rev";
 import CheckPayment from "./component/CheckPayment";
 import OrderDetails from "./component/OrderDetails";
@@ -41,16 +44,20 @@ function App() {
             <Route path="Admin" element={<Admin />} />
             <Route path="Said" element={<Saidbar />} />
             <Route path="/Delete" element={<DelteTicket />} />
-            <Route path="/Update" element={<UpdateTicket />} />
+            <Route path="/Update/:id" element={<UpdateTicket />} />
             <Route path="/Users" element={<Users />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/MDashboard" element={<MainDashboard />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/DisplayEvents" element={<DisplayEvents />} />
+
 
             <Route path="/event/:id" element={<Rev />} />
             <Route path="/CheckPayment" element={<CheckPayment />} />
             <Route path="/order-details" element={<OrderDetails />} />
+          
+
             <Route path="/Logout" element={<Home />} />
           </Routes>
         </div>

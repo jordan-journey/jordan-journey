@@ -17,8 +17,10 @@ function Login() {
       );
       if (response.status === 200) {
         const users = response.data;
-        let userFound = null;
-        let id = null;
+        let userFound = false;
+        let id;
+        sessionStorage.setItem("users", JSON.stringify(users));
+        console.log(users);
 
         for (let key in users) {
           if (users[key].email === email && users[key].password === password) {
