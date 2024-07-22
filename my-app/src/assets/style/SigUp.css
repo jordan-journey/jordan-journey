@@ -11,7 +11,7 @@
   background-repeat: no-repeat;
   justify-content: center;
 
-
+}
 
 
 
@@ -42,7 +42,7 @@
 }
 
 
-/* .signup-btn,
+ .signup-btn,
 .login-btn {
   width: 100%;
   padding: 10px;
@@ -50,7 +50,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-} */
+} 
 
   
 
@@ -103,7 +103,7 @@
   background-color: #3a943c;
   color: #f4f4f4;
 
-
+}
 
 
 
@@ -129,7 +129,7 @@
   background-color: #b8b6b6;
 
   color: rgb(114, 110, 110);
-
+}
 /* .signup2-btn {
   background: #ccc;
   color: #666;
