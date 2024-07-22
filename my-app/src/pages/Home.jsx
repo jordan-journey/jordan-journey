@@ -1,13 +1,12 @@
-
-import Products from '../component/Products/Products';
-import Hero from '../component/Hero/Hero';
-import TopProducts from '../component/TopProducts/TopProducts';
-import Banner from '../component/Banner/Banner';
-import Testimonials from '../component/Testimonials/Testimonials';
-import Popup from '../component/Popup/Popup';
-import React from 'react';
-import Aos from 'aos';
-import 'aos/dist/aos.css';
+import Products from "../component/Products/Products";
+import Hero from "../component/Hero/Hero";
+import TopProducts from "../component/TopProducts/TopProducts";
+import Banner from "../component/Banner/Banner";
+import Testimonials from "../component/Testimonials/Testimonials";
+import Popup from "../component/Popup/Popup";
+import React from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 // import React from "react";
 
@@ -22,11 +21,9 @@ import 'aos/dist/aos.css';
 
 // import Popup from "./components/Popup/Popup";
 
-
-
 // import Header from "../component/header";
 
-function Home(){
+function Home() {
   const [orderPopup, setOrderPopup] = React.useState(false);
 
   const handleOrderPopup = () => {
@@ -42,27 +39,22 @@ function Home(){
     Aos.refresh();
   }, []);
 
+  return (
+    <>
+      <div>
+        <Hero handleOrderPopup={handleOrderPopup} />
+        <Products />
+        <TopProducts handleOrderPopup={handleOrderPopup} />
+        <Banner />
 
-  return(
-
-    
-    <div >
-    <Hero handleOrderPopup={handleOrderPopup} />
-      <Products />
-      <TopProducts handleOrderPopup={handleOrderPopup} />
-      <Banner />
-      
-      <Testimonials />
-      <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
+        <Testimonials />
+        <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
       </div>
 
-    <>
-    {/* <Header/> */}
-    <h1>Home</h1>
+      {/* <Header/> */}
+      <h1>Home</h1>
     </>
-
   );
-
 }
 
 export default Home;

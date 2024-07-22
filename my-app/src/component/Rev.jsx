@@ -248,23 +248,27 @@ const Rev = () => {
     });
   };
   return (
-    <div className="font-sans p-8 tracking-wide max-lg:max-w-2xl mx-auto">
-      <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
+    <div className="font-sans p-8 tracking-wide max-lg:max-w-2xl mx-auto mb-8">
+      <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4 text-center lg:sticky top-8">
-          <div className="bg-green-100 p-4 flex items-center sm:h-[32rem] rounded-lg">
-            <img src={mainImage} alt={name} className="w-full max-h-[30rem]" />
+          <div className=" p-4 flex items-center sm:h-[32rem] rounded-lg">
+            <img
+              src={mainImage}
+              alt={name}
+              className="w-full max-h-[30rem] rounded-lg"
+            />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 ">
             {otherImages.map((image, index) => (
               <div
                 key={index}
-                className="bg-green-100 p-4 flex items-center rounded-lg sm:h-[182px]"
+                className=" p-4 flex items-center rounded-lg sm:h-[182px]"
               >
                 <img
                   src={image}
                   alt={`Gallery ${index + 1}`}
-                  className="w-full max-h-full"
+                  className="w-full h-[15rem] rounded-lg "
                 />
               </div>
             ))}
