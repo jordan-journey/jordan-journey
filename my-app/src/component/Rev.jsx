@@ -140,33 +140,75 @@ const Rev = () => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const { couponCode, discountPercentage } = generateCouponCode();
-      const newComment = {
-        ...comment,
-        eventId: id,
-        couponCode, // Add coupon code to comment
-      };
+      // Retrieve user ID from localStorage
+      const userData = JSON.parse(localStorage.getItem("userData"));
+      const userId = userData ? userData.id : null;
 
-      await axios.post(
-        `https://tickets-73a3c-default-rtdb.firebaseio.com/reviews.json`,
-        newComment
+      // Check if user ID exists
+      if (!userId) {
+        console.error("User is not logged in.");
+        return; // Exit if the user is not logged in
+      }
+
+      // Fetch existing reviews from Firebase
+      const reviewsResponse = await axios.get(
+        `https://tickets-73a3c-default-rtdb.firebaseio.com/reviews.json`
+      );
+      const reviews = Object.values(reviewsResponse.data || []);
+
+      // Check if the user has already reviewed
+      const userHasReviewed = reviews.some(
+        (review) => review.userId === userId
       );
 
-      await axios.post(
-        `https://tickets-73a3c-default-rtdb.firebaseio.com/coupons.json`,
-        { couponCode, email: comment.email, discountPercentage }
-      );
+      if (!userHasReviewed) {
+        // User has not reviewed yet, generate a coupon and send it
+        const { couponCode, discountPercentage } = generateCouponCode();
+        const newComment = {
+          ...comment,
+          eventId: id,
+          userId, // Add user ID to comment
+          couponCode, // Add coupon code to comment
+        };
 
-      await sendCouponEmail(
-        comment.name,
-        comment.email,
-        couponCode,
-        discountPercentage
-      );
+        // Save the review and coupon in Firebase
+        await axios.post(
+          `https://tickets-73a3c-default-rtdb.firebaseio.com/reviews.json`,
+          newComment
+        );
 
+        await axios.post(
+          `https://tickets-73a3c-default-rtdb.firebaseio.com/coupons.json`,
+          { couponCode, email: comment.email, discountPercentage }
+        );
+
+        // Send coupon email
+        await sendCouponEmail(
+          comment.name,
+          comment.email,
+          couponCode,
+          discountPercentage
+        );
+      } else {
+        // User has already reviewed, just save the review without coupon
+        const newComment = {
+          ...comment,
+          eventId: id,
+          userId, // Add user ID to comment
+        };
+
+        // Save the review in Firebase
+        await axios.post(
+          `https://tickets-73a3c-default-rtdb.firebaseio.com/reviews.json`,
+          newComment
+        );
+      }
+
+      // Clear the comment form and update reviews
       setComment({ name: "", email: "", text: "" });
-      setReviews((prevReviews) => [...prevReviews, newComment]);
+      setReviews((prevReviews) => [...prevReviews, { ...comment, userId }]);
     } catch (error) {
       console.error("Error submitting comment", error);
     }

@@ -1,41 +1,46 @@
-import { useState } from 'react';
-import '../assets/style/SigUp.css';
-import axios from 'axios';  
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import "../assets/style/SigUp.css";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://tickets-73a3c-default-rtdb.firebaseio.com/users.json', {
-        name,
-        email,
-        password,
-        Active: true
-      });
+      const response = await axios.post(
+        "https://tickets-73a3c-default-rtdb.firebaseio.com/users.json",
+        {
+          name,
+          email,
+          password,
+        }
+      );
+
       if (response.status === 200) {
-        localStorage.setItem('id', response.data.name);
-        localStorage.setItem('username', name);
-        localStorage.setItem('email', email);
-        alert('Sign up successful!');
-        navigate('/home'); 
-      } 
+        const userData = {
+          id: response.data.name,
+          username: name,
+          email: email,
+        };
+
+        localStorage.setItem("userData", JSON.stringify(userData));
+        alert("Sign up successful!");
+      }
     } catch (error) {
       console.error("Error fetching data from Firebase:", error);
     }
   };
 
   return (
-    <section className='signup-section flex'>
-   
+    <section className="signup-section flex">
       <div className="signup-container flex mt-20 ">
         <div className="signup-box text-black">
-          <h2 className='v text-white'>Sign Up</h2>
+          <h2 className="v text-white">Sign Up</h2>
           <form onSubmit={handleSubmit}>
             <div className="input-container">
               <i className="fas fa-user"></i>
@@ -67,14 +72,17 @@ function SignUp() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button type="submit" className="signup-btn">Sign Up</button>
+            <button type="submit" className="signup-btn">
+              Sign Up
+            </button>
             <Link to="/Login">
-              <button type="button" className="login-btn">Login</button>
+              <button type="button" className="login-btn">
+                Login
+              </button>
             </Link>
           </form>
         </div>
       </div>
-  
     </section>
   );
 }

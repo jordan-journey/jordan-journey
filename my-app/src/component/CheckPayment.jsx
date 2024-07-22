@@ -29,6 +29,8 @@ const CheckPayment = () => {
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [couponApplied, setCouponApplied] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState(null);
+  const [couponKey, setCouponKey] = useState(null);
+  const [couponStatus, setCouponStatus] = useState(false);
 
   const nextStep = () => {
     setCurrentStep((prev) => (prev < 3 ? prev + 1 : prev));
@@ -76,11 +78,8 @@ const CheckPayment = () => {
           setDiscountedPrice(newTotalPrice.toFixed(2));
           setTotalPrice(totalPrice.toFixed(2));
           setCouponApplied(true);
-
-          await axios.patch(
-            `https://tickets-73a3c-default-rtdb.firebaseio.com/coupons/${couponKey}.json`,
-            { used: true }
-          );
+          setCouponStatus(true); // Set coupon status to true
+          setCouponKey(couponKey); // Store coupon key for later use
 
           Swal.fire({
             icon: "success",
@@ -111,9 +110,14 @@ const CheckPayment = () => {
     try {
       console.log("Payment details:", details); // Debugging
 
-      // Retrieve user data from localStorage
+      // Get user ID from localStorage
       const userData = JSON.parse(localStorage.getItem("userData"));
       const userId = userData ? userData.id : null;
+
+      // If userId is not available, handle accordingly
+      if (!userId) {
+        throw new Error("User ID is missing from localStorage");
+      }
 
       Swal.fire({
         icon: "success",
@@ -123,14 +127,18 @@ const CheckPayment = () => {
         confirmButtonColor: "#519341",
       });
 
-      // Record the order with user ID
+      // Record the order
       await axios.post(
         "https://tickets-73a3c-default-rtdb.firebaseio.com/orders.json",
         {
-          paymentDetails: details,
-          totalPrice: discountedPrice || totalPrice,
-          quantity: quantity,
           userId: userId, // Include user ID
+          paymentDetails: details,
+          totalPrice: discountedPrice || initialTotalPrice,
+          quantity: quantity,
+          couponStatus: couponStatus, // Include coupon status
+          title: title, // Include event title
+          date: date, // Include event date
+          location: eventLocation, // Include event location
         }
       );
 
@@ -157,6 +165,14 @@ const CheckPayment = () => {
         console.log("Updated soldTickets:", currentSoldTickets + quantity); // Debugging
       } else {
         console.error("Event ID is missing");
+      }
+
+      // Update coupon status if a coupon was applied
+      if (couponStatus && couponKey) {
+        await axios.patch(
+          `https://tickets-73a3c-default-rtdb.firebaseio.com/coupons/${couponKey}.json`,
+          { used: true }
+        );
       }
 
       setPaymentDetails(details); // Store payment details in state
