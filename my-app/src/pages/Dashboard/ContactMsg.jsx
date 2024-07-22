@@ -52,6 +52,9 @@ function Contact() {
                   <th scope="col" className="px-6 py-3">
                     Action
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    Reply
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -87,36 +90,14 @@ function Contact() {
                         </button>
                       )}
                     </td>
-                    {/* {information[key]?.Active ? (
-                          <button
-                            onClick={() => HandelunActiv(key)}
-                            className="bg-[#be3737] text-white px-4 py-2 rounded hover:bg-[#ff2828] transition duration-300"
-                          >
-                            Unactiv
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => HandelActiv(key)}
-                            className="bg-[#3a9228] text-white px-4 py-2 rounded hover:bg-[#35a035] transition duration-300"
-                          >
-                            Activ
-                          </button>
-                        )} */}
+                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                      <button className="bg-[#2d34ff] text-white px-4 py-2 rounded hover:bg-[#35a035] transition duration-300">
+                        <a href={`mailto:${Contact[key].email}`}>Reply</a>
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
-              {/* <tbody>
-  {Object.keys(Contact).map((key) => (
-    <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-      <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-        {Contact[key].email}
-      </td>
-      <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white"></td>
-      <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white"></td>
-      <td className="px-6 py-4"></td>
-    </tr>
-  ))}
-</tbody> */}
             </table>
           </div>
         </div>
