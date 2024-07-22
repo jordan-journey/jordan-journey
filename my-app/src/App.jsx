@@ -18,7 +18,6 @@ import Contact from "./pages/Dashboard/ContactMsg";
 import Footer from "./component/Footer";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
-
 import Rev from "./component/Rev";
 import CheckPayment from "./component/CheckPayment";
 import OrderDetails from "./component/OrderDetails";
@@ -51,6 +50,8 @@ function App() {
             <Route path="/event/:id" element={<Rev />} />
             <Route path="/CheckPayment" element={<CheckPayment />} />
             <Route path="/order-details" element={<OrderDetails />} />
+          
+
             <Route path="/Logout" element={<Home />} />
           </Routes>
         </div>
