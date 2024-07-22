@@ -19,6 +19,8 @@ function Login() {
         const users = response.data;
         let userFound = false;  
         let id ;
+        sessionStorage.setItem('users', JSON.stringify(users));
+        console.log(users);
 
         for (let key in users) {
           if (users[key].email === email && users[key].password === password && users[key].Active === true) {
