@@ -19,6 +19,7 @@ import Contact from "./pages/Dashboard/ContactMsg";
 import Footer from './component/Footer';
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
+import DisplayEvents from "./pages/Dashboard/DisplayEvents";
 
 
 
@@ -41,12 +42,14 @@ function App() {
             <Route path="Admin" element={<Admin />} />
             <Route path="Said" element={<Saidbar />} />
             <Route path="/Delete" element={<DelteTicket />} />
-            <Route path="/Update" element={<UpdateTicket />} />
+            <Route path="/Update/:id" element={<UpdateTicket />} />
             <Route path="/Users" element={<Users />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/MDashboard" element={<MainDashboard />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/DisplayEvents" element={<DisplayEvents />} />
+
 
 
     
