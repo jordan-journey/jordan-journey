@@ -4,117 +4,138 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Footer from "./Footer";
 import Header from "./header";
+import QRCode from "qrcode";
 
 const OrderDetails = () => {
   const location = useLocation();
   const { orderDetails, paymentDetails } = location.state || {};
 
-  console.log("Order Details:", orderDetails);
-  console.log("Payment Details:", paymentDetails);
-
-  const details = paymentDetails?.details || {};
-  const purchaseUnits = details?.purchase_units || [];
-  const payer = details?.payer || {};
-
-  console.log("Details:", details);
-  console.log("Purchase Units:", purchaseUnits);
-  console.log("Payer:", payer);
-
   if (!orderDetails || !paymentDetails) {
     return (
-      <div className="py-20 text-center text-gray-500">
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 text-gray-600">
         No order or payment details available.
       </div>
     );
   }
 
-  // Extract main image and other images from orderDetails
-  const mainImage = orderDetails.mainImage; // Assuming `mainImage` is a URL or path
-  const otherImages = orderDetails.otherImages || []; // Assuming `otherImages` is an array of URLs
+  const details = paymentDetails.details || {};
+  const purchaseUnits = details.purchase_units || [];
+  const payer = details.payer || {};
 
-  const generatePDF = () => {
+  const mainImage = orderDetails.mainImage;
+  const otherImages = orderDetails.otherImages || [];
+
+  const generatePDF = async () => {
     const doc = new jsPDF();
+
+    // Generate QR Code
+    const qrCodeDataUrl = await QRCode.toDataURL("Thank you for attending!", {
+      width: 100,
+    });
+
+    // Set up fonts and colors
+    const primaryColor = "#519341";
+    const secondaryColor = "#ffffff";
+    doc.setFont("Helvetica", "normal");
+    doc.setTextColor(secondaryColor);
+
+    // Add Header
+    doc.setFillColor(...hexToRgb(primaryColor)); // Header background color
+    doc.rect(0, 0, 210, 40, "F"); // Header rectangle
+    doc.setTextColor(secondaryColor); // White text
+    doc.setFontSize(24);
+    doc.text("Event Ticket", 15, 25);
 
     // Add Main Image
     if (mainImage) {
-      doc.addImage(mainImage, "JPEG", 10, 10, 190, 60); // Adjust x, y, width, height as needed
+      doc.addImage(mainImage, "JPEG", 10, 45, 190, 60);
     }
 
-    // Add Event Title
-    doc.setFontSize(24);
-    doc.setTextColor(0, 0, 0); // Black color
-    doc.text("Event Ticket", 20, 80);
-
     // Add Event Details
-    doc.setFontSize(16);
-    doc.text("Event Details", 20, 100);
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Event Details", 10, 120);
 
-    // Add Event Details Table
     doc.autoTable({
-      startY: 110,
+      startY: 130,
       body: [
         ["Title", orderDetails.title],
         ["Date", orderDetails.date],
         ["Time", orderDetails.time],
         ["Price", `$${orderDetails.price}`],
         ["Quantity", orderDetails.quantity],
-        ["Total Price", `$${orderDetails.totalPrice}`],
       ],
-      theme: "grid",
-      headStyles: { fillColor: [0, 0, 0] }, // Black background for header row
-      styles: { fontSize: 12, cellPadding: 2 },
+      theme: "striped",
+      headStyles: { fillColor: [...hexToRgb(primaryColor)] },
+      styles: { fontSize: 14, cellPadding: 5, cellWidth: "wrap" },
       margin: { top: 5 },
       pageBreak: "auto",
     });
 
-    // Define paymentData from purchaseUnits
-    const paymentData = purchaseUnits[0] || {};
-
     // Add Payment Details
-    let yOffset = doc.lastAutoTable.finalY + 10; // Position Payment Details below Event Details table
+    const paymentData = purchaseUnits[0] || {};
+    let yOffset = doc.lastAutoTable.finalY + 15;
 
-    doc.setFontSize(16);
-    doc.text("Payment Details", 20, yOffset);
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Payment Details", 10, yOffset);
 
-    // Add Payment Details Table
     doc.autoTable({
       startY: yOffset + 10,
       body: [
-        // ["Currency Code", paymentData?.amount?.currency_code || "N/A"],
-        ["Amount", `$${paymentData?.amount?.value || "N/A"}`],
-        ["Name", paymentData?.shipping?.name?.full_name || "N/A"],
-        [
-          "Address",
-          `${paymentData?.shipping?.address?.address_line_1 || ""}, ${
-            paymentData?.shipping?.address?.address_line_2 || ""
-          }, ${paymentData?.shipping?.address?.admin_area_2 || ""}, ${
-            paymentData?.shipping?.address?.admin_area_1 || ""
-          }, ${paymentData?.shipping?.address?.country_code || ""}`,
-        ],
+        ["Amount", `$${paymentData.amount?.value || "N/A"}`],
         [
           "Payer Name",
-          `${payer?.name?.given_name || ""} ${payer?.name?.surname || ""}`,
+          `${payer.name?.given_name || ""} ${payer.name?.surname || ""}`,
         ],
-        ["Payer Email", payer?.email_address || "N/A"],
-        ["Payer ID", payer?.payer_id || "N/A"],
-        ["Country Code", payer?.address?.country_code || "N/A"],
       ],
-      theme: "grid",
-      headStyles: { fillColor: [0, 0, 0] }, // Black background for header row
-      styles: { fontSize: 12, cellPadding: 2 },
+      theme: "striped",
+      headStyles: { fillColor: [...hexToRgb(primaryColor)] },
+      styles: { fontSize: 14, cellPadding: 5, cellWidth: "wrap" },
       margin: { top: 5 },
       pageBreak: "auto",
     });
 
-    // Save PDF
+    // Add QR Code
+    doc.setFillColor(...hexToRgb(primaryColor));
+    doc.rect(160, yOffset + 10, 40, 40, "F"); // Background for QR code
+    doc.addImage(qrCodeDataUrl, "PNG", 160, yOffset + 10, 40, 40);
+
+    // Add Footer
+    doc.setFillColor(...hexToRgb(primaryColor)); // Footer background color
+    doc.rect(0, 280, 210, 30, "F"); // Footer rectangle
+    doc.setTextColor(secondaryColor); // White text
+    doc.setFontSize(12);
+    doc.text("Thank you for your purchase!", 105, 295, { align: "center" });
+
     doc.save("event-ticket.pdf");
+  };
+
+  // Helper function to convert hex color to RGB array
+  const hexToRgb = (hex) => {
+    let r = 0,
+      g = 0,
+      b = 0;
+    // 3 digits
+    if (hex.length === 4) {
+      r = parseInt(hex[1] + hex[1], 16);
+      g = parseInt(hex[2] + hex[2], 16);
+      b = parseInt(hex[3] + hex[3], 16);
+    }
+    // 6 digits
+    else if (hex.length === 7) {
+      r = parseInt(hex[1] + hex[2], 16);
+      g = parseInt(hex[3] + hex[4], 16);
+      b = parseInt(hex[5] + hex[6], 16);
+    }
+    return [r, g, b];
   };
 
   const DetailRow = ({ label, value, isBold = false }) => (
     <div
       className={`flex justify-between text-sm ${
-        isBold ? "font-bold" : "font-medium"
-      } text-gray-800`}
+        isBold ? "font-semibold text-gray-900" : "font-medium text-gray-700"
+      }`}
     >
       <span className="text-gray-600">{label}:</span>
       <span>{value}</span>
@@ -122,104 +143,107 @@ const OrderDetails = () => {
   );
 
   return (
-    <><Header/>
-    <div className="min-h-screen px-8 py-8 bg-gray-100">
-      {/* Hero Section */}
-      {mainImage && (
-        <div className="relative max-w-6xl mx-auto mb-10 overflow-hidden rounded-lg">
-          <img
-            src={mainImage}
-            alt="Main Event"
-            className="object-cover w-full rounded-lg shadow-lg h-96"
-          />
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
-            <h1 className="text-4xl font-bold text-white">Event Details</h1>
+    <>
+      <Header />
+      <div className="min-h-screen px-4 py-10 bg-gray-50">
+        {/* Hero Section */}
+        {mainImage && (
+          <div className="relative max-w-7xl mx-auto mb-12 overflow-hidden rounded-xl shadow-lg">
+            <img
+              src={mainImage}
+              alt="Main Event"
+              className="object-cover w-full h-96 rounded-xl"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+              <h1 className="text-4xl font-bold text-white">Event Details</h1>
+            </div>
+          </div>
+        )}
+
+        <div className="grid max-w-7xl mx-auto gap-8 md:grid-cols-2">
+          {/* Order Summary Section */}
+          <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-md">
+            <h2 className="text-2xl font-semibold text-gray-900 border-b border-gray-300 pb-4 mb-4">
+              Order Summary
+            </h2>
+            <div className="space-y-3">
+              <DetailRow label="Title" value={orderDetails.title} />
+              <DetailRow label="Date" value={orderDetails.date} />
+              <DetailRow label="Time" value={orderDetails.time} />
+              <DetailRow label="Price" value={`$${orderDetails.price}`} />
+              <DetailRow label="Quantity" value={orderDetails.quantity} />
+              <DetailRow
+                label="Total Price"
+                value={`$${orderDetails.totalPrice}`}
+                isBold
+              />
+            </div>
+          </div>
+
+          {/* Payment Details Section */}
+          <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-md">
+            <h2 className="text-2xl font-semibold text-gray-900 border-b border-gray-300 pb-4 mb-4">
+              Payment Details
+            </h2>
+            <div className="space-y-3">
+              <DetailRow
+                label="Amount"
+                value={`$${purchaseUnits[0]?.amount?.value || "N/A"}`}
+              />
+              <DetailRow
+                label="Payer Name"
+                value={`${payer?.name?.given_name || ""} ${
+                  payer?.name?.surname || ""
+                }`}
+              />
+              <DetailRow
+                label="Payer Email"
+                value={payer?.email_address || "N/A"}
+              />
+              <DetailRow label="Payer ID" value={payer?.payer_id || "N/A"} />
+              <DetailRow
+                label="Country Code"
+                value={payer?.address?.country_code || "N/A"}
+              />
+            </div>
           </div>
         </div>
-      )}
 
-      <div className="grid max-w-6xl grid-cols-1 gap-10 mx-auto md:grid-cols-2">
-        {/* Order Summary Section */}
-        <div className="p-8 bg-white border border-gray-200 rounded-lg shadow-lg">
-          <h2 className="pb-2 mb-6 text-3xl font-bold border-b border-gray-300">
-            Order Summary
+        {/* Gallery Section */}
+        <div className="max-w-7xl mx-auto mt-12">
+          <h2 className="text-2xl font-semibold text-center text-gray-900 mb-6">
+            Gallery
           </h2>
-          <div className="space-y-4">
-            <DetailRow label="Title" value={orderDetails.title} />
-            <DetailRow label="Date" value={orderDetails.date} />
-            <DetailRow label="Time" value={orderDetails.time} />
-            <DetailRow label="Price" value={`$${orderDetails.price}`} />
-            <DetailRow label="Quantity" value={orderDetails.quantity} />
-            <DetailRow
-              label="Total Price"
-              value={`$${orderDetails.totalPrice}`}
-              isBold
-            />
-          </div>
-        </div>
-
-        {/* Payment Details Section */}
-        <div className="p-8 bg-white border border-gray-200 rounded-lg shadow-lg">
-          <h2 className="pb-2 mb-6 text-3xl font-bold border-b border-gray-300">
-            Payment Details
-          </h2>
-          <div className="space-y-4">
-            <DetailRow
-              label="Amount"
-              value={`$${purchaseUnits[0]?.amount?.value || "N/A"}`}
-            />
-            <DetailRow
-              label="Payer Name"
-              value={`${payer?.name?.given_name || ""} ${
-                payer?.name?.surname || ""
-              }`}
-            />
-            <DetailRow
-              label="Payer Email"
-              value={payer?.email_address || "N/A"}
-            />
-            <DetailRow label="Payer ID" value={payer?.payer_id || "N/A"} />
-            <DetailRow
-              label="Country Code"
-              value={payer?.address?.country_code || "N/A"}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Gallery Section */}
-      <div className="max-w-6xl mx-auto mt-10">
-        <h2 className="mb-6 text-3xl font-bold text-center">Gallery</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {otherImages.length > 0 &&
-            otherImages.map((image, index) => (
-              <>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            {otherImages.length > 0 &&
+              otherImages.map((image, index) => (
                 <img
                   key={index}
                   src={image}
                   alt={`Event Gallery ${index + 1}`}
-                  className="object-cover w-full h-56 rounded-lg shadow-md"
+                  className="object-cover w-full h-64 rounded-xl shadow-md"
                 />
-              </>
-            ))}
-          <img
-            src="./src/assets/bill.gif"
-            className="object-cover w-full h-56 rounded-lg shadow-md"
-          />
+              ))}
+            <img
+              src="./src/assets/bill.gif"
+              className="object-cover w-full h-64 rounded-xl shadow-md"
+              alt="Additional Gallery"
+            />
+          </div>
+        </div>
+
+        {/* Download PDF Button */}
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={generatePDF}
+            className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Download PDF
+          </button>
         </div>
       </div>
-
-      {/* Download PDF Button */}
-      <div className="flex justify-center max-w-6xl mx-auto mt-10">
-        <button
-          onClick={generatePDF}
-          className="px-8 py-4 font-semibold text-white transition-colors bg-green-600 rounded-full shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-        >
-          Download PDF
-        </button>
-      </div>
-    </div>
-    <Footer/></>
+      <Footer />
+    </>
   );
 };
 
