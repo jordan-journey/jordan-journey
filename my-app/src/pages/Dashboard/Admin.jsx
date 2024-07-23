@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { dbURL } from "./Config";
 import axios from "axios";
-import Saidbar from "./Saidbar";
-import NavDashboard from "../../component/NavDashboard";
 
 function Admin() {
   const [Admins, SetAdmin] = useState([]);
@@ -30,15 +28,12 @@ function Admin() {
     RetrivAdmin();
   }
   return (
-    <div><NavDashboard/>
-    <div className="flex a">
-      <Saidbar />
-      <div className="mt-20 px-28"> 
-      <h1 className="text-2xl font-bold ms-2">Admins</h1>
-      <div className="flex flex-wrap w-3/4 mt-10 ">
+    <div className="w-full md:w-2/3 lg:w-1/2 py-10 mx-auto">
+      <h1 className="text-4xl font-bold mb-9 text-center">Admins</h1>
+      <div className="shadow-xl py-5">
         {Admins.map((admin) =>
           admin.delete ? (
-            <div key={admin.id} className="max-w-sm mx-auto mt-10 mb-10">
+            <div key={admin.id} className="max-w-sm mx-auto mt-10 mb-10 w-96 ">
               <div className="flex items-center justify-between p-6 transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg">
                 <div className="flex items-center">
                   <img
@@ -64,8 +59,7 @@ function Admin() {
           ) : null
         )}
       </div>
-      </div>
-    </div></div>
+    </div>
   );
 }
 export default Admin;
