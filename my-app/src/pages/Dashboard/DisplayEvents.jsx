@@ -52,7 +52,11 @@ function DisplayEvents(){
     navigate(`/Update/${id}`);
   };
   {/*******************end update****************** */}
-
+  {/*******************Delete****************** */}
+  const handleDeleteClick = (id) => {
+    navigate(`/Delete/${id}`);
+  };
+  {/*******************end Delete****************** */}
 
 
   {/*********************pagination************************* */}
@@ -153,8 +157,8 @@ const currentItems = data ? Object.keys(data).slice(startIndex, endIndex) : [];
                     </td>
                     <td className="px-6 py-4">
                     <a href="#"  className="hover:underline">
-                      <FontAwesomeIcon icon={faPenToSquare} className="mx-1" onClick={() => handleUpdateClick(key)}/>
-                      <FontAwesomeIcon icon={faTrash} className="mx-1"/>
+                      <FontAwesomeIcon icon={faPenToSquare} className="mx-1 mr-1" onClick={() => handleUpdateClick(key)}/>
+                      <FontAwesomeIcon icon={faTrash} className="mx-1"  onClick={() => handleDeleteClick(key)} />
                     </a>                </td>
                 </tr>
            

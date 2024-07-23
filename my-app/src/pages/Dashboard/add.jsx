@@ -11,12 +11,11 @@ function AddTicket() {
   const [price, setPrice] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [title, setTitle] = useState('');
-  const [totalTicket, setTotalTicket] = useState('');
+  const [totlaTicket, setTotlaTicket] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [mainImage, setMainImage] = useState('');
-  const [otherImage1, setOtherImage1] = useState('');
-  const [otherImage2, setOtherImage2] = useState('');
+  const [otherImages, setOtherImages] = useState(['', '']);
   const [preview, setPreview] = useState('');
   const [previews, setPreviews] = useState(['', '']);
   const navigate = useNavigate();
@@ -29,15 +28,12 @@ function AddTicket() {
       if (index === 0) {
         setMainImage(reader.result);
         setPreview(reader.result);
-      } else if (index === 1) {
-        setOtherImage1(reader.result);
+      } else {
+        const newImages = [...otherImages];
+        newImages[index - 1] = reader.result;
+        setOtherImages(newImages);
         const newPreviews = [...previews];
-        newPreviews[0] = reader.result;
-        setPreviews(newPreviews);
-      } else if (index === 2) {
-        setOtherImage2(reader.result);
-        const newPreviews = [...previews];
-        newPreviews[1] = reader.result;
+        newPreviews[index - 1] = reader.result;
         setPreviews(newPreviews);
       }
     };
@@ -57,18 +53,16 @@ function AddTicket() {
       mainDescription,
       title,
       mainImage,
-      otherImages: {
-        image1: otherImage1,
-        image2: otherImage2,
-      },
+      otherImages,
       details: {
         location,
         price,
         eventDescription,
-        totalTicket,
+        isSold: true,
+        totlaTicket,
         date,
         time,
-        soldTickets: 0 // إضافة soldTickets هنا
+        soldTickets: 0
       }
     };
 
@@ -129,19 +123,32 @@ function AddTicket() {
                 ))}
               </div>
               <div className="flex flex-wrap mb-6 -mx-3">
-                <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                  <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" htmlFor="location">
-                    Location
-                  </label>
-                  <input
-                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
-                    id="location"
-                    type="text"
-                    placeholder="Location"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                  />
-                </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+  <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" htmlFor="location">
+    Location
+  </label>
+  <select
+    id="location"
+    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+    value={location}
+    onChange={(e) => setLocation(e.target.value)}
+  >
+    <option value="">Select a location</option>
+    <option value="Irbid">Irbid</option>
+    <option value="Ajloun">Ajloun</option>
+    <option value="Jerash">Jerash</option>
+    <option value="Mafraq">Mafraq</option>
+    <option value="Balqa">Balqa</option>
+    <option value="Amman">Amman</option>
+    <option value="Zarqa">Zarqa</option>
+    <option value="Madaba">Madaba</option>
+    <option value="Karak">Karak</option>
+    <option value="Tafilah">Tafilah</option>
+    <option value="Aqaba">Aqaba</option>
+    <option value="Maan">Maan</option>
+  </select>
+</div>
+
                 <div className="w-full px-3 md:w-1/2">
                   <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" htmlFor="name">
                     Name
@@ -179,8 +186,8 @@ function AddTicket() {
                     id="total-ticket"
                     type="number"
                     placeholder="Total Tickets"
-                    value={totalTicket}
-                    onChange={(e) => setTotalTicket(e.target.value)}
+                    value={totlaTicket}
+                    onChange={(e) => setTotlaTicket(e.target.value)}
                   />
                 </div>
               </div>

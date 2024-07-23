@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Cards from "../component/Cards";
-import ListingPageImage from "../assets/images/ListingPageImage.jpg";
+// import ListingPageImage from "../assets/images/ListingPageImage.jpg";
 import axios from "axios";
 import Header from "../component/header";
 import Footer from "../component/Footer";
@@ -76,15 +76,15 @@ function ListingPage() {
       <Header/>
       {/******************************HeroSection in listing page******************************** */}
       <section
-        style={{
-          "--image-url": `url(${ListingPageImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className="bg-[image:var(--image-url)] w-full h-96 flex flex-wrap justify-center gap-44 items-center shadow-lg shadow-green-600 "
+        // style={{
+        //   "--image-url": `url(${ListingPageImage})`,
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "center",
+        // }}
+        className="flex flex-wrap items-center justify-center w-full h-20 shadow-lg gap-44 shadow-green-600"
       >
         {/********************************search************************ */}
-        <div className="mb-3 xl:w-96">
+        <div className="my-3 xl:w-96">
           <div className="relative flex flex-wrap items-stretch w-full mb-4">
             <input
               type="search"
@@ -117,42 +117,36 @@ function ListingPage() {
         {/****************************end search************************ */}
       </section>
       {/****************************** end HeroSection in listing page******************************** */}
-
-      <section className="flex flex-wrap justify-center gap-3 mt-5">
-        {/*********************Checkbox************************ */}
-        <Card className="w-full max-w-[80rem]">
-          <List className="flex flex-wrap">
-            {uniqueLocations.map((location, index) => (
-              <ListItem className="w-1/3 p-2" key={index}>
-                <label
-                  htmlFor={`horizontal-list-${location
-                    .toLowerCase()
-                    .replace(".", "")}`}
-                  className="flex items-center px-3 py-2 cursor-pointer"
-                >
-                  <ListItemPrefix className="mr-3">
-                    <Checkbox
-                      id={`horizontal-list-${location
-                        .toLowerCase()
-                        .replace(".", "")}`}
-                      ripple={false}
-                      className="hover:before:opacity-0"
-                      containerProps={{ className: "p-0" }}
-                      checked={selectedLocations.includes(location)}
-                      onChange={() => handleCheckboxChange(location)}
-                    />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className="font-medium">
-                    {location}
-                  </Typography>
-                </label>
-              </ListItem>
-            ))}
-          </List>
-        </Card>
-        {/*********************end Checkbox************************ */}
-      </section>
-
+{/******************************************* */}
+      <section className="flex flex-wrap justify-center gap-3 mt-5 ">
+      <Card className="w-full max-w-[80rem] p-4 shadow-lg  shadow-green-600">
+        <List className="flex flex-row flex-wrap gap-4 border-8 border-green-600 ">
+          {uniqueLocations.map((location, index) => (
+            <ListItem className="flex-shrink-0 w-auto p-2 " key={index}>
+              <label
+                htmlFor={`horizontal-list-${location.toLowerCase().replace(".", "")}`}
+                className="flex items-center px-3 py-2 cursor-pointer"
+              >
+                <ListItemPrefix className="mr-3">
+                  <Checkbox
+                    id={`horizontal-list-${location.toLowerCase().replace(".", "")}`}
+                    ripple={false}
+                    className="hover:before:opacity-0"
+                    containerProps={{ className: "p-0" }}
+                    checked={selectedLocations.includes(location)}
+                    onChange={() => handleCheckboxChange(location)}
+                  />
+                </ListItemPrefix>
+                <Typography color="blue-gray" className="font-medium">
+                  {location}
+                </Typography>
+              </label>
+            </ListItem>
+          ))}
+        </List>
+      </Card>
+    </section>
+{/***************************************** */}
       <section>
         <Cards events={filteredEvents} searchQuery={searchQuery} />
       </section>
