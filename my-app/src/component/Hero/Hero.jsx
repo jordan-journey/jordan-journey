@@ -1,6 +1,6 @@
-import Image1 from "../../assets/hero/tavel.jpg";
-import Image2 from "../../assets/hero/Amman.jpg";
-import Image3 from "../../assets/hero/Untitled design (1).jpg";
+import Image1 from "../../assets/hero/pngwing.com.png";
+import Image2 from "../../assets/hero/pngwing.com (1).png";
+import Image3 from "../../assets/hero/pngwing.com (2).png";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
@@ -92,11 +92,11 @@ const Hero = () => {
                     data-aos-once="true"
                     className="relative z-10"
                   >
-                    {/* <img
+                    <img
                       src={data.img}
                       alt=""
                       className="w-[600px] h-[600px]  sm:scale-105 lg:scale-120 object-contain mx-auto"
-                    /> */}
+                    />
                   </div>
                 </div>
               </div>

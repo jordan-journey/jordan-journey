@@ -5,6 +5,7 @@ import axios from "axios";
 // import Img3 from "../../assets/women/women3.jpg";
 // import Img4 from "../../assets/women/women4.jpg";
 import { FaDollarSign } from "react-icons/fa6";
+import { FaVaadin } from "react-icons/fa";
 
 // const ProductsData = [
 //   {
@@ -84,43 +85,44 @@ const Products = () => {
 
 
   return (
-    <div className="mb-12 mt-14">
+    <>
+    <div className="mb-48 mt-14">
       <div className="container">
         {/* Header section */}
         <div className="text-center mb-20 max-w-[600px] mx-auto">
-          <p data-aos="fade-up" className="text-sm text-primary">
-            Top Selling Tours for you
-          </p>
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
+          
+          <h1 data-aos="fade-up" className="text-6xl font-bold">
             Tours
           </h1>
-          <p data-aos="fade-up" className="text-xs text-gray-400">
+          <p data-aos="fade-up" className="text-xl text-gray-400">
            Explore a collection of wonderful places that will give you the full
            testement of Jordan Journeys
           </p>
         </div>
         {/* Body section */}
         <div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 place-items-center">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 place-items-center mt-32">
             {/* card section */}
             {events.map(event => (
               <div
-                data-aos="fade-up"
+                data-aos="zoom-in"
                 data-aos-delay={event.aosDelay}
                 key={event.id}
-                className="space-y-3"
-              >
+                className="rounded-2xl bg-white dark:bg-gray-800 hover:bg-green-600/80 dark:hover:bg-green-600 hover:text-white relative shadow-xl duration-300 group w-[300px] h-[237px] "
+              ><div className="h-[100px]">
                 <img
                   src={event.mainImage}
                   alt=""
-                  className="h-[220px] w-[150px] object-cover rounded-md"
+                  className="h-32 w-40 block mx-auto transform -translate-y-20 group-hover:scale-105 duration-300 drop-shadow-md"
                 />
-                <div>
-                  <h3 className="font-semibold">{event.title}</h3>
-                  <p className="text-sm text-gray-600">{event.details.date}</p>
+                </div>
+                <div className="p-3 text-center">
+                  <h1 className="text-xl font-bold">{event.title}</h1>
+                  <p className="mb-5 text-sm text-gray-500 duration-300 group-hover:text-white line-clamp-2">{event.details.date}</p>
                   <div className="flex items-center gap-1">
-                    < FaDollarSign className="text-green-400" />
-                    <span>{event.details.price} </span>
+                    
+                    <p className=" text-green-400 group-hover:text-white text-center ">JD {event.details.price}</p>
+                    
                     
                   </div>
                 </div>
@@ -131,7 +133,9 @@ const Products = () => {
           
         </div>
       </div>
-    </div>
+      </div> 
+     
+      </>
   );
 };
 

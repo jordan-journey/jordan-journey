@@ -48,7 +48,7 @@ const Testimonials = () => {
       {
         breakpoint: 10000,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1,
           slidesToScroll: 1,
           infinite: true,
         },
@@ -56,7 +56,7 @@ const Testimonials = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
         },
@@ -82,14 +82,11 @@ const Testimonials = () => {
         <h1 data-aos="fade-up" className="text-3xl font-bold">
           Testimonials
         </h1>
-        <p data-aos="fade-up" className="text-xs text-gray-400">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit
-          asperiores modi Sit asperiores modi
-        </p>
+        
       </div>
 
       {/* Testimonial cards */}
-      <div data-aos="zoom-in">
+      <div className="w-[400px] h-[300px]" data-aos="zoom-in">
         <Slider {...settings}>
         {events.filter(contact => !contact.Deleted).map(contact => (
           <>
@@ -98,18 +95,12 @@ const Testimonials = () => {
                 key={contact.email}
                 className="flex flex-col gap-4 shadow-lg py-8 px-6 mx-4 rounded-xl dark:bg-gray-800 bg-primary/10 relative"
               >
-                <div className="mb-4">
-                  <img
-                    src={contact.firstname}
-                    alt=""
-                    className="rounded-full w-20 h-20"
-                  />
-                </div>
+               
                 <div className="flex flex-col items-center gap-4">
                   <div className="space-y-3">
-                    <p className="text-xs text-gray-500">{contact.feed}</p>
+                    <p className="text-xl text-gray-500">{contact.feed}</p>
                     <h1 className="text-xl font-bold text-black/80 dark:text-light">
-                      {contact.email}
+                      {contact.firstName}
                     </h1>
                   </div>
                 </div>
