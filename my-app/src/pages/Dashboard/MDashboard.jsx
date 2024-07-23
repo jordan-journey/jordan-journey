@@ -2,6 +2,8 @@ import axios from "axios";
 import Saidbar from "./Saidbar";
 import { dbURL } from "./Config";
 import { useState, useEffect } from "react";
+import NavDashboard from "../../component/NavDashboard";
+import Admin from "./Admin";
 
 function MainDashboard() {
   const [numofuser, setnumofuser] = useState(null);
@@ -35,29 +37,32 @@ function MainDashboard() {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-12">
-      <Saidbar />
-
-      <div className="flex-grow mx-auto my-5 p-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white p-8 rounded-lg shadow-md flex-grow">
+    <div className="flex">
+    <Saidbar />
+    <div className="flex-1 flex flex-col min-h-screen">
+      <NavDashboard />
+      <div className="flex flex-grow justify-center items-center my-12">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="p-8 bg-white rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-gray-700">Users</h2>
-            <p className="text-4xl text-blue-500 mt-2">{numofuser} </p>
+            <p className="mt-2 text-4xl text-blue-500">{numofuser}</p>
           </div>
-
-          <div className="bg-white p-8 rounded-lg shadow-md flex-grow">
+          <div className="p-8 bg-white rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-gray-700">Orders</h2>
-            <p className="text-4xl text-green-500 mt-2">{numoforder}</p>
+            <p className="mt-2 text-4xl text-green-500">{numoforder}</p>
           </div>
-
-          <div className="bg-white p-8 rounded-lg shadow-md flex-grow">
+          <div className="p-8 bg-white rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-gray-700">Events</h2>
-            <p className="text-4xl text-red-500 mt-2">{numofevents}</p>
+            <p className="mt-2 text-4xl text-red-500">{numofevents}</p>
           </div>
         </div>
       </div>
+      <div className="flex justify-center">
+        <Admin />
+      </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default MainDashboard;

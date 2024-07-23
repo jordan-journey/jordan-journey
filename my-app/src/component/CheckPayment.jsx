@@ -35,7 +35,22 @@ const CheckPayment = () => {
   const [paymentCompleted, setPaymentCompleted] = useState(false); // New state for payment completion
 
   const nextStep = () => {
-    setCurrentStep((prev) => (prev < 3 ? prev + 1 : prev));
+    // Check if user data exists in local storage
+    const userData = localStorage.getItem("userData");
+
+    // Only allow moving to the next step if user data is present
+    if (userData) {
+      setCurrentStep((prev) => (prev < 3 ? prev + 1 : prev));
+    } else {
+      // Optionally show an alert or some feedback to the user
+      Swal.fire({
+        icon: "error",
+        title: "Process Error",
+        text: "Please Login First.",
+        confirmButtonText: "Okay",
+        confirmButtonColor: "#d9534f",
+      });
+    }
   };
 
   const prevStep = () => {

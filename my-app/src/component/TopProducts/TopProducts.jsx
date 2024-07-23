@@ -4,6 +4,7 @@ import Img2 from "../../assets/hero/Amman.jpg";
 import Img3 from "../../assets/hero/Ajloun.jpeg";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalf } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const ProductsData = [
   {
@@ -33,7 +34,7 @@ const TopProducts = ({ handleOrderPopup }) => {
     <div>
       <div className="container">
         {/* Header section */}
-        <div className="text-left mb-24">
+        <div className="text-center mb-44">
           <p data-aos="fade-up" className="text-sm text-primary">
             Top Rated Tours for you
           </p>
@@ -45,8 +46,9 @@ const TopProducts = ({ handleOrderPopup }) => {
           </p>
         </div>
         {/* Body section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20 md:gap-5 place-items-center">
+        <div className="grid grid-cols-1 gap-20 sm:grid-cols-2 md:grid-cols-3 md:gap-5 place-items-center">
           {ProductsData.map((data) => (
+            <>
             <div
               data-aos="zoom-in"
               className="rounded-2xl bg-white dark:bg-gray-800 hover:bg-green-600/80 dark:hover:bg-green-600 hover:text-white relative shadow-xl duration-300 group max-w-[300px]"
@@ -62,7 +64,7 @@ const TopProducts = ({ handleOrderPopup }) => {
               {/* details section */}
               <div className="p-4 text-center">
                 {/* star rating */}
-                <div className="w-full flex items-center justify-center gap-1">
+                <div className="flex items-center justify-center w-full gap-1">
                   <FaStar className="text-yellow-500" />
                   <FaStar className="text-yellow-500" />
                   <FaStar className="text-yellow-500" />
@@ -70,18 +72,18 @@ const TopProducts = ({ handleOrderPopup }) => {
                   <FaStarHalf className="text-yellow-500" />
                 </div>
                 <h1 className="text-xl font-bold">{data.title}</h1>
-                <p className="text-gray-500 group-hover:text-white duration-300 text-sm line-clamp-2">
+                <p className="mb-5 text-sm text-gray-500 duration-300 group-hover:text-white line-clamp-2">
                   {data.description}
                 </p>
-                <button
-                  className="bg-green-800 hover:scale-105 duration-300 text-white py-1 px-4 rounded-full mt-4 group-hover:bg-white group-hover:text-primary"
-                  onClick={handleOrderPopup}
+                <Link
+                  className="px-4 py-1 text-white duration-300 bg-green-800 rounded-full hover:scale-105 group-hover:bg-white group-hover:text-green-800"
+                  to="/ListingPage"
                 >
                   Order Now
-                </button>
+                </Link>
               </div>
             </div>
-          ))}
+            </>))}
         </div>
       </div>
     </div>

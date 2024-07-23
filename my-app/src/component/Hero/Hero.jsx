@@ -1,8 +1,8 @@
-import React from "react";
 import Image1 from "../../assets/hero/tavel.jpg";
 import Image2 from "../../assets/hero/Amman.jpg";
 import Image3 from "../../assets/hero/Untitled design (1).jpg";
 import Slider from "react-slick";
+import { Link } from "react-router-dom";
 
 const ImageList = [
   {
@@ -28,7 +28,7 @@ const ImageList = [
   },
 ];
 
-const Hero = ({ handleOrderPopup }) => {
+const Hero = () => {
   var settings = {
     dots: false,
     arrows: false,
@@ -45,22 +45,22 @@ const Hero = ({ handleOrderPopup }) => {
   return (
     <div className="relative overflow-hidden min-h-[550px] sm:min-h-[650px] bg-gray-100 flex justify-center items-center dark:bg-gray-950 dark:text-white duration-200 ">
       {/* background pattern */}
-      <div className="h-[700px] w-[700px] bg-green-700/40 absolute -top-1/2 right-0 rounded-3xl rotate-45 -z[8]"></div>
+      <div className="h-[700px] w-[700px] bg-green-600 absolute -top-1/2 right-0 rounded-3xl rotate-45 -z[8]"></div>
       {/* hero section */}
       <div className="container pb-8 sm:pb-0">
         <Slider {...settings}>
           {ImageList.map((data) => (
             <>
             
-            <div>
+            <div key={data.id}>
               <div className="grid grid-cols-1 sm:grid-cols-2">
                 {/* text content section */}
-                <div className="flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
+                <div className="relative z-10 flex flex-col justify-center order-2 gap-4 pt-12 text-center sm:pt-0 sm:text-left sm:order-1">
                   <h1
                     data-aos="zoom-out"
                     data-aos-duration="500"
                     data-aos-once="true"
-                    className="text-5xl sm:text-6xl lg:text-7xl font-bold"
+                    className="text-5xl font-bold sm:text-6xl lg:text-7xl"
                   >
                     {data.title}
                   </h1>
@@ -77,12 +77,12 @@ const Hero = ({ handleOrderPopup }) => {
                     data-aos-duration="500"
                     data-aos-delay="300"
                   >
-                    <button
-                      onClick={handleOrderPopup}
-                      className="bg-gradient-to-r bg-green-700 bg-green-600 hover:scale-105 duration-200 text-white py-2 px-4 rounded-full"
+                    <Link
+                      to="/ListingPage"
+                      className="px-4 py-2 text-white duration-200 bg-green-600 bg-green-700 rounded-full bg-gradient-to-r hover:scale-105"
                     >
                       Order Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
                 {/* image section */}
@@ -92,11 +92,11 @@ const Hero = ({ handleOrderPopup }) => {
                     data-aos-once="true"
                     className="relative z-10"
                   >
-                    <img
+                    {/* <img
                       src={data.img}
                       alt=""
                       className="w-[600px] h-[600px]  sm:scale-105 lg:scale-120 object-contain mx-auto"
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

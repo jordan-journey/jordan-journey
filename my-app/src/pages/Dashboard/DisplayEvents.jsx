@@ -4,6 +4,7 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useEffect,useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation  } from 'react-router-dom';
+import NavDashboard from '../../component/NavDashboard';
 
 
 function DisplayEvents(){
@@ -51,7 +52,11 @@ function DisplayEvents(){
     navigate(`/Update/${id}`);
   };
   {/*******************end update****************** */}
-
+  {/*******************Delete****************** */}
+  const handleDeleteClick = (id) => {
+    navigate(`/Delete/${id}`);
+  };
+  {/*******************end Delete****************** */}
 
 
   {/*********************pagination************************* */}
@@ -66,6 +71,7 @@ const currentItems = data ? Object.keys(data).slice(startIndex, endIndex) : [];
   {/**********************end pagination****************** */}
 
     return(
+      <div><NavDashboard/>
         <div className="flex flex-wrap gap-12">
   <div className="w-1/4">
     <Saidbar />
@@ -151,8 +157,8 @@ const currentItems = data ? Object.keys(data).slice(startIndex, endIndex) : [];
                     </td>
                     <td className="px-6 py-4">
                     <a href="#"  className="hover:underline">
-                      <FontAwesomeIcon icon={faPenToSquare} className="mx-1" onClick={() => handleUpdateClick(key)}/>
-                      <FontAwesomeIcon icon={faTrash} className="mx-1"/>
+                      <FontAwesomeIcon icon={faPenToSquare} className="mx-1 mr-1" onClick={() => handleUpdateClick(key)}/>
+                      <FontAwesomeIcon icon={faTrash} className="mx-1"  onClick={() => handleDeleteClick(key)} />
                     </a>                </td>
                 </tr>
            
@@ -180,7 +186,7 @@ const currentItems = data ? Object.keys(data).slice(startIndex, endIndex) : [];
     </div>
   </div>
 </div>
-    
+</div>    
     );
 
 }

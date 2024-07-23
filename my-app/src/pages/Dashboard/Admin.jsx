@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { dbURL } from "./Config";
 import axios from "axios";
-import Saidbar from "./Saidbar";
 
 function Admin() {
   const [Admins, SetAdmin] = useState([]);
@@ -29,16 +28,16 @@ function Admin() {
     RetrivAdmin();
   }
   return (
-    <div className="a flex">
-      <Saidbar />
-      <div className=" flex flex-wrap px-28">
+    <div className="w-full md:w-2/3 lg:w-1/2 py-10 mx-auto">
+      <h1 className="text-4xl font-bold mb-9 text-center">Admins</h1>
+      <div className="shadow-xl py-5">
         {Admins.map((admin) =>
           admin.delete ? (
-            <div key={admin.id} className="max-w-sm mx-auto mt-10 mb-10">
-              <div className="p-6 flex items-center justify-between bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div key={admin.id} className="max-w-sm mx-auto mt-10 mb-10 w-96 ">
+              <div className="flex items-center justify-between p-6 transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg">
                 <div className="flex items-center">
                   <img
-                    className="rounded-full h-12 w-12 border-2 border-green-500"
+                    className="w-12 h-12 border-2 border-green-500 rounded-full"
                     src={admin.src}
                     alt="Admin"
                   />
@@ -51,7 +50,7 @@ function Admin() {
                 </div>
                 <button
                   onClick={() => Delete(admin.id)}
-                  className="ml-4 h-8 px-4 text-md font-bold text-white bg-green-500 border border-green-500 rounded-full hover:bg-green-600 transition-colors duration-300"
+                  className="h-8 px-4 ml-4 font-bold text-white transition-colors duration-300 bg-green-500 border border-green-500 rounded-full text-md hover:bg-green-600"
                 >
                   Delete
                 </button>

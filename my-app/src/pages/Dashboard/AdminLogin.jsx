@@ -2,15 +2,19 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dbURL } from "./Config";
+import Header from "../../component/header";
+import Footer from "../../component/Footer";
 
 function AdminLogin() {
   let navigate = useNavigate();
+
+  // creat use state
   const [formdata, setFormdata] = useState({ email: "", pass: "" });
   const [error, setError] = useState("");
 
   async function handleLogin(e) {
     e.preventDefault();
-
+    // fetch data
     try {
       const response = await axios.get(`${dbURL}/Admin.json`);
       const admins = response.data;
@@ -18,9 +22,9 @@ function AdminLogin() {
       const admin = Object.values(admins).find((adminObj) => {
         // Remove extra spaces from email and password
         const email = adminObj.email ? adminObj.email.trim() : "";
-        const password = adminObj.pasword ? adminObj.pasword.trim() : ""; // Note: Using 'pasword' as per your data structure
+        const password = adminObj.pasword ? adminObj.pasword.trim() : "";
 
-        console.log("Checking admin:", email, password); // Log the values being checked
+        // console.log("Checking admin:", email, password); 
 
         return (
           email === formdata.email.trim() && password === formdata.pass.trim()
@@ -30,7 +34,7 @@ function AdminLogin() {
       if (admin) {
         sessionStorage.setItem("AdminImg", admin.src);
         if (admin.delete) {
-          navigate("/Said");
+          navigate("/MDashboard");
         } else setError("  قد تم انهاء خدماتك ");
       } else {
         setError("البيانات غير صحيحة"); // Error message
@@ -43,23 +47,24 @@ function AdminLogin() {
 
   return (
     <>
+      <Header />
       <div
-        className="bg-cover bg-center bg-fixed"
+        className="bg-fixed bg-center bg-cover"
         style={{ backgroundImage: "url('https://picsum.photos/1920/1080')" }}
       >
-        <div className="h-screen flex justify-center items-center">
-          <div className="bg-white mx-4 p-8 rounded shadow-md w-full md:w-1/2 lg:w-1/3">
-            <h1 className="text-3xl font-bold mb-8 text-center">Admin Login</h1>
+        <div className="flex items-center justify-center h-screen">
+          <div className="w-full p-8 mx-4 bg-white rounded shadow-md md:w-1/2 lg:w-1/3">
+            <h1 className="mb-8 text-3xl font-bold text-center">Admin Login</h1>
             <form onSubmit={handleLogin}>
               <div className="mb-4">
                 <label
-                  className="block font-semibold text-gray-700 mb-2"
+                  className="block mb-2 font-semibold text-gray-700"
                   htmlFor="email"
                 >
                   Email
                 </label>
                 <input
-                  className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
                   id="email"
                   type="email"
                   value={formdata.email}
@@ -70,13 +75,13 @@ function AdminLogin() {
               </div>
               <div className="mb-4">
                 <label
-                  className="block font-semibold text-gray-700 mb-2"
+                  className="block mb-2 font-semibold text-gray-700"
                   htmlFor="password"
                 >
                   Password
                 </label>
                 <input
-                  className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded focus:outline-none focus:shadow-outline"
                   id="password"
                   type="password"
                   value={formdata.pass}
@@ -86,11 +91,11 @@ function AdminLogin() {
                 />
               </div>
               {error && (
-                <p className="text-red-500 text-center mb-4">{error}</p>
+                <p className="mb-4 text-center text-red-500">{error}</p>
               )}
               <div className="mb-6">
                 <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
                   Login
@@ -100,6 +105,7 @@ function AdminLogin() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

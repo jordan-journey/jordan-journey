@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Header from "../component/header";
+import Footer from "../component/Footer";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -24,8 +26,10 @@ const Profile = () => {
         .get(
           `https://tickets-73a3c-default-rtdb.firebaseio.com/users/${userId}.json`
         )
-        .then((response) => {
-          const userData = response.data;
+        .then(async (response) => {
+          console.log(response);
+          const userData = await response.data;
+          
           setName(userData.name);
         })
         .catch((error) => {
@@ -96,9 +100,11 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r min-h-screen p-6 flex items-center justify-center">
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <>
+    <Header/>
+    <div className="flex items-center justify-center min-h-screen p-6 bg-gradient-to-r">
+      <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg">
+        <h1 className="mb-8 text-3xl font-bold text-center text-gray-800">
           Profile Page
         </h1>
         <form className="space-y-6" onSubmit={handleUpdate}>
@@ -115,7 +121,7 @@ const Profile = () => {
               placeholder="Your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
           <div className="space-y-2">
@@ -128,19 +134,19 @@ const Profile = () => {
               placeholder="Your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition"
+            className="w-full py-3 text-white transition bg-green-500 rounded-lg hover:bg-green-600"
           >
             Update Profile
           </button>
         </form>
 
         <div className="mt-10">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Orders</h2>
+          <h2 className="mb-4 text-2xl font-bold text-gray-800">Orders</h2>
           {loading ? (
             <p className="text-center text-gray-600">Loading orders...</p>
           ) : error ? (
@@ -151,7 +157,7 @@ const Profile = () => {
                 orders.map((order) => (
                   <div
                     key={order.id}
-                    className="bg-gray-100 shadow-md rounded-lg p-6 border border-gray-200"
+                    className="p-6 bg-gray-100 border border-gray-200 rounded-lg shadow-md"
                   >
                     <h3 className="text-lg font-semibold text-gray-700">
                       Trip: {order.title}
@@ -163,7 +169,7 @@ const Profile = () => {
                     </p>
                     <p className="text-gray-600">Quantity: {order.quantity}</p>
 
-                    <h3 className="text-lg font-semibold text-gray-700 mt-4">
+                    <h3 className="mt-4 text-lg font-semibold text-gray-700">
                       Payment Details:
                     </h3>
                     <ul className="text-gray-600">
@@ -192,7 +198,7 @@ const Profile = () => {
         </div>
 
         <div className="mt-10">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Coupons</h2>
+          <h2 className="mb-4 text-2xl font-bold text-gray-800">Coupons</h2>
           {loading ? (
             <p className="text-center text-gray-600">Loading coupons...</p>
           ) : error ? (
@@ -203,7 +209,7 @@ const Profile = () => {
                 coupons.map((coupon) => (
                   <div
                     key={coupon.id}
-                    className="bg-gray-100 shadow-md rounded-lg p-6 border border-gray-200"
+                    className="p-6 bg-gray-100 border border-gray-200 rounded-lg shadow-md"
                   >
                     <h3 className="text-lg font-semibold text-gray-700">
                       Coupon Code: {coupon.couponCode}
@@ -224,6 +230,8 @@ const Profile = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import Logo from "../assets/images/Logo.png";
+import Jordan_JOURNEYLogo from "../assets/images/Jordan_JOURNEYLogo.png"
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -9,7 +9,7 @@ function Footer() {
           <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">
               <Link href="/" className="flex items-center">
-                <img src={Logo} className="h-20 me-3" alt="FlowBite Logo" />
+                <img src={Jordan_JOURNEYLogo} className="h-20 me-3" alt="FlowBite Logo" />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap text-amber-50 dark:text-white">
                   JOURNEY
                 </span>

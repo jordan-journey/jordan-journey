@@ -6,10 +6,11 @@ import {
   faArrowRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import Logo from "../assets/images/Logo.png";
+import Jordan_JOURNEYLogo from "../assets/images/Jordan_JOURNEYLogo.png";
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   useEffect(() => {
     const userSession = JSON.parse(sessionStorage.getItem("users"));
@@ -34,7 +35,7 @@ function Header() {
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              <img src={Logo} className="h-12" alt="Flowbite Logo" />
+              <img src={Jordan_JOURNEYLogo} className="h-12" alt="Flowbite Logo" />
             </span>
           </Link>
           <div className="flex items-center space-x-6 rtl:space-x-reverse">
@@ -54,24 +55,16 @@ function Header() {
             {!isLoggedIn ? (
               <Link
                 to="/Login"
-                className="text-sm text-white dark:text-white hover:underline"
-              >
-                <FontAwesomeIcon
-                  icon={faArrowRightToBracket}
-                  className="mx-1"
-                />{" "}
-                Login
+
+                className="text-sm text-white dark:text-white hover:underline">
+                <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" /> Login
+
               </Link>
             ) : (
               <Link
                 onClick={handleLogout}
-                className="text-sm text-white dark:text-white hover:underline"
-              >
-                <FontAwesomeIcon
-                  icon={faArrowRightFromBracket}
-                  className="mx-1"
-                />{" "}
-                Logout
+                className="text-sm text-white dark:text-white hover:underline">
+                <FontAwesomeIcon icon={faArrowRightFromBracket} className="mx-1" /> Logout
               </Link>
             )}
           </div>
@@ -79,8 +72,8 @@ function Header() {
       </nav>
       <nav className="bg-green-600 dark:bg-gray-700">
         <div className="max-w-screen-xl px-4 py-3 mx-auto">
-          <div className="flex items-center">
-            <ul className="flex flex-row mt-0 space-x-8 text-sm font-medium rtl:space-x-reverse">
+          <div className="flex items-center justify-center ">
+            <ul className="flex flex-row mt-0 space-x-20 text-sm font-medium rtl:space-x-reverse">
               <li>
                 <Link
                   to="/"
