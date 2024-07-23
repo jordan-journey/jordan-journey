@@ -7,12 +7,14 @@ import Footer from "../../component/Footer";
 
 function AdminLogin() {
   let navigate = useNavigate();
+
+  // creat use state
   const [formdata, setFormdata] = useState({ email: "", pass: "" });
   const [error, setError] = useState("");
 
   async function handleLogin(e) {
     e.preventDefault();
-
+    // fetch data
     try {
       const response = await axios.get(`${dbURL}/Admin.json`);
       const admins = response.data;
@@ -20,9 +22,9 @@ function AdminLogin() {
       const admin = Object.values(admins).find((adminObj) => {
         // Remove extra spaces from email and password
         const email = adminObj.email ? adminObj.email.trim() : "";
-        const password = adminObj.pasword ? adminObj.pasword.trim() : ""; // Note: Using 'pasword' as per your data structure
+        const password = adminObj.pasword ? adminObj.pasword.trim() : "";
 
-        console.log("Checking admin:", email, password); // Log the values being checked
+        // console.log("Checking admin:", email, password); 
 
         return (
           email === formdata.email.trim() && password === formdata.pass.trim()
@@ -44,9 +46,8 @@ function AdminLogin() {
   }
 
   return (
-    
     <>
-    <Header/>
+      <Header />
       <div
         className="bg-fixed bg-center bg-cover"
         style={{ backgroundImage: "url('https://picsum.photos/1920/1080')" }}
@@ -104,7 +105,7 @@ function AdminLogin() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
