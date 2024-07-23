@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import coupon from "../assets/images/imgonline-com-ua-ReplaceColor-i5I62J4vDy9gr-removebg-preview.png";
 import gif from "../assets/images/imggif.gif";
+import Header from "./header";
+import Footer from "./Footer";
 
 const CheckPayment = () => {
   const location = useLocation();
@@ -21,7 +23,6 @@ const CheckPayment = () => {
     otherImages,
     eventId,
   } = location.state || {};
-  console.log(eventId);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [couponCode, setCouponCode] = useState("");
@@ -31,6 +32,7 @@ const CheckPayment = () => {
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [couponKey, setCouponKey] = useState(null);
   const [couponStatus, setCouponStatus] = useState(false);
+  const [paymentCompleted, setPaymentCompleted] = useState(false); // New state for payment completion
 
   const nextStep = () => {
     setCurrentStep((prev) => (prev < 3 ? prev + 1 : prev));
@@ -43,7 +45,7 @@ const CheckPayment = () => {
   const applyCoupon = async () => {
     try {
       const response = await axios.get(
-        `https://tickets-73a3c-default-rtdb.firebaseio.com/coupons.json`
+        "https://tickets-73a3c-default-rtdb.firebaseio.com/coupons.json"
       );
 
       const coupons = response.data;
@@ -78,8 +80,8 @@ const CheckPayment = () => {
           setDiscountedPrice(newTotalPrice.toFixed(2));
           setTotalPrice(totalPrice.toFixed(2));
           setCouponApplied(true);
-          setCouponStatus(true); // Set coupon status to true
-          setCouponKey(couponKey); // Store coupon key for later use
+          setCouponStatus(true);
+          setCouponKey(couponKey);
 
           Swal.fire({
             icon: "success",
@@ -108,13 +110,11 @@ const CheckPayment = () => {
 
   const handlePaymentSuccess = async (details) => {
     try {
-      console.log("Payment details:", details); // Debugging
+      console.log("Payment details:", details);
 
-      // Get user ID from localStorage
       const userData = JSON.parse(localStorage.getItem("userData"));
       const userId = userData ? userData.id : null;
 
-      // If userId is not available, handle accordingly
       if (!userId) {
         throw new Error("User ID is missing from localStorage");
       }
@@ -127,24 +127,22 @@ const CheckPayment = () => {
         confirmButtonColor: "#519341",
       });
 
-      // Record the order
       await axios.post(
         "https://tickets-73a3c-default-rtdb.firebaseio.com/orders.json",
         {
-          userId: userId, // Include user ID
+          userId: userId,
           paymentDetails: details,
           totalPrice: discountedPrice || initialTotalPrice,
           quantity: quantity,
-          couponStatus: couponStatus, // Include coupon status
-          title: title, // Include event title
-          date: date, // Include event date
-          location: eventLocation, // Include event location
+          couponStatus: couponStatus,
+          title: title,
+          date: date,
+          location: eventLocation,
         }
       );
 
       const eventId = location.state?.eventId;
       if (eventId) {
-        // Fetch the current event data
         const eventResponse = await axios.get(
           `https://tickets-73a3c-default-rtdb.firebaseio.com/events/${eventId}.json`
         );
@@ -152,9 +150,8 @@ const CheckPayment = () => {
         const currentEventData = eventResponse.data;
         const currentSoldTickets = currentEventData.details?.soldTickets || 0;
 
-        console.log("Current soldTickets:", currentSoldTickets); // Debugging
+        console.log("Current soldTickets:", currentSoldTickets);
 
-        // Increment the soldTickets field by the quantity of tickets purchased
         await axios.patch(
           `https://tickets-73a3c-default-rtdb.firebaseio.com/events/${eventId}/details.json`,
           {
@@ -162,12 +159,11 @@ const CheckPayment = () => {
           }
         );
 
-        console.log("Updated soldTickets:", currentSoldTickets + quantity); // Debugging
+        console.log("Updated soldTickets:", currentSoldTickets + quantity);
       } else {
         console.error("Event ID is missing");
       }
 
-      // Update coupon status if a coupon was applied
       if (couponStatus && couponKey) {
         await axios.patch(
           `https://tickets-73a3c-default-rtdb.firebaseio.com/coupons/${couponKey}.json`,
@@ -175,8 +171,9 @@ const CheckPayment = () => {
         );
       }
 
-      setPaymentDetails(details); // Store payment details in state
-      nextStep(); // Proceed to confirmation step
+      setPaymentDetails(details);
+      setPaymentCompleted(true); // Update payment completion status
+      nextStep();
     } catch (error) {
       console.error(
         "Error processing payment:",
@@ -225,221 +222,206 @@ const CheckPayment = () => {
 
   return (
     <>
-      <div className="font-[sans-serif] bg-white p-4 lg:max-w-7xl max-w-xl mx-auto mt-20">
-        <div className="grid lg:grid-cols-3 gap-10">
-          <div className="bg-[#ade5a0] p-6 rounded-md h-[27rem]">
-            <h2 className="text-2xl font-extrabold text-gray-800">{title}</h2>
-            <div className="bg-[#ade5a0] p-6 rounded-md">
-              <ul className="text-gray-800 mt-8 space-y-4">
-                <li className="flex flex-wrap gap-4 text-sm">
-                  Location{" "}
-                  <span className="ml-auto font-bold">{eventLocation}</span>
-                </li>
-                <li className="flex flex-wrap gap-4 text-sm">
-                  Date: <span className="ml-auto font-bold">{date}</span>
-                </li>{" "}
-                <li className="flex flex-wrap gap-4 text-sm">
-                  Time: <span className="ml-auto font-bold">{time} AM</span>
-                </li>
-                <li className="flex flex-wrap gap-4 text-sm">
-                  Price per Ticket:{" "}
-                  <span className="ml-auto font-bold">${price}</span>
-                </li>
-                <li className="flex flex-wrap gap-4 text-sm">
-                  Quantity of tickets:{" "}
-                  <span className="ml-auto font-bold">{quantity}</span>
-                </li>
-                <li className="flex flex-col gap-4 text-sm font-bold border-t-2 pt-4">
-                  {discountedPrice ? (
-                    <>
-                      <div className="flex flex-col">
-                        <span className="text-red-500 line-through">
-                          Previous Total: ${totalPrice}
-                        </span>
-                        <span className="text-gray-800 font-bold mt-2">
-                          Discounted Total: ${discountedPrice}
-                        </span>
-                      </div>
-                    </>
-                  ) : (
-                    <span className="ml-auto font-bold">
-                      Total Price: ${totalPrice}
+      <Header />
+      <div className="font-sans bg-white p-8 lg:max-w-7xl max-w-xl mx-auto mt-10">
+        <div className="grid gap-12 lg:grid-cols-3">
+          <div className="bg-green-100 p-8 rounded-lg h-[30rem] shadow-lg">
+            <h2 className="text-3xl font-bold text-gray-800">{title}</h2>
+            <ul className="mt-6 space-y-6 text-gray-800">
+              <li className="flex justify-between text-lg">
+                <span>Location:</span>
+                <span className="font-bold">{eventLocation}</span>
+              </li>
+              <li className="flex justify-between text-lg">
+                <span>Date:</span>
+                <span className="font-bold">{date}</span>
+              </li>
+              <li className="flex justify-between text-lg">
+                <span>Time:</span>
+                <span className="font-bold">{time} AM</span>
+              </li>
+              <li className="flex justify-between text-lg">
+                <span>Price per Ticket:</span>
+                <span className="font-bold">${price}</span>
+              </li>
+              <li className="flex justify-between text-lg">
+                <span>Quantity of Tickets:</span>
+                <span className="font-bold">{quantity}</span>
+              </li>
+              <li className="pt-4 text-lg font-bold border-t-2">
+                {discountedPrice ? (
+                  <div className="flex flex-col">
+                    <span className="text-red-500 line-through">
+                      Previous Total: ${totalPrice}
                     </span>
-                  )}
-                </li>
-              </ul>
-            </div>
+                    <span className="mt-2 text-gray-800">
+                      Discounted Total: ${discountedPrice}
+                    </span>
+                  </div>
+                ) : (
+                  <span>Total Price: ${totalPrice}</span>
+                )}
+              </li>
+            </ul>
           </div>
           <div className="lg:col-span-2 max-lg:order-1">
-            <div className="flex items-start">
+            <div className="flex items-start space-x-6">
               <div className="w-full">
                 <div className="flex items-center w-full">
                   <div
-                    className={`w-8 h-8 shrink-0 mx-[-1px] ${
+                    className={`w-8 h-8 shrink-0 ${
                       currentStep >= 1
-                        ? "bg-[#519341]"
-                        : "bg-[#519341] opacity-50"
-                    } p-1.5 flex items-center justify-center rounded-full`}
+                        ? "bg-green-600"
+                        : "bg-green-600 opacity-50"
+                    } p-1.5 rounded-full text-white flex items-center justify-center text-lg font-bold`}
                   >
-                    <span className="text-sm text-white font-bold">1</span>
+                    1
                   </div>
                   <div
-                    className={`w-full h-[3px] mx-4 rounded-lg ${
+                    className={`flex-grow h-1 ${
                       currentStep >= 2
-                        ? "bg-[#519341]"
-                        : "bg-[#519341] opacity-50"
+                        ? "bg-green-600"
+                        : "bg-green-600 opacity-50"
                     }`}
-                  ></div>
-                </div>
-                <div className="mt-2 mr-4">
-                  <h6 className="text-sm font-bold text-gray-800">Coupon</h6>
-                </div>
-                {currentStep === 1 && (
-                  <div className="mt-4 flex flex-col items-center">
-                    <img
-                      src={coupon}
-                      alt="Coupon"
-                      className="w-[20rem] h-[16rem] " // Adjust the size as needed
-                    />
-                    <div className="mt-4 w-full max-w-md">
-                      <input
-                        type="text"
-                        value={couponCode}
-                        onChange={(e) => setCouponCode(e.target.value)}
-                        className="px-4 py-2 border rounded-md w-full"
-                        placeholder="Enter coupon code (optional)"
-                      />
-                      <button
-                        onClick={applyCoupon}
-                        className="px-4 py-2 mt-2 bg-[#519341] text-white rounded-md w-full"
-                      >
-                        Apply Coupon
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="w-full">
-                <div className="flex items-center w-full">
+                  />
                   <div
-                    className={`w-8 h-8 shrink-0 mx-[-1px] ${
+                    className={`w-8 h-8 shrink-0 ${
                       currentStep >= 2
-                        ? "bg-[#519341]"
-                        : "bg-[#519341] opacity-50"
-                    } p-1.5 flex items-center justify-center rounded-full`}
+                        ? "bg-green-600"
+                        : "bg-green-600 opacity-50"
+                    } p-1.5 rounded-full text-white flex items-center justify-center text-lg font-bold`}
                   >
-                    <span className="text-sm text-white font-bold">2</span>
+                    2
                   </div>
                   <div
-                    className={`w-full h-[3px] mx-4 rounded-lg ${
+                    className={`flex-grow h-1 ${
                       currentStep >= 3
-                        ? "bg-[#519341]"
-                        : "bg-[#519341] opacity-50"
+                        ? "bg-green-600"
+                        : "bg-green-600 opacity-50"
                     }`}
-                  ></div>
-                </div>
-                <div className="mt-2 mr-4">
-                  <h6 className="text-sm font-bold text-gray-800">Payment</h6>
-                </div>
-                {currentStep === 2 && (
-                  <div className="p-2 rounded-lg mt-4 border-[#519341] border-2">
-                    <PayPalScriptProvider
-                      options={{
-                        "client-id":
-                          "AWQjlXnJ7sd3brhAawVZd4KPIF93UxZKCY_OB8L0GfftCa6mmzOM-pDsBmQVJmYMrQgFcPg8jbm4q1jy",
-                        currency: "USD",
-                      }}
-                    >
-                      <PayPalButtons
-                        style={{ layout: "vertical" }}
-                        createOrder={(data, actions) => {
-                          return actions.order.create({
-                            purchase_units: [
-                              {
-                                amount: {
-                                  value: discountedPrice || totalPrice,
-                                },
-                              },
-                            ],
-                          });
-                        }}
-                        onApprove={(data, actions) => {
-                          return actions.order
-                            .capture()
-                            .then(handlePaymentSuccess);
-                        }}
-                      />
-                    </PayPalScriptProvider>
-                  </div>
-                )}
-              </div>
-
-              <div className="w-full">
-                <div className="flex items-center w-full">
+                  />
                   <div
-                    className={`w-8 h-8 shrink-0 mx-[-1px] ${
+                    className={`w-8 h-8 shrink-0 ${
                       currentStep >= 3
-                        ? "bg-[#519341]"
-                        : "bg-[#519341] opacity-50"
-                    } p-1.5 flex items-center justify-center rounded-full`}
+                        ? "bg-green-600"
+                        : "bg-green-600 opacity-50"
+                    } p-1.5 rounded-full text-white flex items-center justify-center text-lg font-bold`}
                   >
-                    <span className="text-sm text-white font-bold">3</span>
+                    3
                   </div>
                 </div>
-                <div className="mt-2 mr-4">
-                  <h6 className="text-sm font-bold text-gray-800">
-                    Confirmation
-                  </h6>
-                </div>
-                {currentStep === 3 && (
-                  <div className="p-4 rounded-lg mt-4 border-[#519341] border-2 bg-white shadow-md">
-                    <div className="flex flex-col items-center">
-                      <img
-                        src={gif} // Replace with your image URL
-                        alt="Confirmation"
-                        className="w-64 h-32 mb-4 object-cover rounded-lg border-4 border-[#519341]"
-                      />
-                      <h2 className="text-xl font-bold text-green-700">
-                        Awesome!
-                      </h2>
-                      <p className="mt-4 text-lg text-gray-800 text-center">
-                        Your payment went through smoothly. Thanks a bunch for
-                        choosing us! 😊
-                      </p>
-                      <button
-                        onClick={handleOrderDetails}
-                        className="px-6 py-3 mt-6 bg-[#519341] text-white rounded-lg shadow-md hover:bg-[#417a2c] transition duration-300"
-                      >
-                        Order details
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
+
+            {currentStep === 1 && (
+              <div className="mt-12 px-6 py-8 bg-white shadow-lg rounded-lg">
+                <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+                  Have a Discount Code?
+                </h2>
+                <div className="flex items-center space-x-6 mb-6">
+                  <img src={coupon} alt="Coupon Icon" className="w-16 h-16" />
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                    placeholder="Enter Discount Code"
+                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150 ease-in-out"
+                  />
+                </div>
+                <div className="flex justify-between mt-8">
+                  <button
+                    onClick={applyCoupon}
+                    className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150 ease-in-out"
+                  >
+                    Apply
+                  </button>
+                  <button
+                    onClick={nextStep}
+                    className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150 ease-in-out"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {currentStep === 2 && (
+              <div className="mt-12 px-6 py-8 bg-white shadow-lg rounded-lg">
+                <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+                  Payment
+                </h2>
+                <PayPalScriptProvider
+                  options={{
+                    "client-id":
+                      "AWQjlXnJ7sd3brhAawVZd4KPIF93UxZKCY_OB8L0GfftCa6mmzOM-pDsBmQVJmYMrQgFcPg8jbm4q1jy",
+                  }}
+                >
+                  <PayPalButtons
+                    createOrder={(data, actions) =>
+                      actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value: discountedPrice || totalPrice,
+                            },
+                          },
+                        ],
+                      })
+                    }
+                    onApprove={(data, actions) =>
+                      actions.order
+                        .capture()
+                        .then((details) => handlePaymentSuccess(details))
+                    }
+                  />
+                </PayPalScriptProvider>
+                <div className="flex justify-between mt-8">
+                  <button
+                    onClick={prevStep}
+                    className="px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition duration-150 ease-in-out"
+                  >
+                    Back
+                  </button>
+                  <button
+                    onClick={nextStep}
+                    disabled={!paymentCompleted} // Disable the button based on payment status
+                    className={`px-6 py-3 ${
+                      paymentCompleted ? "bg-green-600" : "bg-gray-400"
+                    } text-white font-semibold rounded-lg shadow-md hover:${
+                      paymentCompleted ? "bg-green-700" : "bg-gray-500"
+                    } focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150 ease-in-out`}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {currentStep === 3 && (
+              <div className="text-center px-6 py-8 bg-white shadow-lg rounded-lg">
+                <img
+                  src={gif}
+                  alt="Success Animation"
+                  className="mx-auto mb-6 h-52 w-auto max-w-md"
+                />
+                <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+                  Your payment went through smoothly. Thanks a bunch for
+                  choosing us! 😊
+                </h2>
+                <div className="flex justify-between mt-8">
+                  <button
+                    onClick={handleOrderDetails}
+                    className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150 ease-in-out"
+                  >
+                    View Order Details
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-
-        <div className="flex justify-between mt-6">
-          <button
-            onClick={prevStep}
-            className="px-4 py-2 bg-[#519341] text-white rounded-md"
-            disabled={currentStep === 1}
-          >
-            Previous
-          </button>
-          {!(currentStep === 2 || currentStep === 3) && (
-            <button
-              onClick={nextStep}
-              className="px-4 py-2 bg-[#519341] text-white rounded-md"
-              disabled={currentStep === 2}
-            >
-              Next
-            </button>
-          )}
-        </div>
       </div>
+      <Footer />
     </>
   );
 };
