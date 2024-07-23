@@ -13,7 +13,8 @@ function UpdateTicket() {
   const [price, setPrice] = useState('');
   const [eventDescription, setEventDescription] = useState('');
   const [title, setTitle] = useState('');
-  const [totlaTicket, setTotal] = useState('');
+  const [totlaTicket
+, setTotal] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [mainImage, setMainImage] = useState('');
@@ -34,7 +35,8 @@ function UpdateTicket() {
         setPrice(data.details?.price || '');
         setEventDescription(data.details?.eventDescription || '');
         setTitle(data.title || '');
-        setTotal(data.details?.totlaTicket || '');
+        setTotal(data.details?.totlaTicket
+ || '');
         setDate(data.details?.date || '');
         setTime(data.details?.time || '');
         setMainImage(data.mainImage || '');
@@ -94,7 +96,10 @@ function cancelUpdate(){
         location: location || eventData.details.location,
         price: price || eventData.details.price,
         eventDescription: eventDescription || eventData.details.eventDescription,
-        totlaTicket: totlaTicket || eventData.details.totlaTicket,
+        totlaTicket
+: totlaTicket
+ || eventData.details.totlaTicket
+,
         date: date || eventData.details.date,
         time: time || eventData.details.time,
       }
@@ -159,12 +164,32 @@ function cancelUpdate(){
       {/******************end images**************** */}
     
       <div className="flex flex-wrap mb-6 -mx-3">
-        <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" htmlFor="grid-Location">
-            Location
-          </label>
-          <input className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} />
-        </div>
+      <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+  <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" htmlFor="grid-Location">
+    Location
+  </label>
+  <select
+    id="grid-Location"
+    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+    value={location}
+    onChange={(e) => setLocation(e.target.value)}
+  >
+    <option value="">Select a location</option>
+    <option value="Irbid">Irbid</option>
+    <option value="Ajloun">Ajloun</option>
+    <option value="Jerash">Jerash</option>
+    <option value="Mafraq">Mafraq</option>
+    <option value="Balqa">Balqa</option>
+    <option value="Amman">Amman</option>
+    <option value="Zarqa">Zarqa</option>
+    <option value="Madaba">Madaba</option>
+    <option value="Karak">Karak</option>
+    <option value="Tafilah">Tafilah</option>
+    <option value="Aqaba">Aqaba</option>
+    <option value="Maan">Maan</option>
+  </select>
+</div>
+
         <div className="w-full px-3 md:w-1/2">
           <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" htmlFor="grid-name">
             Name
@@ -183,7 +208,8 @@ function cancelUpdate(){
           <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" htmlFor="grid-Total-Tickets">
             Total Tickets
           </label>
-          <input value={totlaTicket} onChange={(e) => setTotal(e.target.value)} className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="Total Tickets" />
+          <input value={totlaTicket
+} onChange={(e) => setTotal(e.target.value)} className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="Total Tickets" />
         </div>
       </div>
       <div className="flex flex-wrap mb-2 -mx-3">

@@ -122,7 +122,7 @@ const OrderDetails = () => {
   );
 
   return (
-    <><Footer/>
+    <><Header/>
     <div className="min-h-screen px-8 py-8 bg-gray-100">
       {/* Hero Section */}
       {mainImage && (

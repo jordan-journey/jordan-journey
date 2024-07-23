@@ -4,14 +4,14 @@ import AboutUs from "./pages/About";
 import ContactUs from "./pages/ContactUs";
 import ListingPage from "./pages/ListingPage";
 import Login from "./pages/Login";
-import MainDashboard from "./pages/Dashboard/Dashboard";
+import MainDashboard from "./pages/Dashboard/MDashboard";
 import AddNewTicket from "./pages/Dashboard/add";
 import AddAdmin from "./pages/Dashboard/AddAdmin";
 import Admin from "./pages/Dashboard/Admin";
 import AdminLogin from "./pages/Dashboard/AdminLogin";
 import Saidbar from "./pages/Dashboard/Saidbar";
-import DelteTicket from "./pages/Dashboard/Delte";
-import UpdateTicket from "./pages/Dashboard/UPdate";
+import DeleteTicket from "./pages/Dashboard/Delete";
+ import UpdateTicket from "./pages/Dashboard/UPdate";
 import Users from "./pages/Dashboard/Users";
 import Contact from "./pages/Dashboard/ContactMsg";
 import Profile from "./pages/Profile";
@@ -41,7 +41,7 @@ function App() {
             <Route path="ADDAdmin" element={<AddAdmin />} />
             <Route path="Admin" element={<Admin />} />
             <Route path="Said" element={<Saidbar />} />
-            <Route path="/Delete" element={<DelteTicket />} />
+            <Route path="/Delete/:id" element={<DeleteTicket />} />
             <Route path="/Update/:id" element={<UpdateTicket />} />
             <Route path="/Users" element={<Users />} />
             <Route path="/Contact" element={<Contact />} />

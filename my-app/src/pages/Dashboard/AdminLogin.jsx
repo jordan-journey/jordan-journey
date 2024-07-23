@@ -32,7 +32,7 @@ function AdminLogin() {
       if (admin) {
         sessionStorage.setItem("AdminImg", admin.src);
         if (admin.delete) {
-          navigate("/DisplayEvents");
+          navigate("/MDashboard");
         } else setError("  قد تم انهاء خدماتك ");
       } else {
         setError("البيانات غير صحيحة"); // Error message
