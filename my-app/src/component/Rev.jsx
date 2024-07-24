@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import emailjs from "emailjs-com"; // Import emailjs
@@ -8,6 +8,10 @@ import SoldOut from "../assets/images/SoldOut.jpg";
 import soldwhite from "../assets/images/soldwhite.png";
 import Header from "./header";
 import Footer from "./Footer";
+import Modal from "react-modal";
+import { motion } from "framer-motion";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const Rev = () => {
   const { id } = useParams(); // Get the event ID from the URL
@@ -20,6 +24,48 @@ const Rev = () => {
   const [comment, setComment] = useState({ name: "", email: "", text: "" }); // State to manage new comment
   const [totalTickets, setTotalTickets] = useState(0); // Total number of tickets
   const [soldTickets, setSoldTickets] = useState(0); // Number of sold tickets
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
+  const toastShown = useRef(false);
+
+  const [isSoldOutModalOpen, setIsSoldOutModalOpen] = useState(true); // Open by default
+
+  const closeSoldOutModal = () => {
+    setIsSoldOutModalOpen(false);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!toastShown.current) {
+        Toastify({
+          text: "🌟 Leave a review to get a coupon! 🎟️",
+          duration: 5000, // Duration in milliseconds
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center`, `right`
+          backgroundColor: "#4CAF50", // Green color for the background
+          stopOnFocus: true, // Prevents the toast from closing on mouse hover
+          offset: {
+            x: 20, // Horizontal offset
+            y: 100, // Vertical offset (distance from the top)
+          },
+        }).showToast();
+
+        toastShown.current = true; // Mark toast as shown
+      }
+    }, 5000); // Delay in milliseconds
+
+    // Cleanup function to clear the timer if the component unmounts before the delay completes
+    return () => clearTimeout(timer);
+  }, []);
+
+  const openModal = (image) => {
+    setCurrentImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   // Fetch event data and reviews when the component mounts or `id` changes
   useEffect(() => {
@@ -32,6 +78,11 @@ const Rev = () => {
         setEvent(eventData);
         setTotalTickets(eventData.details.totlaTicket || 0); // Set totalTickets
         setSoldTickets(eventData.details.soldTickets || 0); // Set soldTickets
+        if (eventData.details.totlaTicket <= eventData.details.soldTickets) {
+          setIsSoldOutModalOpen(true);
+        } else {
+          setIsSoldOutModalOpen(false);
+        }
       } catch (error) {
         console.error("Error fetching event data", error);
       }
@@ -85,10 +136,6 @@ const Rev = () => {
     }, 1000);
     return () => clearTimeout(timer);
   }, [quantity]);
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
 
   const handleCommentChange = (e) => {
     const { name, value } = e.target;
@@ -150,8 +197,13 @@ const Rev = () => {
 
       // Check if user ID exists
       if (!userId) {
-        console.error("User is not logged in.");
-        return; // Exit if the user is not logged in
+        Swal.fire({
+          icon: "error",
+          title: "Oops!",
+          text: "You need to be logged in to to applay a review ",
+          confirmButtonText: "OK",
+        });
+        return; // Exit if the user is not authenticated
       }
 
       // Fetch existing reviews from Firebase
@@ -211,6 +263,20 @@ const Rev = () => {
       // Clear the comment form and update reviews
       setComment({ name: "", email: "", text: "" });
       setReviews((prevReviews) => [...prevReviews, { ...comment, userId }]);
+      Toastify({
+        text: "✅ Thank you for your review! !",
+        duration: 5000, // Duration in milliseconds
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center`, `right`
+        backgroundColor: "#4CAF50", // Green color for the background
+        stopOnFocus: true, // Prevents the toast from closing on mouse hover
+        offset: {
+          x: 20, // Horizontal offset
+          y: 50, // Vertical offset (distance from the top)
+        },
+      }).showToast();
+
+      toastShown.current = true; // Mark toast as shown
     } catch (error) {
       console.error("Error submitting comment", error);
     }
@@ -249,266 +315,372 @@ const Rev = () => {
       },
     });
   };
+
   return (
-    <><Header/>
-    <div className="p-8 mx-auto mb-8 font-sans tracking-wide max-lg:max-w-2xl">
-      <div className="grid items-start grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="space-y-4 text-center lg:sticky top-8">
-          <div className=" p-4 flex items-center sm:h-[32rem] rounded-lg">
+    <>
+      {/* Modal for Sold Out */}
+      <Modal
+        isOpen={isSoldOutModalOpen}
+        onRequestClose={closeSoldOutModal}
+        contentLabel="Sold Out Modal"
+        className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-75"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-75"
+      >
+        <div className="relative max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+          <button
+            onClick={closeSoldOutModal}
+            className="absolute top-3 right-3 bg-white text-gray-800 rounded-full p-2 hover:bg-gray-200"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <img
+            src={SoldOut}
+            alt="Sold Out"
+            className="w-full h-auto object-contain"
+          />
+        </div>
+      </Modal>
+
+      <Header />
+      <main className="p-6 mx-auto max-w-screen-xl space-y-16">
+        {/* Hero Section */}
+        <section className="relative mb-16">
+          <div className="relative">
             <img
               src={mainImage}
               alt={name}
-              className="w-full max-h-[30rem] rounded-lg"
+              className="w-full h-[50vh] object-cover rounded-xl shadow-xl"
             />
+            <div className="absolute bottom-6 left-6 bg-white bg-opacity-85 p-6 rounded-lg shadow-xl">
+              <h2 className="text-4xl font-extrabold text-gray-900">{title}</h2>
+              <p className="mt-2 text-gray-700">{mainDescription}</p>
+            </div>
           </div>
+        </section>
+        {/* Event Details Section */}
+        <section className="bg-white p-8 rounded-xl shadow-lg">
+          <h3 className="text-3xl font-bold text-[#519341] mb-6">
+            Event Details
+          </h3>
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="space-y-6">
+              <div>
+                <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                  Event Information
+                </h4>
+                <ul className="space-y-3">
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-gray-500 mr-2">📅</span>
+                    <strong>Date:</strong> {details.date}
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-gray-500 mr-2">📍</span>
+                    <strong>Location:</strong> {details.location}
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-gray-500 mr-2">⏰</span>
+                    <strong>Time:</strong> {details.time}
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-gray-500 mr-2">💲</span>
+                    <strong>Price:</strong> ${details.price}
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-gray-500 mr-2">🎫</span>
+                    <strong>Total tickets:</strong> {details.totlaTicket}
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-gray-500 mr-2">✅</span>
+                    <strong>Sold tickets:</strong> {details.soldTickets}
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                  Description
+                </h4>
+                <p className="text-gray-700">{details.eventDescription}</p>
+              </div>
+            </div>
+            <div className="bg-green-50 p-6 rounded-xl shadow-md">
+              <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                Tickets
+              </h4>
+              <div
+                className={`mb-4 ${
+                  highlightPrice ? "bg-yellow-100 border border-yellow-500" : ""
+                }`}
+              >
+                <span className="text-xl font-medium text-gray-800">
+                  Total Price: ${totalPrice}
+                </span>
+              </div>
+              <div className="flex items-center space-x-2 mb-4">
+                <button
+                  type="button"
+                  onClick={handleDecrement}
+                  className="px-4 py-2 text-white bg-[#519341] rounded-lg flex items-center justify-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M20 12H4"
+                    />
+                  </svg>
+                </button>
+                <input
+                  type="number"
+                  value={quantity}
+                  readOnly
+                  className="w-16 h-12 text-center bg-green-100 border border-gray-300 rounded-md"
+                />
+                <button
+                  type="button"
+                  onClick={handleIncrement}
+                  className="px-4 py-2 text-white bg-[#519341] rounded-lg flex items-center justify-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={handlePayTickets}
+                className={`w-full py-3 mt-4 text-base font-medium text-white rounded-lg ${
+                  isButtonVisible ? "bg-red-500" : "bg-[#519341]"
+                }`}
+                disabled={isButtonVisible}
+              >
+                Pay Tickets
+              </button>
+            </div>
+          </div>
+        </section>
 
-          <div className="grid grid-cols-2 ">
+        {/* Gallery Section */}
+        <section>
+          <h3 className="text-3xl font-semibold text-center text-gray-900 mb-8">
+            Gallery
+          </h3>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-2">
             {otherImages.map((image, index) => (
               <div
                 key={index}
-                className=" p-4 flex items-center rounded-lg sm:h-[182px]"
+                className="relative overflow-hidden rounded-xl shadow-md cursor-pointer group"
+                onClick={() => openModal(image)}
               >
                 <img
                   src={image}
-                  alt={`Gallery ${index + 1}`}
-                  className="w-full h-[15rem] rounded-lg "
+                  alt={`Gallery image ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-110"
+                  style={{ width: "100%", height: "20rem" }} // Ensure full width
                 />
+
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-white text-lg font-semibold">
+                    View Image
+                  </span>
+                </div>
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="max-w-xl">
-          <div>
-            <h2 className="text-2xl font-extrabold text-gray-800">{title}</h2>
-            <p className="text-sm text-gray-600 mt-2 w-auto z-[-10000000000]">
-              {mainDescription}
-            </p>
-            <br /> <br />{" "}
-          </div>
-
-          <form className="flex flex-col items-end space-y-4 ">
-            <div className="flex items-center justify-end space-x-4">
-              <div className="w-[11rem]">
-                <div className={`mb-4 ${highlightPrice ? "highlight" : ""}`}>
-                  <span className="text-lg font-medium">
-                    Total Price: ${totalPrice}
-                  </span>
-                </div>
-                <legend className="mb-4 text-xl font-medium">Quantity</legend>
-                <div className="flex items-center space-x-1 ">
-                  <button
-                    type="button"
-                    onClick={handleDecrement}
-                    className="px-2.5 py-1.5 text-xs text-[#519341] rounded-lg flex items-center"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-3 h-3"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M20 12H4"
-                      />
-                    </svg>
-                  </button>
-
-                  <input
-                    type="number"
-                    value={quantity}
-                    readOnly
-                    className="w-20 h-12 text-center bg-green-100 border border-gray-300 rounded-md pl-7"
+          {/* Modal for Image Preview */}
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            contentLabel="Image Modal"
+            className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-75"
+            overlayClassName="fixed inset-0 bg-black bg-opacity-75"
+          >
+            <div className="relative max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+              <button
+                onClick={closeModal}
+                className="absolute top-3 right-3 bg-white text-gray-800 rounded-full p-2 hover:bg-gray-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
                   />
-
-                  <button
-                    type="button"
-                    onClick={handleIncrement}
-                    className="px-2.5 py-1.5 text-xs text-[#519341] rounded-lg flex items-center"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-3 h-3"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 4v16m8-8H4"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              {isButtonVisible ? (
-                <img
-                  src={SoldOut}
-                  alt={`${title} Sold Out`}
-                  width="370"
-                  height="200"
-                  className="mt-[-2rem] mb-[-2rem] mx-auto"
-                />
-              ) : (
-                <img
-                  src={soldwhite}
-                  alt={`${title} Sold Out`}
-                  width="370"
-                  height="200"
-                  className="mt-[-2rem] mb-[-2rem] mx-auto "
-                />
-              )}
+                </svg>
+              </button>
+              <img
+                src={currentImage}
+                alt="Current Gallery"
+                className="w-full h-auto object-contain"
+              />
             </div>
-            <button
-              type="button"
-              onClick={handlePayTickets}
-              className={`w-full py-3 text-base font-medium text-white rounded-lg ${
-                isButtonVisible
-                  ? "bg-red-500 text-white"
-                  : "bg-[#519341] text-white"
-              }`}
-              disabled={isButtonVisible}
-            >
-              Pay Tickets
-            </button>
-          </form>
+          </Modal>
+        </section>
 
-          <div className="mt-10 border-b border-gray-200">
-            <nav className="flex -mb-px space-x-8">
-              <button
-                onClick={() => handleTabChange("description")}
-                className={`pb-4 px-1 text-base font-medium ${
-                  activeTab === "description"
-                    ? "border-[#519341] text-[#519341] border-b-2"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                }`}
-              >
-                Description
-              </button>
-              <button
-                onClick={() => handleTabChange("reviews")}
-                className={`pb-4 px-1 text-base font-medium ${
-                  activeTab === "reviews"
-                    ? "border-[#519341] text-[#519341] border-b-2"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                }`}
-              >
-                Reviews
-              </button>
-            </nav>
-          </div>
-
-          <div className="mt-8">
-            {activeTab === "description" && (
-              <>
-                <div className="mt-4 text-sm text-gray-600">
-                  <p>{details.eventDescription}</p>
-                </div>
-                <ul className="pl-4 mt-6 space-y-3 text-sm text-gray-600 list-disc">
-                  <li>Date: {details.date}</li>
-                  <li>Location: {details.location}</li>
-                  <li>Time: {details.time}</li>
-                  <li>Price: ${details.price}</li>
-                  <li>Total tickets: {details.totlaTicket}</li>
-                  <li>Sold tickets: {details.soldTickets}</li>
-                </ul>
-              </>
-            )}
-            {activeTab === "reviews" && (
-              <div>
-                <h3 className="mb-4 text-lg font-semibold">Reviews</h3>
-                <div className="space-y-4">
-                  {reviews.length === 0 ? (
-                    <p className="text-gray-500">
-                      There are no reviews yet. Be the first to leave a review!
-                    </p>
-                  ) : (
-                    reviews.map((review, index) => (
-                      <div
-                        key={index}
-                        className="p-4 rounded-lg shadow bg-green-50"
-                      >
-                        <div className="flex items-center">
+        {/* Reviews Section */}
+        <section className="bg-gray-100 py-12">
+          <div className="container mx-auto px-4">
+            <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
+              Reviews
+            </h3>
+            <div className="bg-white p-6 rounded-lg shadow-xl">
+              {reviews.length === 0 ? (
+                <p className="text-center text-gray-500">
+                  There are no reviews yet. Be the first to leave a review!
+                </p>
+              ) : (
+                <div
+                  className={`space-y-8 ${
+                    reviews.length > 3 ? "max-h-80 overflow-y-scroll" : ""
+                  }`}
+                >
+                  {reviews.slice(0, 3).map((review, index) => (
+                    <div
+                      key={index}
+                      className="p-6 bg-green-50 rounded-lg shadow-lg flex items-center space-x-4"
+                    >
+                      <img
+                        src={
+                          review.avatar ||
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU5mKo7TNAlFnR_IPJ9JWBKb4jNOzzlFFjrA&s"
+                        }
+                        alt={`${review.name}'s avatar`}
+                        className="w-16 h-16 rounded-full object-cover"
+                      />
+                      <div>
+                        <h4 className="text-xl font-semibold text-gray-900">
+                          {review.name}
+                        </h4>
+                        <p className="mt-2 text-gray-700">{review.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {reviews.length > 3 && (
+                    <div className="space-y-8">
+                      {reviews.slice(3).map((review, index) => (
+                        <div
+                          key={index}
+                          className="p-6 bg-green-50 rounded-lg shadow-lg flex items-center space-x-4"
+                        >
                           <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU5mKo7TNAlFnR_IPJ9JWBKb4jNOzzlFFjrA&s"
+                            src={
+                              review.avatar ||
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU5mKo7TNAlFnR_IPJ9JWBKb4jNOzzlFFjrA&s"
+                            }
                             alt={`${review.name}'s avatar`}
-                            className="w-10 h-10 mr-4 rounded-full"
+                            className="w-16 h-16 rounded-full object-cover"
                           />
                           <div>
-                            <p className="text-sm text-gray-600">
-                              <strong>{review.name}</strong>: {review.text}
-                            </p>
-                            {/* <p className="mt-1 text-xs text-gray-400">
-                  {new Date(review.date).toLocaleString()}
-                </p> */}
+                            <h4 className="text-xl font-semibold text-gray-900">
+                              {review.name}
+                            </h4>
+                            <p className="mt-2 text-gray-700">{review.text}</p>
                           </div>
                         </div>
-                      </div>
-                    ))
+                      ))}
+                    </div>
                   )}
                 </div>
-                <form className="mt-8 space-y-4" onSubmit={handleCommentSubmit}>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={comment.name}
-                      onChange={handleCommentChange}
-                      required
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm h-11 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={comment.email}
-                      onChange={handleCommentChange}
-                      required
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm h-11 sm:text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Comment
-                    </label>
-                    <textarea
-                      name="text"
-                      value={comment.text}
-                      onChange={handleCommentChange}
-                      required
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm sm:text-sm"
-                      rows="4"
-                    ></textarea>
-                  </div>
-                  <div>
-                    <button
-                      type="submit"
-                      className="w-full py-3 text-base font-medium text-white bg-[#519341] rounded-lg"
-                    >
-                      Submit Comment
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+              )}
+            </div>
+            <div className="mt-12">
+              <h4 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+                Leave a Review
+              </h4>
+              <form
+                className="bg-white p-6 rounded-lg shadow-xl max-w-2xl mx-auto"
+                onSubmit={handleCommentSubmit}
+              >
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={comment.name}
+                    onChange={handleCommentChange}
+                    required
+                    className="block w-full mt-1 p-2 border-gray-300 rounded-md shadow-sm"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={comment.email}
+                    onChange={handleCommentChange}
+                    required
+                    className="block w-full mt-1 p-2 border-gray-300 rounded-md shadow-sm"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Comment
+                  </label>
+                  <textarea
+                    name="text"
+                    value={comment.text}
+                    onChange={handleCommentChange}
+                    required
+                    className="block w-full mt-1 p-2 border-gray-300 rounded-md shadow-sm"
+                    rows="4"
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-3 text-lg font-semibold text-white bg-green-600 rounded-lg hover:bg-green-500 transition-transform duration-200"
+                >
+                  Submit Comment
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <Footer/></>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 };
 
