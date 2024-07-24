@@ -1,24 +1,35 @@
 import { useState, useEffect } from "react";
 import Cards from "../component/Cards";
-// import ListingPageImage from "../assets/images/ListingPageImage.jpg";
 import axios from "axios";
 import Header from "../component/header";
 import Footer from "../component/Footer";
-import {
-  Checkbox,
-  Card,
-  List,
-  ListItem,
-  ListItemPrefix,
-  Typography,
-} from "@material-tailwind/react";
+import { Range, getTrackBackground } from 'react-range';
 
 function ListingPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [uniqueLocations, setUniqueLocations] = useState([]);
-  const [selectedLocations, setSelectedLocations] = useState([]);
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [priceRange, setPriceRange] = useState([0, 100]);
+
+  const STEP = 1;
+  const MIN = 0;
+  const MAX = 100;
+
+  const uniqueLocations = [
+    "Irbid",
+    "Ajloun",
+    "Jerash",
+    "Mafraq",
+    "Balqa",
+    "Amman",
+    "Zarqa",
+    "Madaba",
+    "Karak",
+    "Tafilah",
+    "Aqaba",
+    "Maan"
+  ];
 
   useEffect(() => {
     fetchData();
@@ -35,33 +46,22 @@ function ListingPage() {
           ...response.data[key],
         }));
         setEvents(fetchedEvents);
-
-        const uniqueLocations = [
-          ...new Set(fetchedEvents.map((event) => event.details.location)),
-        ];
-        setUniqueLocations(uniqueLocations);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false);
     }
   };
 
-  const handleCheckboxChange = (location) => {
-    setSelectedLocations((prevState) =>
-      prevState.includes(location)
-        ? prevState.filter((loc) => loc !== location)
-        : [...prevState, location]
+  const filteredEvents = events.filter((event) => {
+    const eventPrice = event.details.price;
+    return (
+      (selectedLocation === '' || selectedLocation === event.details.location) &&
+      event.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      eventPrice >= priceRange[0] && eventPrice <= priceRange[1]
     );
-  };
-
-  const filteredEvents = events.filter(
-    (event) =>
-      (selectedLocations.length === 0 ||
-        selectedLocations.includes(event.details.location)) &&
-      event.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  });
 
   if (loading) {
     return (
@@ -73,17 +73,10 @@ function ListingPage() {
 
   return (
     <main>
-      <Header/>
-      {/******************************HeroSection in listing page******************************** */}
-      <section
-        // style={{
-        //   "--image-url": `url(${ListingPageImage})`,
-        //   backgroundSize: "cover",
-        //   backgroundPosition: "center",
-        // }}
-        className="flex flex-wrap items-center justify-center w-full h-20 shadow-lg gap-44 shadow-green-600"
-      >
-        {/********************************search************************ */}
+      <Header />
+            {/**********************************search********************************** */}
+
+      <section className="flex flex-wrap items-center justify-center w-full h-20 shadow-lg gap-44shadow-xl ">
         <div className="my-3 xl:w-96">
           <div className="relative flex flex-wrap items-stretch w-full mb-4">
             <input
@@ -114,43 +107,77 @@ function ListingPage() {
             </span>
           </div>
         </div>
-        {/****************************end search************************ */}
       </section>
-      {/****************************** end HeroSection in listing page******************************** */}
-{/******************************************* */}
-      <section className="flex flex-wrap justify-center gap-3 mt-5 ">
-      <Card className="w-full max-w-[80rem] p-4 shadow-lg  shadow-green-600">
-        <List className="flex flex-row flex-wrap gap-4 border-8 border-green-600 ">
-          {uniqueLocations.map((location, index) => (
-            <ListItem className="flex-shrink-0 w-auto p-2 " key={index}>
-              <label
-                htmlFor={`horizontal-list-${location.toLowerCase().replace(".", "")}`}
-                className="flex items-center px-3 py-2 cursor-pointer"
-              >
-                <ListItemPrefix className="mr-3">
-                  <Checkbox
-                    id={`horizontal-list-${location.toLowerCase().replace(".", "")}`}
-                    ripple={false}
-                    className="hover:before:opacity-0"
-                    containerProps={{ className: "p-0" }}
-                    checked={selectedLocations.includes(location)}
-                    onChange={() => handleCheckboxChange(location)}
-                  />
-                </ListItemPrefix>
-                <Typography color="blue-gray" className="font-medium">
+
+
+      {/**********************************end search********************************** */}
+            {/******************************************************************** */}
+
+      <section className="flex flex-wrap justify-center gap-3 mt-16">
+   
+          <div className="flex flex-row flex-wrap gap-10 p-4 space-x-80">
+
+            {/**********************dropdown list************************* */}
+            <select
+              id="location"
+              className="block px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none h-15 w-52 focus:outline-none focus:bg-white"
+              value={selectedLocation}
+              onChange={(e) => setSelectedLocation(e.target.value)}
+            >
+              <option value="">Select a location</option>
+              {uniqueLocations.map((location, index) => (
+                <option key={index} value={location}>
                   {location}
-                </Typography>
-              </label>
-            </ListItem>
-          ))}
-        </List>
-      </Card>
-    </section>
-{/***************************************** */}
+                </option>
+              ))}
+            </select>
+            {/**********************end dropdown list************************* */}
+
+                        {/**********************price************************* */}
+
+            <div className="flex flex-col items-center ">
+              <label className="mb-2 text-gray-700">Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
+              <Range
+                values={priceRange}
+                step={STEP}
+                min={MIN}
+                max={MAX}
+                onChange={(values) => setPriceRange(values)}
+                renderTrack={({ props, children }) => (
+                  <div
+                    {...props}
+                    className="w-40 h-2 rounded-md"
+                    style={{
+                      background: getTrackBackground({
+                        values: priceRange,
+                        colors: ['#ccc', '#519341', '#ccc'],
+                        min: MIN,
+                        max: MAX,
+                      }),
+                    }}
+                  >
+                    {children}
+                  </div>
+                )}
+                renderThumb={({ props }) => (
+                  <div
+                    {...props}
+                    className="w-6 h-6 bg-green-500 rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
+                  />
+                )}
+              />
+            </div>
+                        {/**********************end price************************* */}
+
+        
+        </div>
+      </section>
+            {/******************************************************************** */}
+
       <section>
         <Cards events={filteredEvents} searchQuery={searchQuery} />
       </section>
-      <Footer/>
+      <Footer />
     </main>
   );
 }

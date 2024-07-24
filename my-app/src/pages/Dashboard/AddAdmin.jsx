@@ -23,7 +23,7 @@ function AddAdmin() {
     });
   };
 
-  //   add new admin-----------------------------------------------------------------------------------------------------------------------------------
+  //   add new admin
   async function AddNewAdmin(e) {
     e.preventDefault();
     try {
