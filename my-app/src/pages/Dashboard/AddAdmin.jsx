@@ -23,6 +23,9 @@ function AddAdmin() {
     });
   };
 
+
+  //   add new admin
+
   async function AddNewAdmin(e) {
     e.preventDefault();
     try {
