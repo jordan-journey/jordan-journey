@@ -81,21 +81,23 @@ function AddTicket() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       <NavDashboard />
-      <div className="flex flex-1 pt-16">
+      <div className="flex flex-wrap gap-12 pt-16 mt-16">
         {" "}
         {/* Add padding-top to avoid overlap */}
-        <Saidbar />
-        <div className="flex-1 flex items-center justify-center p-10 min-h-screen bg-gray-100 relative z-10">
-          <div className="w-full max-w-3xl bg-slate-300 p-8 rounded-lg shadow-lg z-20 relative">
-            <h1 className="text-4xl font-bold mb-9">Add Event</h1>
-            <form className="w-full">
+        <div className="w-1/4">
+          <Saidbar />
+        </div>
+        <div className="w-2.5/4 py-7 ms-28">
+        
+        <h1 className="text-4xl font-bold mb-9">Add Event</h1>
+            <form className="w-full max-w-3xl mx-auto">
               {/* Form fields */}
-              <div className="flex flex-wrap gap-5 mb-5">
+              <div className="flex flex-wrap gap-5">
                 <button
                   type="submit"
-                  className="w-32 px-4 py-2 font-bold text-white bg-green-500 rounded"
+                  className="w-32 px-4 py-2 mb-10 font-bold text-white rounded bg-slate-400 hover:bg-slate-300"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAddEvent();
@@ -105,7 +107,7 @@ function AddTicket() {
                 </button>
                 <button
                   type="button"
-                  className="w-32 px-4 py-2 font-bold text-white bg-green-300 rounded hover:bg-green-500"
+                  className="w-32 px-4 py-2 mb-10 font-bold text-white rounded bg-slate-300 hover:bg-slate-200"
                   onClick={() => {
                     cancelAdd();
                   }}
@@ -113,8 +115,11 @@ function AddTicket() {
                   Cancel
                 </button>
               </div>
-              <div className="flex flex-wrap gap-5">
-                <div className="w-full md:w-1/3">
+              <div className="flex ">
+              <div className="w-full p-8 bg-white rounded shadow-xl">
+                    {/**********************images********************** */}
+                    <div className="flex flex-wrap mx-3 mt-10 mb-6 ">
+                <div className="w-full px-3 mb-6 md:w-1/3 md:mb-0">
                   {preview && (
                     <img
                       className="w-full max-w-[200px] mx-auto my-4 border border-gray-300 max-h-28"
@@ -136,7 +141,7 @@ function AddTicket() {
                   />
                 </div>
                 {previews.map((preview, index) => (
-                  <div className="w-full md:w-1/3" key={index}>
+                  <div className="w-full px-3 mb-6 md:w-1/3" key={index}>
                     {preview && (
                       <img
                         className="w-full max-w-[200px] mx-auto my-4 border border-gray-300 max-h-28"
@@ -159,8 +164,10 @@ function AddTicket() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-5 mb-5">
-                <div className="w-full md:w-1/2">
+
+              
+              <div className="flex flex-wrap mb-6 -mx-3">
+                <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="location"
@@ -169,15 +176,23 @@ function AddTicket() {
                   </label>
                   <select
                     id="location"
-                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+                    className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                   >
-                    <option value="">Select a location</option>
-                    {/* Option values */}
+                       <option value="" disabled>
+                            Select Location
+                          </option>
+                          <option value="Amman">Amman</option>
+                          <option value="Irbid">Irbid</option>
+                          <option value="Zarqa">Zarqa</option>
+                          <option value="Madaba">Madaba</option>
+                          <option value="Tafilah">Tafilah</option>
+                          <option value="Aqaba">Aqaba</option>
+                          <option value="Maan">Maan</option>
                   </select>
                 </div>
-                <div className="w-full md:w-1/2">
+                <div className="w-full px-3 md:w-1/2">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="name"
@@ -194,8 +209,8 @@ function AddTicket() {
                   />
                 </div>
               </div>
-              <div className="flex flex-wrap gap-5 mb-5">
-                <div className="w-full md:w-1/2">
+              <div className="flex flex-wrap mb-6 -mx-3">
+                <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="title"
@@ -211,7 +226,7 @@ function AddTicket() {
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
-                <div className="w-full md:w-1/2">
+                <div className="w-full px-3 md:w-1/2">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="total-ticket"
@@ -228,8 +243,8 @@ function AddTicket() {
                   />
                 </div>
               </div>
-              <div className="flex flex-wrap gap-5 mb-5">
-                <div className="w-full md:w-1/3">
+              <div className="flex flex-wrap mb-2 -mx-3">
+                <div className="w-full px-3 mb-6 md:w-1/3 md:mb-0">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="price"
@@ -245,7 +260,7 @@ function AddTicket() {
                     onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
-                <div className="w-full md:w-1/3">
+                <div className="w-full px-3 mb-6 md:w-1/3 md:mb-0">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="date"
@@ -261,7 +276,7 @@ function AddTicket() {
                     onChange={(e) => setDate(e.target.value)}
                   />
                 </div>
-                <div className="w-full md:w-1/3">
+                <div className="w-full px-3 mb-6 md:w-1/3 md:mb-0">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="time"
@@ -278,7 +293,7 @@ function AddTicket() {
                   />
                 </div>
               </div>
-              <div className="flex flex-wrap mb-6">
+              <div className="flex flex-wrap mb-2">
                 <div className="w-full">
                   <label
                     htmlFor="main-description"
@@ -314,11 +329,12 @@ function AddTicket() {
                   ></textarea>
                 </div>
               </div>
+              </div>
+              </div>
             </form>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

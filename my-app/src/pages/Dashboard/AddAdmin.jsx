@@ -45,16 +45,16 @@ function AddAdmin() {
       <NavDashboard />
       <div className="flex">
         <Saidbar />
-        <section className="flex-1 flex items-center justify-center p-10 dark:bg-gray-900 min-h-screen mt-20">
+        <section className="flex items-center justify-center flex-1 min-h-screen p-10 mt-20 dark:bg-gray-900 ms-52">
           {" "}
           {/* Adjusted margin-top */}
-          <div className="w-full max-w-md mx-auto shadow-2xl p-6 rounded-xl dark:bg-gray-800">
-            <h1 className="mb-4 font-serif font-extrabold text-2xl text-center dark:text-white">
+          <div className="w-full max-w-md p-6 mx-auto shadow-2xl rounded-xl dark:bg-gray-800">
+            <h1 className="mb-4 font-serif text-2xl font-extrabold text-center dark:text-white">
               Add Admin
             </h1>
 
             <form onSubmit={AddNewAdmin}>
-              <div className="flex items-center justify-center w-full h-32 bg-gray-200 rounded-sm dark:bg-gray-700 mb-4">
+              <div className="flex items-center justify-center w-full h-32 mb-4 bg-gray-200 rounded-sm dark:bg-gray-700">
                 <div className="flex items-center justify-center w-24 h-24 bg-gray-300 rounded-full dark:bg-gray-600">
                   <div className="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full dark:bg-gray-400">
                     <input

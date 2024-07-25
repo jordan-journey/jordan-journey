@@ -1,5 +1,5 @@
-import Image1 from "../../assets/hero/pngwing.com.png";
-import Image2 from "../../assets/hero/pngwing.com (1).png";
+import Image1 from "../../assets/images/ajlounHome.png";
+import Image2 from "../../assets/images/ammanHome.png";
 import Image3 from "../../assets/hero/pngwing.com (2).png";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 const ImageList = [
   {
     id: 1,
-    img: Image1,
-    title: "Upto 50% off on Ajloun trip",
-    description: "Full day with launch and free camps",
+    img: Image3,
+    title: "70% off on family lunch",
+    description: "Enjoy a happy family's meal",
   },
   {
     id: 2,
@@ -19,10 +19,11 @@ const ImageList = [
   },
   {
     id: 3,
-    img: Image3,
-    title: "70% off on family lunch",
-    description: "Enjoy a happy family's meal",
+    img: Image1,
+    title: "Upto 50% off on Ajloun trip",
+    description: "Full day with launch and free camps",
   },
+
 ];
 
 const Hero = () => {
@@ -51,7 +52,7 @@ const Hero = () => {
               <div key={data.id}>
                 <div className="grid grid-cols-1 sm:grid-cols-2">
                   {/* text content section */}
-                  <div className="relative z-10 flex flex-col justify-center order-2 pl-36 gap-4 pt-12 text-center sm:pt-0 sm:text-left sm:order-1">
+                  <div className="relative z-10 flex flex-col justify-center order-2 gap-4 pt-12 text-center pl-36 sm:pt-0 sm:text-left sm:order-1">
                     <h1
                       data-aos="zoom-out"
                       data-aos-duration="500"
@@ -91,7 +92,7 @@ const Hero = () => {
                       <img
                         src={data.img}
                         alt=""
-                        className="w-[600px] h-[600px]  sm:scale-105 lg:scale-120 object-contain mx-auto"
+                        className="object-contain mx-auto h-96 w-96 sm:scale-105 lg:scale-120"
                       />
                     </div>
                   </div>
