@@ -11,14 +11,13 @@ import Admin from "./pages/Dashboard/Admin";
 import AdminLogin from "./pages/Dashboard/AdminLogin";
 import Saidbar from "./pages/Dashboard/Saidbar";
 import DeleteTicket from "./pages/Dashboard/Delete";
- import UpdateTicket from "./pages/Dashboard/UPdate";
+import UpdateTicket from "./pages/Dashboard/UPdate";
 import Users from "./pages/Dashboard/Users";
 import Contact from "./pages/Dashboard/ContactMsg";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 
 import DisplayEvents from "./pages/Dashboard/DisplayEvents";
-
 
 import Rev from "./component/Rev";
 import CheckPayment from "./component/CheckPayment";
@@ -28,7 +27,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        
         <div>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -50,16 +48,13 @@ function App() {
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/DisplayEvents" element={<DisplayEvents />} />
 
-
             <Route path="/event/:id" element={<Rev />} />
             <Route path="/CheckPayment" element={<CheckPayment />} />
             <Route path="/order-details" element={<OrderDetails />} />
-          
 
             <Route path="/Logout" element={<Home />} />
           </Routes>
         </div>
-
       </div>
     </BrowserRouter>
   );

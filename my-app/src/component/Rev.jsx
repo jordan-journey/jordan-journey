@@ -173,7 +173,7 @@ const Rev = () => {
         Swal.fire({
           icon: "success",
           title: "Thank you for your comment!",
-          text: "Your email has been sent to the trip organizer to inquire about discounts for future trips with them.",
+          text: "Your email has been sent to the trip organizer, check the coupon code in your profile.",
           confirmButtonText: "OK",
         });
       })

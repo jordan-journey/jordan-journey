@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,24 +7,10 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import Jordan_JOURNEYLogo from "../assets/images/Jordan_JOURNEYLogo.png";
+import { AuthContext } from "../hooks/AuthContext";
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-
-  useEffect(() => {
-    const userSession = JSON.parse(sessionStorage.getItem("users"));
-    if (userSession) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("users");
-    setIsLoggedIn(false);
-  };
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <div>
@@ -35,37 +21,56 @@ function Header() {
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              <img src={Jordan_JOURNEYLogo} className="h-12" alt="Flowbite Logo" />
+              <img
+                src={Jordan_JOURNEYLogo}
+                className="h-12"
+                alt="Flowbite Logo"
+              />
             </span>
           </Link>
           <div className="flex items-center space-x-6 rtl:space-x-reverse">
-            <Link
-              to="/Profile"
-              className="text-sm text-white dark:text-white hover:underline"
-            >
-              <FontAwesomeIcon icon={faUser} className="mx-1" /> Profile
-            </Link>
-            <Link
-              to="/Dashboard"
-              className="text-sm text-white dark:text-white hover:underline"
-            >
-              <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" />{" "}
-              Admin
-            </Link>
+            {isLoggedIn && (
+              <Link
+                to="/Profile"
+                className="text-sm text-white dark:text-white hover:underline"
+              >
+                <FontAwesomeIcon icon={faUser} className="mx-1" /> Profile
+              </Link>
+            )}
+            {!isLoggedIn && (
+              <Link
+                to="/Dashboard"
+                className="text-sm text-white dark:text-white hover:underline"
+              >
+                <FontAwesomeIcon
+                  icon={faArrowRightToBracket}
+                  className="mx-1"
+                />{" "}
+                Admin
+              </Link>
+            )}
             {!isLoggedIn ? (
               <Link
                 to="/Login"
-
-                className="text-sm text-white dark:text-white hover:underline">
-                <FontAwesomeIcon icon={faArrowRightToBracket} className="mx-1" /> Login
-
+                className="text-sm text-white dark:text-white hover:underline"
+              >
+                <FontAwesomeIcon
+                  icon={faArrowRightToBracket}
+                  className="mx-1"
+                />{" "}
+                Login
               </Link>
             ) : (
-              <Link
-                onClick={handleLogout}
-                className="text-sm text-white dark:text-white hover:underline">
-                <FontAwesomeIcon icon={faArrowRightFromBracket} className="mx-1" /> Logout
-              </Link>
+              <button
+                onClick={logout}
+                className="text-sm text-white dark:text-white hover:underline"
+              >
+                <FontAwesomeIcon
+                  icon={faArrowRightFromBracket}
+                  className="mx-1"
+                />{" "}
+                Logout
+              </button>
             )}
           </div>
         </div>

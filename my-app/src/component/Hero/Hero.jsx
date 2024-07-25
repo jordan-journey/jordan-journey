@@ -9,22 +9,19 @@ const ImageList = [
     id: 1,
     img: Image1,
     title: "Upto 50% off on Ajloun trip",
-    description:
-      "Full day with launch and free camps",
+    description: "Full day with launch and free camps",
   },
   {
     id: 2,
     img: Image2,
     title: "30% off on all in Amman trips",
-    description:
-      "See all wonderful places during a fabulous trip around Amman",
+    description: "See all wonderful places during a fabulous trip around Amman",
   },
   {
     id: 3,
     img: Image3,
     title: "70% off on family lunch",
-    description:
-      "Enjoy a happy family's meal",
+    description: "Enjoy a happy family's meal",
   },
 ];
 
@@ -51,56 +48,55 @@ const Hero = () => {
         <Slider {...settings}>
           {ImageList.map((data) => (
             <>
-            
-            <div key={data.id}>
-              <div className="grid grid-cols-1 sm:grid-cols-2">
-                {/* text content section */}
-                <div className="relative z-10 flex flex-col justify-center order-2 gap-4 pt-12 text-center sm:pt-0 sm:text-left sm:order-1">
-                  <h1
-                    data-aos="zoom-out"
-                    data-aos-duration="500"
-                    data-aos-once="true"
-                    className="text-5xl font-bold sm:text-6xl lg:text-7xl"
-                  >
-                    {data.title}
-                  </h1>
-                  <p
-                    data-aos="fade-up"
-                    data-aos-duration="500"
-                    data-aos-delay="100"
-                    className="text-sm"
-                  >
-                    {data.description}
-                  </p>
-                  <div
-                    data-aos="fade-up"
-                    data-aos-duration="500"
-                    data-aos-delay="300"
-                  >
-                    <Link
-                      to="/ListingPage"
-                      className="px-4 py-2 text-white duration-200 bg-green-600 bg-green-700 rounded-full bg-gradient-to-r hover:scale-105"
+              <div key={data.id}>
+                <div className="grid grid-cols-1 sm:grid-cols-2">
+                  {/* text content section */}
+                  <div className="relative z-10 flex flex-col justify-center order-2 pl-36 gap-4 pt-12 text-center sm:pt-0 sm:text-left sm:order-1">
+                    <h1
+                      data-aos="zoom-out"
+                      data-aos-duration="500"
+                      data-aos-once="true"
+                      className="text-5xl font-bold sm:text-6xl lg:text-7xl"
                     >
-                      Order Now
-                    </Link>
+                      {data.title}
+                    </h1>
+                    <p
+                      data-aos="fade-up"
+                      data-aos-duration="500"
+                      data-aos-delay="100"
+                      className="text-sm"
+                    >
+                      {data.description}
+                    </p>
+                    <div
+                      data-aos="fade-up"
+                      data-aos-duration="500"
+                      data-aos-delay="300"
+                    >
+                      <Link
+                        to="/ListingPage"
+                        className="px-4 py-2 text-white duration-200 bg-green-600 bg-green-700 rounded-full bg-gradient-to-r hover:scale-105"
+                      >
+                        Order Now
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                {/* image section */}
-                <div className="order-1 sm:order-2">
-                  <div
-                    data-aos="zoom-in"
-                    data-aos-once="true"
-                    className="relative z-10"
-                  >
-                    <img
-                      src={data.img}
-                      alt=""
-                      className="w-[600px] h-[600px]  sm:scale-105 lg:scale-120 object-contain mx-auto"
-                    />
+                  {/* image section */}
+                  <div className="order-1 sm:order-2">
+                    <div
+                      data-aos="zoom-in"
+                      data-aos-once="true"
+                      className="relative z-10"
+                    >
+                      <img
+                        src={data.img}
+                        alt=""
+                        className="w-[600px] h-[600px]  sm:scale-105 lg:scale-120 object-contain mx-auto"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </>
           ))}
         </Slider>

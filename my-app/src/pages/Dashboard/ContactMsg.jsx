@@ -39,18 +39,28 @@ function Contact() {
         <div className="fixed top-16 left-0 w-64 h-full bg-gray-100">
           <Saidbar />
         </div>
-        <div className="flex-1 ml-64 mt-16 p-4">
+        <div className="flex-1 ml-64  p-4 mt-[150px]">
           <div className="w-full max-w-4xl mx-auto bg-white shadow-md sm:rounded-lg">
             <h1 className="mb-6 text-2xl font-bold text-center">All Contact</h1>
             <div className="relative overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                    <th scope="col" className="px-6 py-3">Email</th>
-                    <th scope="col" className="px-6 py-3">Name</th>
-                    <th scope="col" className="px-6 py-3">Message</th>
-                    <th scope="col" className="px-6 py-3">Action</th>
-                    <th scope="col" className="px-6 py-3">Reply</th>
+                    <th scope="col" className="px-6 py-3">
+                      Email
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Message
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Action
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Reply
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
