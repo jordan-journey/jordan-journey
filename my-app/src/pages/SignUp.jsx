@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "../assets/style/SigUp.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Image from "../assets/images/ListingPageImage.jpg";
 import Footer from "../component/Footer";
 import Header from "../component/header";
+import { AuthContext } from "../hooks/AuthContext";
 
 function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +34,10 @@ function SignUp() {
         };
 
         localStorage.setItem("userData", JSON.stringify(userData));
+
+        // Update context state
+        login(userData);
+
         alert("Sign up successful!");
         navigate(`/`);
       }
@@ -46,14 +52,14 @@ function SignUp() {
       <section
         className="flex items-center justify-center h-screen signup-container"
         style={{
-          backgroundImage: { Image },
+          backgroundImage: `url(${Image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className=" flex justify-center items-center  w-[30rem] bg-white  p-8 rounded-lg shadow-lg">
-          <div className="w-full max-w-md signup-box ">
+        <div className="flex justify-center items-center w-[30rem] bg-white p-8 rounded-lg shadow-lg">
+          <div className="w-full max-w-md signup-box">
             <h2 className="text-3xl font-semibold text-center text-[#000000] mb-6">
               Sign Up
             </h2>

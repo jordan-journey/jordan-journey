@@ -3,13 +3,13 @@ import Cards from "../component/Cards";
 import axios from "axios";
 import Header from "../component/header";
 import Footer from "../component/Footer";
-import { Range, getTrackBackground } from 'react-range';
+import { Range, getTrackBackground } from "react-range";
 
 function ListingPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState("");
   const [priceRange, setPriceRange] = useState([0, 100]);
 
   const STEP = 1;
@@ -28,7 +28,7 @@ function ListingPage() {
     "Karak",
     "Tafilah",
     "Aqaba",
-    "Maan"
+    "Maan",
   ];
 
   useEffect(() => {
@@ -57,9 +57,11 @@ function ListingPage() {
   const filteredEvents = events.filter((event) => {
     const eventPrice = event.details.price;
     return (
-      (selectedLocation === '' || selectedLocation === event.details.location) &&
+      (selectedLocation === "" ||
+        selectedLocation === event.details.location) &&
       event.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      eventPrice >= priceRange[0] && eventPrice <= priceRange[1]
+      eventPrice >= priceRange[0] &&
+      eventPrice <= priceRange[1]
     );
   });
 
@@ -74,7 +76,7 @@ function ListingPage() {
   return (
     <main>
       <Header />
-            {/**********************************search********************************** */}
+      {/**********************************search********************************** */}
 
       <section className="flex flex-wrap items-center justify-center w-full h-20 shadow-lg gap-44shadow-xl ">
         <div className="my-3 xl:w-96">
@@ -109,70 +111,67 @@ function ListingPage() {
         </div>
       </section>
 
-
       {/**********************************end search********************************** */}
-            {/******************************************************************** */}
+      {/******************************************************************** */}
 
       <section className="flex flex-wrap justify-center gap-3 mt-16">
-   
-          <div className="flex flex-row flex-wrap gap-10 p-4 space-x-80">
+        <div className="flex flex-row flex-wrap gap-10 p-4 space-x-80">
+          {/**********************dropdown list************************* */}
+          <select
+            id="location"
+            className="block px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none h-15 w-52 focus:outline-none focus:bg-white"
+            value={selectedLocation}
+            onChange={(e) => setSelectedLocation(e.target.value)}
+          >
+            <option value="">Select a location</option>
+            {uniqueLocations.map((location, index) => (
+              <option key={index} value={location}>
+                {location}
+              </option>
+            ))}
+          </select>
+          {/**********************end dropdown list************************* */}
 
-            {/**********************dropdown list************************* */}
-            <select
-              id="location"
-              className="block px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none h-15 w-52 focus:outline-none focus:bg-white"
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-            >
-              <option value="">Select a location</option>
-              {uniqueLocations.map((location, index) => (
-                <option key={index} value={location}>
-                  {location}
-                </option>
-              ))}
-            </select>
-            {/**********************end dropdown list************************* */}
+          {/**********************price************************* */}
 
-                        {/**********************price************************* */}
-
-            <div className="flex flex-col items-center ">
-              <label className="mb-2 text-gray-700">Price Range: ${priceRange[0]} - ${priceRange[1]}</label>
-              <Range
-                values={priceRange}
-                step={STEP}
-                min={MIN}
-                max={MAX}
-                onChange={(values) => setPriceRange(values)}
-                renderTrack={({ props, children }) => (
-                  <div
-                    {...props}
-                    className="w-40 h-2 rounded-md"
-                    style={{
-                      background: getTrackBackground({
-                        values: priceRange,
-                        colors: ['#ccc', '#519341', '#ccc'],
-                        min: MIN,
-                        max: MAX,
-                      }),
-                    }}
-                  >
-                    {children}
-                  </div>
-                )}
-                renderThumb={({ props }) => (
-                  <div
-                    {...props}
-                    className="w-6 h-6 bg-green-500 rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
-                  />
-                )}
-              />
-            </div>
-                        {/**********************end price************************* */}
-
-        
+          <div className="flex flex-col items-center ">
+            <label className="mb-2 text-gray-700">
+              Price Range: ${priceRange[0]} - ${priceRange[1]}
+            </label>
+            <Range
+              values={priceRange}
+              step={STEP}
+              min={MIN}
+              max={MAX}
+              onChange={(values) => setPriceRange(values)}
+              renderTrack={({ props, children }) => (
+                <div
+                  {...props}
+                  className="w-40 h-2 rounded-md"
+                  style={{
+                    background: getTrackBackground({
+                      values: priceRange,
+                      colors: ["#ccc", "#519341", "#ccc"],
+                      min: MIN,
+                      max: MAX,
+                    }),
+                  }}
+                >
+                  {children}
+                </div>
+              )}
+              renderThumb={({ props }) => (
+                <div
+                  {...props}
+                  className="w-6 h-6 bg-green-500 rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
+                />
+              )}
+            />
+          </div>
+          {/**********************end price************************* */}
         </div>
       </section>
-            {/******************************************************************** */}
+      {/******************************************************************** */}
 
       <section>
         <Cards events={filteredEvents} searchQuery={searchQuery} />

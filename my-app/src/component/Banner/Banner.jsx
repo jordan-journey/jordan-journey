@@ -5,7 +5,7 @@ import { GiFoodTruck } from "react-icons/gi";
 // import { IoFastFood } from "react-icons/io5";
 const Banner = () => {
   return (
-    <div className="min-h-[550px] flex justify-center items-center py-12 sm:py-0 shadow-xl">
+    <div className="min-h-[550px] flex justify-center items-center py-12 sm:py-0 shadow-xl mt-9">
       <div className="container">
         <div className="grid items-center grid-cols-1 gap-6 sm:grid-cols-2">
           {/* image section */}

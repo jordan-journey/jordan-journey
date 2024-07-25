@@ -1,17 +1,14 @@
-
-
-import Products from '../component/Products/Products';
-import Hero from '../component/Hero/Hero';
-import TopProducts from '../component/TopProducts/TopProducts';
-import Banner from '../component/Banner/Banner';
-import Testimonials from '../component/Testimonials/Testimonials';
-import Popup from '../component/Popup/Popup';
-import React from 'react';
-import Aos from 'aos';
-import 'aos/dist/aos.css';
-import Header from '../component/header';
-import Footer from '../component/Footer';
-
+import Products from "../component/Products/Products";
+import Hero from "../component/Hero/Hero";
+import TopProducts from "../component/TopProducts/TopProducts";
+import Banner from "../component/Banner/Banner";
+import Testimonials from "../component/Testimonials/Testimonials";
+import Popup from "../component/Popup/Popup";
+import React from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import Header from "../component/header";
+import Footer from "../component/Footer";
 
 // import React from "react";
 
@@ -44,28 +41,20 @@ function Home() {
     Aos.refresh();
   }, []);
 
- 
-  return(
+  return (
+    <div>
+      <Header />
+      <Hero handleOrderPopup={handleOrderPopup} />
+      <div className="items-center p-20">
+        <Products />
+        <TopProducts handleOrderPopup={handleOrderPopup} />
+        <Banner />
 
-    
-    <div >
-      <Header/>
-    <Hero handleOrderPopup={handleOrderPopup} />
-    <div className='items-center p-20'>
-      <Products />
-      <TopProducts handleOrderPopup={handleOrderPopup} />
-      <Banner />
-      
-      <Testimonials />
-      <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
-
+        <Testimonials />
+        <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />
       </div>
-      <Footer/>
-      </div>
-
-
-  
-
+      <Footer />
+    </div>
   );
 }
 
