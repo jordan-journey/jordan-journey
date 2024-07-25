@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightToBracket,
@@ -11,23 +11,21 @@ import { AuthContext } from "../hooks/AuthContext";
 
 function Header() {
   const { isLoggedIn, logout } = useContext(AuthContext);
+  const location = useLocation(); // استخدام useLocation لمعرفة المسار الحالي
 
   return (
     <div>
       <nav className="bg-green-600 border-b-2 border-gray-200 dark:bg-gray-900">
         <div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
-          <Link
-            to="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <Link to="/" className="flex items-center">
               <img
                 src={Jordan_JOURNEYLogo}
-                className="h-12"
-                alt="Flowbite Logo"
+                className="w-20 h-14"
+                alt="Jordan Journey Logo"
               />
-            </span>
-          </Link>
+            </Link>
+          </div>
           <div className="flex items-center space-x-6 rtl:space-x-reverse">
             {isLoggedIn && (
               <Link
@@ -77,12 +75,14 @@ function Header() {
       </nav>
       <nav className="bg-green-600 dark:bg-gray-700">
         <div className="max-w-screen-xl px-4 py-3 mx-auto">
-          <div className="flex items-center justify-center ">
+          <div className="flex items-center justify-center">
             <ul className="flex flex-row mt-0 space-x-20 text-sm font-medium rtl:space-x-reverse">
               <li>
                 <Link
                   to="/"
-                  className="text-white dark:text-white hover:underline"
+                  className={`text-white dark:text-white hover:underline ${
+                    location.pathname === "/" ? "underline" : ""
+                  }`}
                   aria-current="page"
                 >
                   Home
@@ -91,7 +91,9 @@ function Header() {
               <li>
                 <Link
                   to="/ListingPage"
-                  className="text-white dark:text-white hover:underline"
+                  className={`text-white dark:text-white hover:underline ${
+                    location.pathname === "/ListingPage" ? "underline" : ""
+                  }`}
                 >
                   Discover
                 </Link>
@@ -99,7 +101,9 @@ function Header() {
               <li>
                 <Link
                   to="/ContactUs"
-                  className="text-white dark:text-white hover:underline"
+                  className={`text-white dark:text-white hover:underline ${
+                    location.pathname === "/ContactUs" ? "underline" : ""
+                  }`}
                 >
                   Reach Out
                 </Link>
@@ -107,7 +111,9 @@ function Header() {
               <li>
                 <Link
                   to="/AboutUs"
-                  className="text-white dark:text-white hover:underline"
+                  className={`text-white dark:text-white hover:underline ${
+                    location.pathname === "/AboutUs" ? "underline" : ""
+                  }`}
                 >
                   Our Story
                 </Link>

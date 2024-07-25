@@ -118,20 +118,17 @@ function UpdateTicket() {
   };
 
   return (
-    <div>
+    <div >
       <NavDashboard />
-      <div className="flex flex-wrap gap-12 mt-16 pt-16">
+      <div className="flex flex-wrap gap-12 pt-16 mt-16">
         {" "}
         {/* إضافة مسافة علوية كافية */}
         <div className="w-1/4">
           <Saidbar />
         </div>
-        <div className="w-2.5/4 py-10">
-          <br />
-          <br />
-          <br />
-          <br />
-          <h1 className="text-4xl font-bold mb-9">Events</h1>
+        <div className="w-2.5/4 py-10 ms-28">
+        
+          <h1 className="text-4xl font-bold mb-9">Update</h1>
           {eventData ? (
             <div>
               <form className="w-full max-w-3xl mx-auto">
@@ -160,7 +157,7 @@ function UpdateTicket() {
                 {/*********end button******** */}
 
                 <div className="flex">
-                  <div className="w-full p-8 rounded bg-slate-300">
+                  <div className="w-full p-8 bg-white rounded shadow-xl">
                     {/**********************images********************** */}
                     <div className="flex flex-wrap mx-3 mt-10 mb-6">
                       <div className="w-full px-3 mb-6 md:w-1/3 md:mb-0">
@@ -341,6 +338,7 @@ function UpdateTicket() {
                     </div>
 
                     <div className="flex flex-wrap mb-2 -mx-3">
+                    <div className="w-full">
                       <label
                         htmlFor="message"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -356,8 +354,9 @@ function UpdateTicket() {
                         placeholder="Write Description here..."
                       ></textarea>
                     </div>
-
+                   </div>
                     <div className="flex flex-wrap mb-2 -mx-3">
+                    <div className="w-full">
                       <label
                         htmlFor="message"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -372,6 +371,7 @@ function UpdateTicket() {
                         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Write Description here..."
                       ></textarea>
+                      </div>
                     </div>
                   </div>
                 </div>

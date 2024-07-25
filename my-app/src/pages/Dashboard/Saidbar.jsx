@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Sidebar() {
   const [openHamburgerMenu, setHamburger] = useState(false);
+  const location = useLocation();
+  const activePath = location.pathname;
 
   function handleHamburgerMenu() {
     setHamburger(!openHamburgerMenu);
@@ -47,7 +49,11 @@ function Sidebar() {
             <li>
               <Link
                 to="/MDashboard"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg dark:text-white ${
+                  activePath === "/MDashboard"
+                    ? "bg-green-400 text-white"
+                    : "text-white hover:bg-black-100 dark:hover:bg-gray-700"
+                } group`}
               >
                 <svg
                   className="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -65,7 +71,11 @@ function Sidebar() {
             <li>
               <Link
                 to="/ADDAdmin"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg dark:text-white ${
+                  activePath === "/ADDAdmin"
+                    ? "bg-green-400 text-white"
+                    : "text-white hover:bg-black-100 dark:hover:bg-gray-700"
+                } group`}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -79,27 +89,14 @@ function Sidebar() {
                 <span className="flex-1 ms-3 whitespace-nowrap">Add Admin</span>
               </Link>
             </li>
-            {/* <li>
-              <Link
-                to="/Admin"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 2.69-6 6v1h12v-1c0-3.31-2.69-6-6-6z" />
-                </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Admins</span>
-              </Link>
-            </li> */}
             <li>
               <Link
                 to="/add"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg dark:text-white ${
+                  activePath === "/add"
+                    ? "bg-green-400 text-white"
+                    : "text-white hover:bg-black-100 dark:hover:bg-gray-700"
+                } group`}
               >
                 <svg
                   className="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -117,7 +114,11 @@ function Sidebar() {
             <li>
               <Link
                 to="/DisplayEvents"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg dark:text-white ${
+                  activePath === "/DisplayEvents"
+                    ? "bg-green-400 text-white"
+                    : "text-white hover:bg-black-100 dark:hover:bg-gray-700"
+                } group`}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -134,7 +135,11 @@ function Sidebar() {
             <li>
               <Link
                 to="/Users"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg dark:text-white ${
+                  activePath === "/Users"
+                    ? "bg-green-400 text-white"
+                    : "text-white hover:bg-black-100 dark:hover:bg-gray-700"
+                } group`}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -151,7 +156,11 @@ function Sidebar() {
             <li>
               <Link
                 to="/Contact"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg dark:text-white ${
+                  activePath === "/Contact"
+                    ? "bg-green-400 text-white"
+                    : "text-white hover:bg-black-100 dark:hover:bg-gray-700"
+                } group`}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -162,15 +171,17 @@ function Sidebar() {
                 >
                   <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6l-4 4V6a2 2 0 0 1 2-2zM20 6H4v12h16V6zm-8 6h4v2h-4v-2zm-6-4h12v2H6V8zm0 6h12v2H6v-2z" />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Contact Messages
-                </span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Contact Messages</span>
               </Link>
             </li>
             <li>
               <Link
                 to="/Logout"
-                className="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-black-100 dark:hover:bg-gray-700 group"
+                className={`flex items-center p-2 rounded-lg dark:text-white ${
+                  activePath === "/Logout"
+                    ? "bg-gray-700 text-white"
+                    : "text-white hover:bg-black-100 dark:hover:bg-gray-700"
+                } group`}
               >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

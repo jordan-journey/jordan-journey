@@ -37,10 +37,11 @@ function MainDashboard() {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex ">
       <Saidbar />
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex flex-col flex-1 min-h-screen">
         <NavDashboard />
+        <div className="items-center ms-52 ">
         <div className="flex flex-grow justify-center items-center my-12 mt-[150px]">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div className="p-8 bg-white rounded-lg shadow-md">
@@ -59,6 +60,7 @@ function MainDashboard() {
         </div>
         <div className="flex justify-center">
           <Admin />
+        </div>
         </div>
       </div>
     </div>
